@@ -67,3 +67,4 @@ jobs:
             git commit -m "chore: 更新竞赛状态 [skip ci]"
             git push
           fi
+
