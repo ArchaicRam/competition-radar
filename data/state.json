@@ -1319,7 +1319,7 @@
       "key": "ai:201395edf5eb",
       "title": "2026年高教社杯全国大学生数学建模竞赛",
       "platform": "AI发现·我爱竞赛网",
-      "organizer": "中国工业与应用数学学会、高等教育出版社",
+      "organizer": "中国工业与应用数学学会（高教社杯）",
       "url": "https://www.52jingsai.com/article-23557-1.html",
       "deadline": "",
       "reward": "",
@@ -1480,7 +1480,21 @@
       "enabled_date": "2026-08-30 11:00",
       "rating": "",
       "detected_at": "2026-08-17T08:02:17"
+    },
+    "nowcoder:NowCoder:1139666": {
+      "key": "nowcoder:NowCoder:1139666",
+      "title": "河南萌新联赛2026第（六）场：郑州大学",
+      "platform": "nowcoder",
+      "organizer": "NowCoder",
+      "url": "https://ac.nowcoder.com/acm/contest/139666?from=acm_calendar",
+      "deadline": "2026-08-24 09:00",
+      "reward": "",
+      "comp_type": "算法竞赛",
+      "status": "未开始",
+      "enabled_date": "2026-08-24 05:00",
+      "rating": "",
+      "detected_at": "2026-08-17T22:10:49"
     }
   },
-  "last_run": "2026-08-17T08:02:42"
+  "last_run": "2026-08-17T22:11:06"
 }
