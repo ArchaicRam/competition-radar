@@ -1,8 +1,22 @@
-﻿name: test-register
+name: test-register
 on:
   workflow_dispatch: {}
 jobs:
   t:
     runs-on: ubuntu-latest
     steps:
+      - name: Configure lark-cli（从 Secrets 写入应用配置）
+        run: |
+          mkdir -p ~/.lark-cli
+          python - <<'EOF'
+          import json, os
+          cfg = {"apps": [{"name": "jingsai",
+                           "appId": os.environ["LARK_APP_ID"],
+                           "appSecret": os.environ["LARK_APP_SECRET"],
+                           "brand": "feishu", "users": []}]}
+          open(os.path.expanduser("~/.lark-cli/config.json"), "w").write(json.dumps(cfg))
+          EOF
+        env:
+          LARK_APP_ID: ${{ secrets.LARK_APP_ID }}
+          LARK_APP_SECRET: ${{ secrets.LARK_APP_SECRET }}
       - run: echo hi
