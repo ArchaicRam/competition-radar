@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 # 每天自动运行一次（配合 Windows"任务计划程序"使用，详见 README）
 # 日志写到 logs\daily.log，出错了也能查
 $ErrorActionPreference = "Stop"

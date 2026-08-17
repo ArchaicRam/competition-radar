@@ -1,4 +1,4 @@
-# 竞赛雷达 · GitHub Actions 一键配置脚本
+﻿# 竞赛雷达 · GitHub Actions 一键配置脚本
 # 作用：安装 GitHub CLI -> 登录 -> 创建私有仓库 -> 推送 -> 自动配置全部 Secrets
 # 用法：在 PowerShell 中执行  powershell -ExecutionPolicy Bypass -File setup_github.ps1
 $ErrorActionPreference = "Stop"
@@ -17,8 +17,9 @@ if (-not (Get-Command gh -ErrorAction SilentlyContinue)) {
 Write-Host ">> GitHub CLI 就绪：$(gh --version | Select-Object -First 1)"
 
 # ---------- 2. 登录 ----------
-gh auth status *> $null
-if ($LASTEXITCODE -ne 0) {
+$authed = $false
+try { gh auth status *> $null; $authed = ($LASTEXITCODE -eq 0) } catch { $authed = $false }
+if (-not $authed) {
     Write-Host ">> 请在浏览器中完成 GitHub 登录（登录后回到本窗口）..."
     gh auth login --web --git-protocol https
 }
@@ -31,7 +32,7 @@ if (-not (git remote -v)) {
 
 # ---------- 4. 配置 Secrets（从本地配置自动读取，无需手打） ----------
 Write-Host ">> 配置仓库 Secrets..."
-$cfg = Get-Content config.json -Raw | ConvertFrom-Json
+$cfg = Get-Content config.json -Raw -Encoding UTF8 | ConvertFrom-Json
 if ($cfg.feishu_webhook) { gh secret set FEISHU_WEBHOOK -b $cfg.feishu_webhook }
 if ($cfg.feishu_secret)  { gh secret set FEISHU_SECRET -b $cfg.feishu_secret }
 if ($cfg.llm_api_key)    { gh secret set LLM_API_KEY -b $cfg.llm_api_key }
@@ -39,7 +40,7 @@ if ($cfg.kaggle_username){ gh secret set KAGGLE_USERNAME -b $cfg.kaggle_username
 if ($cfg.kaggle_key)     { gh secret set KAGGLE_KEY -b $cfg.kaggle_key }
 $larkCfg = Join-Path $env:USERPROFILE ".lark-cli\config.json"
 if (Test-Path $larkCfg) {
-    $lark = Get-Content $larkCfg -Raw | ConvertFrom-Json
+    $lark = Get-Content $larkCfg -Raw -Encoding UTF8 | ConvertFrom-Json
     $app = $lark.apps | Where-Object { $_.name -eq "jingsai" } | Select-Object -First 1
     if ($app) {
         gh secret set LARK_APP_ID -b $app.appId
