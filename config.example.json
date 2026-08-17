@@ -1,0 +1,32 @@
+{
+  "feishu_webhook": "https://open.feishu.cn/open-apis/bot/v2/hook/在此粘贴你的群机器人Webhook地址",
+  "feishu_secret": "",
+  "bot_name": "竞赛雷达",
+  "sources": ["tianchi", "datafountain", "nowcoder", "xfyun", "kaggle"],
+  "only_new": true,
+  "digest_when_no_new": false,
+  "send_table_daily": true,
+  "max_table_rows": 0,
+  "excel_file": "data/competitions.xlsx",
+  "excel_link": "",
+  "feishu_sheet_url": "",
+  "lark_profile": "jingsai",
+  "official_keywords": [],
+  "llm_api_key": "",
+  "llm_base_url": "https://api.deepseek.com",
+  "llm_model": "deepseek-chat",
+  "llm_max_tokens": 1200,
+  "ai_discover": true,
+  "ai_digest": true,
+  "seed_sources": [
+    {"name": "中国软件杯", "url": "https://www.cnsoftbei.com/"},
+    {"name": "我爱竞赛网", "url": "https://www.52jingsai.com/"}
+  ],
+  "max_items_per_push": 20,
+  "deadline_alert_days": 14,
+  "data_file": "data/state.json",
+  "http_timeout": 30,
+  "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36",
+  "kaggle_username": "",
+  "kaggle_key": ""
+}

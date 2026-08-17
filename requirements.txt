@@ -1,0 +1,6 @@
+requests>=2.31
+beautifulsoup4>=4.12
+
+# 可选：如果某些平台改用纯 JS 渲染后抓不到，装这个启用浏览器渲染兜底
+# pip install playwright && playwright install chromium
+# playwright>=1.45

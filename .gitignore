@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# 含飞书 Webhook 密钥的本地配置 —— 绝不入库
+config.json
+
+# 探测脚本与日志
+_probe/
+logs/
+.tmp/
+_tmp_test/
+*.log
+
+# 本地临时安装缓存（npm 等）
+.npm-cache/
+npm-global/
+node_modules/
+
+# 系统
+.DS_Store
+Thumbs.db
