@@ -122,7 +122,9 @@ python run_daily.py --export-csv     # 导出台账 data/competitions.csv（Exce
    黑客松页面、揭榜挂帅/众包平台、赛事聚合站、高校就业网——靠 AI 从页面文本里
    提炼比赛/需求征集（标题/主办方/类型/截止/奖励/链接/含金量），并入总表，
    "来源"列标注 **AI发现·站点名**，状态标"待核实"（建议人工复核后再报名）。
-   - **含金量为"低"（商业营销、付费参赛、野鸡主办方）的直接过滤**，不入表
+   - **含金量为"低"（纯商业营销、野鸡主办方、割韭菜类）直接过滤**，不入表；
+     答题/知识竞赛类（如"XX知识竞赛"）由本地规则硬过滤，不依赖 AI 判断；
+     "付费参赛"本身不作为低含金量依据（蓝桥杯等正规赛也收费）
    - 报名链接优先匹配页面内的真实公告页（锚点匹配），不再是聚合站首页
    - 种子源在 `seed_sources` 里随意增删，任何能打开的公告页都能当种子。
 2. **AI 今日看点（ai_digest）**：每天把当日新增写成 ≤130 字的"今日看点"
@@ -174,6 +176,17 @@ python run_daily.py --export-csv     # 导出台账 data/competitions.csv（Exce
 > GitHub Actions **不是云服务器**：它是免费的计划任务，每天到点临时开一台虚拟机
 > 跑完即销毁，不常驻、不收费、不用运维。云服务器（VPS）是常驻机器，要花钱买，
 > 对本项目属于杀鸡用牛刀。
+
+**一键配置**：在 PowerShell 中运行（会自动装 GitHub CLI、登录、建私有仓库、推送、配 Secrets）：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File D:\find_competition\setup_github.ps1
+```
+
+脚本会自动从本地配置读取飞书 Webhook、DeepSeek Key、飞书应用 ID/Secret 等，
+写入仓库 Secrets（`config.json` 等敏感文件不会入库）。
+配置完成后到仓库 Actions 页手动触发一次 `daily-competition-scan` 验证，
+之后每天 06:00 自动运行（含 AI 情报员与在线表格同步，你的电脑关机也能跑）。
 
 1. 把本项目推到 GitHub 仓库（`data/` 目录会跟着走，它是增量去重的依据）
 2. 仓库 Settings -> Secrets and variables -> Actions，添加：
