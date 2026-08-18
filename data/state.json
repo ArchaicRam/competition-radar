@@ -1494,7 +1494,77 @@
       "enabled_date": "2026-08-24 05:00",
       "rating": "",
       "detected_at": "2026-08-17T22:10:49"
+    },
+    "xfyun:DexNDM": {
+      "key": "xfyun:DexNDM",
+      "title": "灵巧手与具身智能自主操作",
+      "platform": "xfyun",
+      "organizer": "中国科学院自动化研究所",
+      "url": "https://challenge.xfyun.cn/topic/info?type=DexNDM",
+      "deadline": "2026-08-31",
+      "reward": "¥1万",
+      "comp_type": "application",
+      "status": "报名中",
+      "enabled_date": "2026-08-18",
+      "rating": "",
+      "detected_at": "2026-08-18T16:12:17"
+    },
+    "xfyun:p4-health-management": {
+      "key": "xfyun:p4-health-management",
+      "title": "个性化全周期医疗健康管理",
+      "platform": "xfyun",
+      "organizer": "科大讯飞股份有限公司",
+      "url": "https://challenge.xfyun.cn/topic/info?type=p4-health-management",
+      "deadline": "2026-08-31",
+      "reward": "¥1万",
+      "comp_type": "application",
+      "status": "报名中",
+      "enabled_date": "2026-08-18",
+      "rating": "",
+      "detected_at": "2026-08-18T16:12:17"
+    },
+    "xfyun:smart-home-care": {
+      "key": "xfyun:smart-home-care",
+      "title": "居家健康管理与智能监护",
+      "platform": "xfyun",
+      "organizer": "科大讯飞股份有限公司",
+      "url": "https://challenge.xfyun.cn/topic/info?type=smart-home-care",
+      "deadline": "2026-08-31",
+      "reward": "¥1万",
+      "comp_type": "application",
+      "status": "报名中",
+      "enabled_date": "2026-08-18",
+      "rating": "",
+      "detected_at": "2026-08-18T16:12:17"
+    },
+    "xfyun:brand-user-growth": {
+      "key": "xfyun:brand-user-growth",
+      "title": "全渠道品牌营销与用户增长",
+      "platform": "xfyun",
+      "organizer": "科大讯飞股份有限公司",
+      "url": "https://challenge.xfyun.cn/topic/info?type=brand-user-growth",
+      "deadline": "2026-08-31",
+      "reward": "¥1万",
+      "comp_type": "application",
+      "status": "报名中",
+      "enabled_date": "2026-08-18",
+      "rating": "",
+      "detected_at": "2026-08-18T16:12:17"
+    },
+    "xfyun:edge-ai-for-driving": {
+      "key": "xfyun:edge-ai-for-driving",
+      "title": "智能驾驶与端侧智能",
+      "platform": "xfyun",
+      "organizer": "长城汽车股份有限公司",
+      "url": "https://challenge.xfyun.cn/topic/info?type=edge-ai-for-driving",
+      "deadline": "2026-08-31",
+      "reward": "¥1万",
+      "comp_type": "application",
+      "status": "报名中",
+      "enabled_date": "2026-08-18",
+      "rating": "",
+      "detected_at": "2026-08-18T16:12:17"
     }
   },
-  "last_run": "2026-08-17T22:11:06"
+  "last_run": "2026-08-18T16:12:46"
 }
