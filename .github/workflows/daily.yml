@@ -50,6 +50,8 @@ jobs:
           FEISHU_WEBHOOK: ${{ secrets.FEISHU_WEBHOOK }}
           # 若机器人创建时勾选了"签名校验"，把密钥也存成 secret
           FEISHU_SECRET: ${{ secrets.FEISHU_SECRET }}
+          # 飞书在线表格地址（必配：否则卡片降级为"本机路径"、表格不更新）
+          FEISHU_SHEET_URL: ${{ secrets.FEISHU_SHEET_URL }}
           # Kaggle 账号（可选）：不配置则跳过 Kaggle
           KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
           KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}

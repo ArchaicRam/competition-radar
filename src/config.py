@@ -43,6 +43,8 @@ DEFAULT_CONFIG: Dict[str, Any] = {
 _ENV_MAP = {
     "FEISHU_WEBHOOK": "feishu_webhook",
     "FEISHU_SECRET": "feishu_secret",
+    "FEISHU_SHEET_URL": "feishu_sheet_url",
+    "LARK_PROFILE": "lark_profile",
     "SOURCES": "sources",
     "DATA_FILE": "data_file",
     "HTTP_TIMEOUT": "http_timeout",

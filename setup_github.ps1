@@ -1,4 +1,4 @@
-﻿# 竞赛雷达 · GitHub Actions 一键配置脚本
+# 竞赛雷达 · GitHub Actions 一键配置脚本
 # 作用：安装 GitHub CLI -> 登录 -> 创建私有仓库 -> 推送 -> 自动配置全部 Secrets
 # 用法：在 PowerShell 中执行  powershell -ExecutionPolicy Bypass -File setup_github.ps1
 $ErrorActionPreference = "Stop"
@@ -35,6 +35,7 @@ Write-Host ">> 配置仓库 Secrets..."
 $cfg = Get-Content config.json -Raw -Encoding UTF8 | ConvertFrom-Json
 if ($cfg.feishu_webhook) { gh secret set FEISHU_WEBHOOK -b $cfg.feishu_webhook }
 if ($cfg.feishu_secret)  { gh secret set FEISHU_SECRET -b $cfg.feishu_secret }
+if ($cfg.feishu_sheet_url) { gh secret set FEISHU_SHEET_URL -b $cfg.feishu_sheet_url }
 if ($cfg.llm_api_key)    { gh secret set LLM_API_KEY -b $cfg.llm_api_key }
 if ($cfg.kaggle_username){ gh secret set KAGGLE_USERNAME -b $cfg.kaggle_username }
 if ($cfg.kaggle_key)     { gh secret set KAGGLE_KEY -b $cfg.kaggle_key }
