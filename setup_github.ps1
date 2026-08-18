@@ -35,6 +35,7 @@ Write-Host ">> 配置仓库 Secrets..."
 $cfg = Get-Content config.json -Raw -Encoding UTF8 | ConvertFrom-Json
 if ($cfg.feishu_webhook) { gh secret set FEISHU_WEBHOOK -b $cfg.feishu_webhook }
 if ($cfg.feishu_secret)  { gh secret set FEISHU_SECRET -b $cfg.feishu_secret }
+if ($cfg.feishu_chat_id) { gh secret set FEISHU_CHAT_ID -b $cfg.feishu_chat_id }
 if ($cfg.feishu_sheet_url) { gh secret set FEISHU_SHEET_URL -b $cfg.feishu_sheet_url }
 if ($cfg.llm_api_key)    { gh secret set LLM_API_KEY -b $cfg.llm_api_key }
 if ($cfg.kaggle_username){ gh secret set KAGGLE_USERNAME -b $cfg.kaggle_username }

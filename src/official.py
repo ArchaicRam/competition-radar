@@ -94,14 +94,28 @@ def normalize_comp_type(s) -> str:
 
 
 # 含金量评级（高/中/低）与颜色（高=红、中=橙、低=绿）
+# 评分模型（用户规则）：业界认可(+3) > 部委/工信部认可(+2) > 名声大(+1)
+#   - 总分 >=3 → 高（业界认可本身，或 部委认可+名声大）
+#   - 总分 1~2 → 中（仅部委认可，或仅名声大）
+#   - 0 分 → 走平台/主办方默认规则；答题类等低质模式一律 低
 RATING_COLOR = {"高": "#E02020", "中": "#E67E22", "低": "#2ECC40"}
 
-_HIGH_ORG_KEYWORDS = [
-    "教育部", "工信部", "科技部", "共青团", "国务院", "中央", "中国科学院", "中国工程院",
-    "中国计算机学会", "中国人工智能学会", "中国电子学会", "中国软件行业协会", "ACM", "IEEE",
+# 业界认可：知名企业、权威学会、顶级/业界公认赛事（权重 3）
+_INDUSTRY_KEYS = [
     "阿里巴巴", "阿里云", "腾讯", "华为", "百度", "科大讯飞", "字节", "美团", "京东",
-    "蚂蚁", "微软", "Google", "Kaggle", "北京大学", "清华大学", "浙江大学", "上海交通大学",
+    "蚂蚁", "微软", "Google", "Kaggle", "大疆", "网易", "小米",
+    "ACM", "ICPC", "CCPC", "IEEE", "中国计算机学会", "中国人工智能学会", "中国电子学会",
+    "中国工业与应用数学学会", "中国工程院", "中国科学院", "北京大学", "清华大学",
+    "蓝桥杯", "数学建模", "挑战杯", "互联网+", "国际大学生创新", "天梯赛", "RoboMaster",
+    "RoboCup", "计算机设计大赛", "信息安全竞赛", "中国软件杯", "软件杯", "华为ICT",
+    "金砖", "服务外包", "创客中国", "数据要素", "智能汽车", "电子设计",
 ]
+
+# 部委/政府认可（权重 2）：工信部、教育部、科技部等
+_GOV_KEYS = ["工信部", "工业和信息化部", "教育部", "科技部", "共青团", "中央网信办", "国务院", "中央"]
+
+# 名声大但未必业界认可（权重 1）
+_FAME_KEYS = ["全国高校计算机能力", "大学生职业发展", "全国大学生科技"]
 
 
 # 低含金量标题模式：答题/知识竞赛类（常见"报名费+刷题+发证"收割模式），
@@ -114,26 +128,34 @@ def is_low_value(title: str = "") -> bool:
 
 
 def prestige(title: str = "", organizer: str = "", platform: str = "", rating: str = "") -> str:
-    """含金量：高 / 中 / 低。AI 已评级的直接用；其余按主办方/名称规则推算。"""
+    """含金量：高 / 中 / 低。AI 已评级的直接用；其余按评分模型推算。"""
     r = (rating or "").strip()
     if r in ("高", "中", "低"):
         return r
     if is_low_value(title):
         return "低"
-    if is_official(title, organizer):
-        return "高"
-    org = organizer or ""
-    if any(k in org for k in _HIGH_ORG_KEYWORDS):
-        return "高"
     t = title or ""
+    org = organizer or ""
+    # 练手/练习/周赛/月赛类：练习性质，一律低
     if any(k in t for k in ("练手", "练习赛", "周赛", "月赛", "入门", "新手")):
         return "低"
+    score = 0
+    if any(k in org or k in t for k in _INDUSTRY_KEYS):
+        score += 3  # 业界认可
+    if any(k in org for k in _GOV_KEYS):
+        score += 2  # 部委/工信部认可
+    if any(k in t for k in _FAME_KEYS):
+        score += 1  # 名声大
+    if score >= 3:
+        return "高"
+    if score >= 1:
+        return "中"
+    # 0 分：走平台/主办方默认
     if platform == "nowcoder":
         return "中" if any(k in t for k in ("多校", "挑战", "邀请赛", "省赛", "区域赛")) else "低"
-    # 知名平台赛事（阿里/讯飞/Kaggle 等主办，主办方字段常为空）
     if platform in ("tianchi", "kaggle", "xfyun"):
         return "高"
-    if any(k in org for k in ("协会", "学会", "研究会", "委员会", "研究院", "大学", "学院", "省", "市", "中心")):
+    if any(k in org for k in ("协会", "学会", "研究会", "研究院", "大学", "学院", "中心", "省", "市")):
         return "中"
     return "中"
 

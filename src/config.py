@@ -9,6 +9,7 @@ from typing import Any, Dict, List
 DEFAULT_CONFIG: Dict[str, Any] = {
     "feishu_webhook": "",
     "feishu_secret": "",
+    "feishu_chat_id": "",
     "bot_name": "竞赛雷达",
     "sources": ["tianchi", "datafountain", "nowcoder", "xfyun", "kaggle"],
     "only_new": True,
@@ -43,6 +44,7 @@ DEFAULT_CONFIG: Dict[str, Any] = {
 _ENV_MAP = {
     "FEISHU_WEBHOOK": "feishu_webhook",
     "FEISHU_SECRET": "feishu_secret",
+    "FEISHU_CHAT_ID": "feishu_chat_id",
     "FEISHU_SHEET_URL": "feishu_sheet_url",
     "LARK_PROFILE": "lark_profile",
     "SOURCES": "sources",

@@ -35,14 +35,22 @@ def main():
     config = load_config(args.config)
 
     if args.test_notify:
+        chat_id = (config.get("feishu_chat_id") or "").strip()
+        msg = f"✅ {config.get('bot_name', '竞赛雷达')}已接通！\n以后每天扫描到新比赛会自动推送到本群。\n（这是一条测试消息）"
+        if chat_id:
+            from src.feishu_app import send_text
+
+            send_text(chat_id, msg, profile=config.get("lark_profile", "jingsai"))
+            print("已通过应用机器人发送测试消息，请到飞书群查看。")
+            return
         notifier = FeishuNotifier(
             config.get("feishu_webhook", ""),
             config.get("feishu_secret", ""),
         )
         if not notifier.enabled:
-            print("config.json 里还没有配置 feishu_webhook，无法发送测试消息。")
+            print("config.json 里还没有配置 feishu_chat_id 或 feishu_webhook，无法发送测试消息。")
             sys.exit(1)
-        notifier.send_test(config.get("bot_name", "竞赛雷达"))
+        notifier.send_text(msg)
         print("测试消息已发送，请到飞书群查看。")
         return
 

@@ -84,13 +84,21 @@ def main():
     assert is_official("蓝桥杯全国软件和信息技术专业人才大赛", "") is True
     assert is_official("某某企业AI挑战赛", "某科技公司") is False
 
-    # 含金量评级
-    assert prestige("蓝桥杯", "", "") == "高"                      # 官方赛事
-    assert prestige("", "阿里云", "tianchi") == "高"               # 知名企业
-    assert prestige("", "某某科技有限公司", "datafountain") == "中"  # 一般企业
+    # 含金量评级（评分模型：业界+3 > 部委+2 > 名声+1）
+    assert prestige("蓝桥杯", "", "") == "高"                      # 标题命中业界认可
+    assert prestige("", "阿里云", "tianchi") == "高"               # 知名企业=业界认可
+    assert prestige("", "某某科技有限公司", "datafountain") == "中"  # 无加分 → 默认中
     assert prestige("牛客周赛", "NowCoder", "nowcoder") == "低"     # 练习赛
     assert prestige("牛客暑期多校训练营", "NowCoder", "nowcoder") == "中"
     assert prestige("x", "x", "tianchi", rating="高") == "高"       # AI 评级优先
+    # 用户规则：仅工信部认可（名声不大、业界不认可）→ 中
+    assert prestige("某赛事", "工业和信息化部网络安全产业发展中心", "datafountain") == "中"
+    # 工信部 + 业界认可 → 高
+    assert prestige("某赛事", "工业和信息化部、中国计算机学会", "datafountain") == "高"
+    # 名声大 + 业界认可 → 高
+    assert prestige("创客中国", "工业和信息化部", "datafountain") == "高"
+    # 练手赛 → 低
+    assert prestige("用户新增预测练手赛", "科大讯飞股份有限公司", "xfyun") == "低"
 
     sorted_comps = sort_competitions(new)
     # 官方A类排最前（本测试数据里没有官方赛，验证不报错即可）

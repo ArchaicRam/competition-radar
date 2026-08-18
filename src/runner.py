@@ -132,11 +132,10 @@ def run(
             excel_path=excel_path or "",
             ai_digest_text=ai_digest_text,
         )
-        if notifier.enabled:
-            notifier.send_card(card)
+        if _push_card(config, notifier, card):
             log.info("已推送情报日报卡片（%d 场，今日新增 %d）", len(all_comps), len(new))
         else:
-            log.info("未配置 feishu_webhook，跳过推送（本应推送情报日报卡片）")
+            log.info("未配置发送通道（feishu_chat_id 或 feishu_webhook），跳过推送")
     else:
         message = build_message(
             new, updated,
@@ -145,13 +144,12 @@ def run(
             bot_name=bot_name,
         )
         if message:
-            if notifier.enabled:
-                notifier.send_text(message)
+            if _push_text(config, notifier, message):
                 log.info("已推送 %d 字消息到飞书", len(message))
             else:
-                log.info("未配置 feishu_webhook，跳过推送（本应推送 %d 字）", len(message))
+                log.info("未配置发送通道（feishu_chat_id 或 feishu_webhook），跳过推送")
         elif config.get("digest_when_no_new"):
-            notifier.send_text(build_no_new_message(bot_name))
+            _push_text(config, notifier, build_no_new_message(bot_name))
 
     store.update(all_comps)
     if export_csv_path:
@@ -159,6 +157,40 @@ def run(
         log.info("CSV 台账已导出: %s", path)
         result["csv"] = path
     return result
+
+
+def _push_card(config, notifier, card) -> bool:
+    """推送卡片：应用机器人优先（feishu_chat_id），失败/未配置则降级 webhook。"""
+    chat_id = (config.get("feishu_chat_id") or "").strip()
+    if chat_id:
+        try:
+            from .feishu_app import send_card
+
+            send_card(chat_id, card, profile=config.get("lark_profile", "jingsai"))
+            return True
+        except Exception as e:  # noqa: BLE001
+            log.warning("应用机器人推送失败，降级 webhook: %s", e)
+    if notifier.enabled:
+        notifier.send_card(card)
+        return True
+    return False
+
+
+def _push_text(config, notifier, text) -> bool:
+    """推送文本：应用机器人优先，失败/未配置则降级 webhook。"""
+    chat_id = (config.get("feishu_chat_id") or "").strip()
+    if chat_id:
+        try:
+            from .feishu_app import send_text
+
+            send_text(chat_id, text, profile=config.get("lark_profile", "jingsai"))
+            return True
+        except Exception as e:  # noqa: BLE001
+            log.warning("应用机器人推送失败，降级 webhook: %s", e)
+    if notifier.enabled:
+        notifier.send_text(text)
+        return True
+    return False
 
 
 def _export_excel(config, all_comps, new) -> Optional[str]:
