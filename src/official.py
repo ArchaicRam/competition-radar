@@ -161,8 +161,16 @@ def prestige(title: str = "", organizer: str = "", platform: str = "", rating: s
         return r
     if platform == "nowcoder":
         return "中" if any(k in t for k in ("多校", "挑战", "邀请赛", "省赛", "区域赛")) else "低"
-    if platform in ("tianchi", "kaggle", "xfyun"):
+    if platform == "tianchi" and not org:
+        # 天池上无主办方信息的赛事：学习/练手/新人/实战类降级，其余视为阿里系正规赛事
+        if any(k in t for k in ("新人", "实战", "教学", "Baseline", "练手", "学习")):
+            return "低"
+        if any(k in t for k in ("打榜", "系列赛")):
+            return "中"
         return "高"
+    if platform == "kaggle":
+        return "高"  # 国际公认平台（主办方为空时）
+    # 有主办方的：按主办方性质默认（大学/协会/研究院挂的课题 → 中，不再因平台无脑高）
     if any(k in org for k in ("协会", "学会", "研究会", "研究院", "大学", "学院", "中心", "省", "市")):
         return "中"
     return "中"

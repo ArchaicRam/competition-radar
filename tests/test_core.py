@@ -103,6 +103,13 @@ def main():
     assert prestige("创客中国", "工业和信息化部", "datafountain") == "高"
     # 练手赛 → 低
     assert prestige("用户新增预测练手赛", "科大讯飞股份有限公司", "xfyun") == "低"
+    # 天池学习/新人/实战类 → 低；正规赛事（无主办方字段）→ 高
+    assert prestige("天池新人实战赛", "", "tianchi") == "低"
+    assert prestige("2026-具身极限挑战赛", "", "tianchi") == "高"
+    assert prestige("Q力星期四", "", "tianchi") == "高"
+    # 大学在讯飞平台挂的课题 → 中（不再因平台无脑高）
+    assert prestige("野生东北虎个体识别挑战赛", "北京林业大学", "xfyun") == "中"
+    assert prestige("智慧生活助理Skill开发挑战赛", "科大讯飞股份有限公司", "xfyun") == "高"
 
     sorted_comps = sort_competitions(new)
     # 官方A类排最前（本测试数据里没有官方赛，验证不报错即可）
