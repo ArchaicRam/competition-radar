@@ -34,6 +34,16 @@ DEFAULT_SCHEDULES: List[Dict[str, Any]] = [
     {"keywords": ["电子设计"], "months": [3, 4, 5, 6, 7]},
     {"keywords": ["集成电路"], "months": [1, 2, 3, 4, 5]},
     {"keywords": ["物联网设计"], "months": [3, 4, 5, 6]},
+    # 学校竞赛目录补漏（按往届规律估算）
+    {"keywords": ["工程实践与创新能力"], "months": [10, 11, 12, 1, 2, 3]},
+    {"keywords": ["程序设计竞赛"], "months": [6, 7, 8, 9, 10]},
+    {"keywords": ["嵌入式"], "months": [3, 4, 5, 6]},
+    {"keywords": ["智能机器人", "机器人及人工智能"], "months": [10, 11, 12, 1, 2, 3]},
+    {"keywords": ["RoboCom"], "months": [4, 5, 6, 7, 8]},
+    {"keywords": ["大唐杯"], "months": [3, 4, 5]},
+    {"keywords": ["青年创客"], "months": [4, 5, 6]},
+    {"keywords": ["BIM"], "months": [10, 11, 12, 1, 2, 3]},
+    {"keywords": ["西门子杯"], "months": [3, 4, 5, 6]},
 ]
 
 
