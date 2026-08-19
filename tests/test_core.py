@@ -13,12 +13,17 @@ from src.csv_export import export_csv
 
 
 def main():
+    from datetime import date, timedelta
+
+    # 截止日期用相对"今天"的未来时间，避免测试随日期漂移失败
+    soon = (date.today() + timedelta(days=5)).isoformat()
+
     # ---- 消息模板 ----
     new = [
         Competition(
             key="tianchi:1", title="AI+跨境黑客松巅峰赛", platform="tianchi",
             organizer="阿里云", url="https://tianchi.aliyun.com/competition/entrance/1",
-            deadline="2026-08-20", reward="¥100,000", comp_type="AI",
+            deadline=soon, reward="¥100,000", comp_type="AI",
             status="报名中",
         ),
         Competition(
@@ -145,6 +150,17 @@ def main():
     sorted_comps = sort_competitions(new)
     # 官方A类排最前（本测试数据里没有官方赛，验证不报错即可）
     assert len(sorted_comps) == 3
+
+    # ---- 排序：官方赛事 > 含金量 > 主办方聚合（用户示例 ACBD） ----
+    A = Competition(key="A", title="蓝桥杯全国软件和信息技术专业人才大赛", organizer="E", platform="tianchi")
+    B = Competition(key="B", title="大学生创新创业训练计划年会展示", organizer="F", platform="tianchi")
+    C = Competition(key="C", title="中国大学生计算机设计大赛", organizer="G", platform="tianchi")
+    D = Competition(key="D", title="某某行业数据挑战赛", organizer="某市教育协会", platform="datafountain")
+    assert prestige(A.title, A.organizer, A.platform) == "高"
+    assert prestige(B.title, B.organizer, B.platform) == "中"
+    assert prestige(C.title, C.organizer, C.platform) == "高"
+    order = [c.key for c in sort_competitions([B, D, C, A])]
+    assert order == ["A", "C", "B", "D"], order  # 官方(ABC)在前且按含金量 A,C > B，D 企业赛最后
 
     card = build_digest_card(new, {new[0].key}, bot_name="竞赛雷达", excel_link="", excel_path="data/competitions.xlsx")
     md = [e["text"]["content"] for e in card["elements"] if e.get("text", {}).get("tag") == "lark_md"]

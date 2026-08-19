@@ -188,12 +188,20 @@ def normalize_org(name: str) -> str:
     return s.strip() or "其他"
 
 
+_RATING_RANK = {"高": 0, "中": 1, "低": 2}
+
+
 def competition_sort_key(c) -> Tuple:
-    """排序键：(是否官方, 归一化主办方, 截止日期)。"""
-    official = 0 if is_official(c.title, c.organizer) else 1
+    """排序键：(是否官方, 含金量高→低, 归一化主办方, 截止日期)。
+
+    官方赛事优先 -> 含金量（高>中>低）-> 同一主办方聚合 -> 截止日期升序。
+    """
+    official_flag = 0 if is_official(c.title, c.organizer) else 1
+    rating = prestige(c.title, c.organizer, c.platform, c.rating)
+    rating_rank = _RATING_RANK.get(rating, 1)
     org = normalize_org(c.organizer)
     dl = (c.deadline or "").strip()
-    return (official, org, (0, dl) if dl else (1, ""))
+    return (official_flag, rating_rank, org, (0, dl) if dl else (1, ""))
 
 
 def sort_competitions(comps: List) -> List:
