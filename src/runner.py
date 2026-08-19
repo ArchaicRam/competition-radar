@@ -73,25 +73,7 @@ def run(
         except Exception as e:  # noqa: BLE001
             log.warning("AI 情报员失败: %s", e)
 
-    all_comps, dropped = _sanitize(all_comps)
-    for c, reason in dropped:
-        log.warning("数据质量拦截: [%s] %s —— %s", c.platform, c.title, reason)
-
-    # 官方赛事报名时间兜底：有真实截止最好；否则按往届经验推断；
-    # 本届报名已过或推不出窗口 → 从表中移除（不出现"待核实"）
-    kept: List[Competition] = []
-    for c in all_comps:
-        if official.is_official(c.title, c.organizer) and not (c.deadline or "").strip():
-            from .schedules import enrich_official
-
-            note, keep = enrich_official(c.title, c.deadline, config)
-            if not keep:
-                log.warning("官方赛事无有效报名时间（本届已过或推不出窗口），移除: %s", c.title)
-                continue
-            if note:
-                c.status = note
-        kept.append(c)
-    all_comps = kept
+    all_comps = postprocess(all_comps, config)
 
     # 排序：教育部A类优先 -> 同一主办方聚合 -> 截止日期升序
     all_comps = official.sort_competitions(all_comps)
@@ -262,6 +244,8 @@ def _why_bad(c: Competition) -> Optional[str]:
 
     st = _parse_dt(enabled)
     dl = _parse_dt(deadline)
+    if dl and dl < datetime.now():
+        return f"已截止: {deadline}"
     if st and dl and st > dl:
         return f"开始晚于截止: {enabled} > {deadline}"
     return None
@@ -288,6 +272,42 @@ def _dedup(comps: List[Competition]) -> List[Competition]:
         seen.add(c.key)
         out.append(c)
     return out
+
+
+def postprocess(comps: List[Competition], config: Dict[str, Any]) -> List[Competition]:
+    """共享后处理：去重 -> 数据校验 -> 官方赛事报名时间兜底 -> 排序。
+
+    定时任务（runner.run）和手动同步（resync_sheet）都走这里，
+    保证表格/卡片与真实运行行为一致。
+    """
+    comps = _dedup(comps)
+    comps, dropped = _sanitize(comps)
+    for c, reason in dropped:
+        log.warning("数据质量拦截: [%s] %s —— %s", c.platform, c.title, reason)
+
+    # 官方赛事报名时间兜底：有真实截止最好；否则按往届经验推断；
+    # 本届报名已过或推不出窗口 → 从表中移除（不出现"待核实"）
+    kept: List[Competition] = []
+    for c in comps:
+        if official.is_official(c.title, c.organizer) and not (c.deadline or "").strip():
+            from .schedules import enrich_official
+
+            note, keep = enrich_official(c.title, c.deadline, config)
+            if not keep:
+                log.warning("官方赛事无有效报名时间（本届已过或推不出窗口），移除: %s", c.title)
+                continue
+            if note:
+                c.status = note
+        kept.append(c)
+
+    # 状态补齐：有真实截止日期且未过期 → "报名中"（AI 初版的"待核实"改为明确状态）
+    now = datetime.now()
+    for c in kept:
+        if (c.status or "").strip() in ("", "待核实") and (c.deadline or "").strip():
+            dl = _parse_dt(c.deadline)
+            if dl and dl >= now:
+                c.status = "报名中"
+    return official.sort_competitions(kept)
 
 
 def _dry_run_text(new, updated, all_comps) -> str:
