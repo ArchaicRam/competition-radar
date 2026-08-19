@@ -111,6 +111,30 @@ def main():
     assert prestige("野生东北虎个体识别挑战赛", "北京林业大学", "xfyun") == "中"
     assert prestige("智慧生活助理Skill开发挑战赛", "科大讯飞股份有限公司", "xfyun") == "高"
 
+    # ---- 官方赛事报名时间（往届经验推断） ----
+    from datetime import datetime
+    from src.schedules import enrich_official
+
+    today = datetime(2026, 8, 19)  # 模拟"当前"为 2026-08
+    # 有真实截止日期 → 直接用，不推断
+    note, keep = enrich_official("2026年高教社杯数学建模竞赛", "2026-09-10", {}, today)
+    assert keep and note == ""
+    # 数学建模报名窗口 6-9 月，8 月在窗口内 → 报名中（按往届）
+    note, keep = enrich_official("2026年高教社杯数学建模竞赛", "", {}, today)
+    assert keep and note == "报名中（按往届）"
+    # 蓝桥杯窗口 10-3 月，8 月不在窗口且标题年份=今年 → 本届已过，移除
+    note, keep = enrich_official("2026年蓝桥杯", "", {}, today)
+    assert not keep
+    # 下一届（2027年蓝桥杯）→ 保留并写"预计10月启动报名"
+    note, keep = enrich_official("2027年蓝桥杯", "", {}, today)
+    assert keep and "预计10月启动报名（按往届）" == note
+    # 互联网+（窗口 3-5 月）8 月已过 → 移除
+    note, keep = enrich_official("2026年中国国际大学生创新大赛", "", {}, today)
+    assert not keep
+    # 查不到往届规律 → 移除（不写"待核实"）
+    note, keep = enrich_official("某某冷门官方赛事", "", {}, today)
+    assert not keep
+
     sorted_comps = sort_competitions(new)
     # 官方A类排最前（本测试数据里没有官方赛，验证不报错即可）
     assert len(sorted_comps) == 3

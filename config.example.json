@@ -21,7 +21,9 @@
   "ai_digest": true,
   "seed_sources": [
     {"name": "中国软件杯", "url": "https://www.cnsoftbei.com/"},
-    {"name": "我爱竞赛网", "url": "https://www.52jingsai.com/"}
+    {"name": "我爱竞赛网", "url": "https://www.52jingsai.com/"},
+    {"name": "Biendata数据竞赛", "url": "https://www.biendata.xyz/"},
+    {"name": "Coggle竞赛社区", "url": "https://www.coggle.club/"}
   ],
   "max_items_per_push": 20,
   "deadline_alert_days": 14,

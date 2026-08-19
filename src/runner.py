@@ -77,6 +77,22 @@ def run(
     for c, reason in dropped:
         log.warning("数据质量拦截: [%s] %s —— %s", c.platform, c.title, reason)
 
+    # 官方赛事报名时间兜底：有真实截止最好；否则按往届经验推断；
+    # 本届报名已过或推不出窗口 → 从表中移除（不出现"待核实"）
+    kept: List[Competition] = []
+    for c in all_comps:
+        if official.is_official(c.title, c.organizer) and not (c.deadline or "").strip():
+            from .schedules import enrich_official
+
+            note, keep = enrich_official(c.title, c.deadline, config)
+            if not keep:
+                log.warning("官方赛事无有效报名时间（本届已过或推不出窗口），移除: %s", c.title)
+                continue
+            if note:
+                c.status = note
+        kept.append(c)
+    all_comps = kept
+
     # 排序：教育部A类优先 -> 同一主办方聚合 -> 截止日期升序
     all_comps = official.sort_competitions(all_comps)
 

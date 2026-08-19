@@ -42,7 +42,8 @@ def build_digest_card(
     if new_comps:
         lines = []
         for c in new_comps[:max_list]:
-            lines.append(f"🆕 **<font color='red'>[{_esc(c.title)}]({c.url})</font>**（{c.deadline or '截止未知'}）")
+            deadline_info = c.deadline or c.status or "截止未知"
+            lines.append(f"🆕 **<font color='red'>[{_esc(c.title)}]({c.url})</font>**（{deadline_info}）")
         if len(new_comps) > max_list:
             lines.append(f"… 另有 {len(new_comps) - max_list} 场见 Excel 台账")
         elements.append(
