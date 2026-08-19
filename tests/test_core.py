@@ -90,7 +90,11 @@ def main():
     assert prestige("", "某某科技有限公司", "datafountain") == "中"  # 无加分 → 默认中
     assert prestige("牛客周赛", "NowCoder", "nowcoder") == "低"     # 练习赛
     assert prestige("牛客暑期多校训练营", "NowCoder", "nowcoder") == "中"
-    assert prestige("x", "x", "tianchi", rating="高") == "高"       # AI 评级优先
+    assert prestige("x", "x", "tianchi", rating="高") == "高"       # 规则无信号时 AI 评级兜底
+    # "互联网+"同名赛事要区分：教育部主办 → 高；协会主办（技能应用赛）→ AI 评级为中
+    assert prestige("2026年中国国际大学生创新大赛", "教育部、中央统战部、工业和信息化部等", "ai", rating="中") == "高"
+    assert prestige("2026年第四届\"互联网+\"技能应用赛", "中国技术创业协会技术创新工作委员会", "ai", rating="中") == "中"
+    assert prestige("\"互联网+\"大学生创新创业大赛", "教育部", "ai", rating="") == "高"  # 旧称也高
     # 用户规则：仅工信部认可（名声不大、业界不认可）→ 中
     assert prestige("某赛事", "工业和信息化部网络安全产业发展中心", "datafountain") == "中"
     # 工信部 + 业界认可 → 高
