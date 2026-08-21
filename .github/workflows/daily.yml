@@ -3,7 +3,7 @@ name: daily-competition-scan
 on:
   schedule:
     # 每天 UTC 22:00 = 北京时间 06:00
-    - cron: "0 22 * * *"
+    - cron: "0 4 * * *"  # 北京时间中午 12:00（UTC 04:00）
   workflow_dispatch: {}
 
 permissions:
