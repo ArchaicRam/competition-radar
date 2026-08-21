@@ -1,12 +1,13 @@
 ﻿平台,比赛名称,主办方,类型,含金量,报名截止,开始日期,奖金,状态,链接,首次发现时间
 nowcoder,牛客周赛 Round 157,NowCoder,算法竞赛,低,2026-08-16 21:00,2026-08-16 19:00,,进行中,https://ac.nowcoder.com/acm/contest/139206?from=acm_calendar,2026-08-16T19:51:01
 nowcoder,河南萌新联赛2026第（五）场：信息工程大学,NowCoder,算法竞赛,低,2026-08-17 09:00,2026-08-17 05:00,,进行中,https://ac.nowcoder.com/acm/contest/139416?from=acm_calendar,2026-08-17T15:05:26
-xfyun,跨设备感知与协同执行,苏州穿山甲机器人股份有限公司,应用,高,2026-08-18,2026-06-26,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=XD-Perception,2026-08-17T15:05:28
+xfyun,跨设备感知与协同执行,苏州穿山甲机器人股份有限公司,应用,中,2026-08-18,2026-06-26,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=XD-Perception,2026-08-17T15:05:28
 xfyun,人才培养与求职就业智能化,科大讯飞股份有限公司,应用,高,2026-08-18,2026-06-26,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=Talent-AI,2026-08-17T15:05:28
-nowcoder,2026牛客暑期多校训练营10,NowCoder,算法竞赛,中,2026-08-19 09:00,2026-08-19 04:00,,未开始,https://ac.nowcoder.com/acm/contest/133885?from=acm_calendar,2026-08-17T15:05:26
-nowcoder,牛客2026年七夕节比赛,NowCoder,算法竞赛,低,2026-08-19 13:00,2026-08-19 11:00,,未开始,https://ac.nowcoder.com/acm/contest/139172?from=acm_calendar,2026-08-17T15:05:26
+tianchi,CHIP2026-面向生物医学全文的特定患者表型概念识别任务,,医疗健康、自然语言处理、大语言模型,高,2026-08-19,2026-08-13,,进行中,https://tianchi.aliyun.com/competition/entrance/532512,2026-08-19T23:02:28
+nowcoder,2026牛客暑期多校训练营10,NowCoder,算法竞赛,中,2026-08-19 17:00,2026-08-19 12:00,,未开始,https://ac.nowcoder.com/acm/contest/133885?from=acm_calendar,2026-08-17T15:05:26
+nowcoder,牛客2026年七夕节比赛,NowCoder,算法竞赛,低,2026-08-19 21:00,2026-08-19 19:00,,未开始,https://ac.nowcoder.com/acm/contest/139172?from=acm_calendar,2026-08-17T15:05:26
 tianchi,Q力星期四·小鹏 AI 出行服务编排 Agent挑战赛,,智能体、本地生活,高,2026-08-20,,,进行中,https://tianchi.aliyun.com/competition/entrance/532505,2026-08-17T15:05:25
-xfyun,工业园区智能化管理,包河区人工智能视觉产业港,应用,高,2026-08-21,2026-07-21,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=ind-park,2026-08-17T15:05:28
+xfyun,工业园区智能化管理,包河区人工智能视觉产业港,应用,中,2026-08-21,2026-07-21,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=ind-park,2026-08-17T15:05:28
 nowcoder,牛客小白月赛136,NowCoder,算法竞赛,低,2026-08-21 13:00,2026-08-21 11:00,,未开始,https://ac.nowcoder.com/acm/contest/139208?from=acm_calendar,2026-08-17T15:05:26
 nowcoder,牛客周赛 Round 158,NowCoder,算法竞赛,低,2026-08-23 13:00,2026-08-23 11:00,,未开始,https://ac.nowcoder.com/acm/contest/139659?from=acm_calendar,2026-08-17T08:02:17
 nowcoder,河南萌新联赛2026第（六）场：郑州大学,NowCoder,算法竞赛,低,2026-08-24 09:00,2026-08-24 05:00,,未开始,https://ac.nowcoder.com/acm/contest/139666?from=acm_calendar,2026-08-17T22:10:49
@@ -14,11 +15,11 @@ tianchi,AI+跨境黑客松巅峰赛——用AI解跨境真命题,,电商、物�
 xfyun,智慧生活助理Skill开发挑战赛,科大讯飞股份有限公司,算法,高,2026-08-27,2026-06-23,¥1.23万,报名中,https://challenge.xfyun.cn/topic/info?type=SLA-Skill,2026-08-17T15:05:28
 xfyun,人才匹配与发展智能辅助Skill开发挑战赛,科大讯飞股份有限公司,算法,高,2026-08-27,2026-06-09,¥1.23万,报名中,https://challenge.xfyun.cn/topic/info?type=TM-DIA-Skill,2026-08-17T15:05:28
 xfyun,智能办公协同助理Skill开发挑战赛,科大讯飞股份有限公司,算法,高,2026-08-27,2026-06-09,¥1.23万,报名中,https://challenge.xfyun.cn/topic/info?type=OCAS-skill,2026-08-17T15:05:28
-xfyun,编程竞赛测试用例生成挑战赛 赛季2,中国科学技术大学认知智能全国重点实验室,算法,高,2026-08-27,2026-06-09,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=CP-TCG,2026-08-17T15:05:28
+xfyun,编程竞赛测试用例生成挑战赛 赛季2,中国科学技术大学认知智能全国重点实验室,算法,中,2026-08-27,2026-06-09,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=CP-TCG,2026-08-17T15:05:28
 xfyun,金融材料智能解析与风险洞察Skill开发挑战赛,科大讯飞股份有限公司,算法,高,2026-08-27,2026-06-09,¥1.23万,报名中,https://challenge.xfyun.cn/topic/info?type=FARI-skill,2026-08-17T15:05:28
 xfyun,医疗健康智能理解与辅助决策Skill开发挑战赛,科大讯飞股份有限公司,算法,高,2026-08-27,2026-06-09,¥1.23万,报名中,https://challenge.xfyun.cn/topic/info?type=HIDS-skill,2026-08-17T15:05:28
 xfyun,全场景内容智能创作Skill开发挑战赛,科大讯飞股份有限公司,算法,高,2026-08-27,2026-06-09,¥1.23万,报名中,https://challenge.xfyun.cn/topic/info?type=FSCIC-Skill,2026-08-17T15:05:28
-xfyun,高分辨率遥感影像水体分割挑战赛,长光卫星技术股份有限公司,算法,高,2026-08-27,2026-06-09,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=HRRSI-WS,2026-08-17T15:05:28
+xfyun,高分辨率遥感影像水体分割挑战赛,长光卫星技术股份有限公司,算法,中,2026-08-27,2026-06-09,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=HRRSI-WS,2026-08-17T15:05:28
 xfyun,代码智能辅助与质量保障Skill开发挑战赛,科大讯飞股份有限公司,算法,高,2026-08-27,2026-06-09,¥1.23万,报名中,https://challenge.xfyun.cn/topic/info?type=CQA-Skill,2026-08-17T15:05:28
 xfyun,电商内容智能生成与用户洞察Skill开发挑战赛,科大讯飞股份有限公司,算法,高,2026-08-27,2026-06-09,¥1.23万,报名中,https://challenge.xfyun.cn/topic/info?type=ECGI-skill,2026-08-17T15:05:28
 xfyun,多源信息检索与分析Skill开发挑战赛,科大讯飞股份有限公司,算法,高,2026-08-27,2026-06-09,¥1.23万,报名中,https://challenge.xfyun.cn/topic/info?type=MSRA-skill,2026-08-17T15:05:28
@@ -26,14 +27,14 @@ xfyun,教育智能辅助与个性化学习Skill开发挑战赛,科大讯飞股�
 xfyun,数据智能分析与应用Skill开发挑战赛,科大讯飞股份有限公司,算法,高,2026-08-27,2026-06-09,¥1.23万,报名中,https://challenge.xfyun.cn/topic/info?type=DIA-App-Skill,2026-08-17T15:05:28
 xfyun,面向智能营销的目标客群拓展（Lookalike）算法挑战赛,科大讯飞股份有限公司,算法,高,2026-08-27,2026-06-18,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=Lookalike-AC,2026-08-17T15:05:28
 xfyun,面向受限场景的多语言语种识别挑战赛,科大讯飞股份有限公司,算法,高,2026-08-27,2026-06-18,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=MLLI-RS,2026-08-17T15:05:28
-xfyun,多语言推理能力评测挑战赛,小牛翻译,算法,高,2026-08-27,2026-06-09,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=Mul1tiNRC,2026-08-17T15:05:28
+xfyun,多语言推理能力评测挑战赛,小牛翻译,算法,中,2026-08-27,2026-06-09,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=Mul1tiNRC,2026-08-17T15:05:28
 xfyun,基于用户注册信息的关键词检测挑战赛,科大讯飞股份有限公司,算法,高,2026-08-27,2026-06-09,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=KDBURI,2026-08-17T15:05:28
-xfyun,基于现场LIBS光谱的煤炭弹筒发热量预测挑战赛,上海海事大学,算法,高,2026-08-27,2026-06-09,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=LIBS-CBCV,2026-08-17T15:05:28
+xfyun,基于现场LIBS光谱的煤炭弹筒发热量预测挑战赛,上海海事大学,算法,中,2026-08-27,2026-06-09,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=LIBS-CBCV,2026-08-17T15:05:28
 xfyun,政务公文智能处理Skill开发挑战赛,科大讯飞股份有限公司,算法,高,2026-08-27,2026-06-09,¥1.23万,报名中,https://challenge.xfyun.cn/topic/info?type=GDS-skill,2026-08-17T15:05:28
 xfyun,在线考试防作弊手机识别挑战赛,科大讯飞股份有限公司、安徽信息工程学院、上海外国语大学贤达经济人文学院、天津仁爱学院,算法,高,2026-08-28,2026-07-10,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=proctor-mobile,2026-08-17T15:05:28
 nowcoder,牛客练习赛156,NowCoder,算法竞赛,低,2026-08-28 13:30,2026-08-28 11:00,,未开始,https://ac.nowcoder.com/acm/contest/139209?from=acm_calendar,2026-08-17T15:05:26
 tianchi,AFAC2026金融智能创新大赛,,金融,高,2026-08-30,,"¥1,000,000",进行中,https://tianchi.aliyun.com/competition/entrance/37,2026-08-17T15:05:25
-xfyun,高分辨率遥感影像土地利用分类挑战赛,长光卫星技术股份有限公司,算法,高,2026-08-30,2026-06-09,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=HRRSI-LUC,2026-08-17T15:05:28
+xfyun,高分辨率遥感影像土地利用分类挑战赛,长光卫星技术股份有限公司,算法,中,2026-08-30,2026-06-09,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=HRRSI-LUC,2026-08-17T15:05:28
 nowcoder,牛客周赛 Round 159,NowCoder,算法竞赛,低,2026-08-30 13:00,2026-08-30 11:00,,未开始,https://ac.nowcoder.com/acm/contest/139660?from=acm_calendar,2026-08-17T08:02:17
 tianchi,AFAC2026挑战组-赛题四：金融长文本Agent 的动态记忆压缩与高效问答挑战,,金融、智能体、蚂蚁集团竞赛、大语言模型,低,2026-08-31,,"¥1,000,000",进行中,https://tianchi.aliyun.com/competition/entrance/532486,2026-08-17T15:05:25
 tianchi,AFAC2026挑战组-赛题三：稀疏反馈下的自动化实验挑战,,金融、智能体、蚂蚁集团竞赛、大语言模型,高,2026-08-31,,"¥1,000,000",进行中,https://tianchi.aliyun.com/competition/entrance/532487,2026-08-17T15:05:25
@@ -42,56 +43,63 @@ tianchi,AFAC2026挑战组-赛题一：市场参与者交易行为识别与资金
 datafountain,AI新睿人才“星探计划”,烟台睿创微纳技术股份有限公司,智能算法,中,2026-08-31,2026-04-06,"¥90,000",报名中,https://www.datafountain.cn/competitions/1169,2026-08-17T15:05:25
 datafountain,“猎鹰·微波智探”—雷达多目标智能探测与识别挑战,中国电子学会&睿创微纳,智能算法,高,2026-08-31,2026-03-15,"¥145,000",报名中,https://www.datafountain.cn/competitions/1166,2026-08-17T15:05:25
 datafountain,具有多模态能力的客服智能体设计,中国电子学会&睿创微纳,智能算法,高,2026-08-31,2026-03-15,"¥145,000",报名中,https://www.datafountain.cn/competitions/1165,2026-08-17T15:05:25
-AI发现·我爱竞赛网,第十一届“创客中国”智能体与具身智能中小企业创新创业大赛,工业和信息化部网络安全产业发展中心、广东省工业和信息化厅,比赛,高,2026-08-31,,,待核实,https://www.52jingsai.com/article-24008-1.html,2026-08-17T15:05:35
+AI发现·我爱竞赛网,第十一届“创客中国”智能体与具身智能中小企业创新创业大赛,工业和信息化部网络安全产业发展中心、广东省工业和信息化厅,比赛,高,2026-08-31,,创新创业支持及奖项,报名中,https://www.52jingsai.com/article-24008-1.html,2026-08-17T15:05:35
 xfyun,灵巧手与具身智能自主操作,中国科学院自动化研究所,应用,高,2026-08-31,2026-08-18,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=DexNDM,2026-08-18T16:12:17
 xfyun,个性化全周期医疗健康管理,科大讯飞股份有限公司,应用,高,2026-08-31,2026-08-18,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=p4-health-management,2026-08-18T16:12:17
 xfyun,居家健康管理与智能监护,科大讯飞股份有限公司,应用,高,2026-08-31,2026-08-18,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=smart-home-care,2026-08-18T16:12:17
 xfyun,全渠道品牌营销与用户增长,科大讯飞股份有限公司,应用,高,2026-08-31,2026-08-18,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=brand-user-growth,2026-08-18T16:12:17
-xfyun,智能驾驶与端侧智能,长城汽车股份有限公司,应用,高,2026-08-31,2026-08-18,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=edge-ai-for-driving,2026-08-18T16:12:17
+xfyun,智能驾驶与端侧智能,长城汽车股份有限公司,应用,中,2026-08-31,2026-08-18,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=edge-ai-for-driving,2026-08-18T16:12:17
 tianchi,2026-具身仿真合成挑战赛,,,高,2026-09-01,2026-07-30,"¥100,000",报名中,https://tianchi.aliyun.com/competition/entrance/532506,2026-08-17T15:05:25
 tianchi,2026-具身安全应用挑战赛,,,高,2026-09-01,2026-07-30,"¥100,000",报名中,https://tianchi.aliyun.com/competition/entrance/532507,2026-08-17T15:05:25
 tianchi,2026-跨本体具身认知极限联合挑战赛,,机器人,高,2026-09-01,2026-07-30,"¥100,000",报名中,https://tianchi.aliyun.com/competition/entrance/532508,2026-08-17T15:05:25
 xfyun,面向说话人转写内容的角色分离挑战赛 赛季2,科大讯飞股份有限公司,算法,高,2026-09-01,2026-06-26,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=SpkRole-Cup,2026-08-17T15:05:28
-xfyun,纠错码解码挑战赛,合肥工业大学,算法,高,2026-09-02,2026-07-10,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=ecc-decode-contest,2026-08-17T15:05:28
-xfyun,多模态开放词汇关键词检索挑战赛,国家语音及语言信息处理工程研究中心 中国科学技术大学,算法,高,2026-09-03,2026-07-17,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=MOVKR,2026-08-17T15:05:28
-xfyun,智能量化投资策略建模挑战赛,上海师范大学商学院,算法,高,2026-09-03,2026-07-17,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=AI-QIM,2026-08-17T15:05:28
+AI发现·Biendata数据竞赛,JCIIOT 2026 开发者大赛：工业具身智能挑战赛,清华大学（计算机系）-西门子（中国）有限公司工业智能与物联网联合研究中心,比赛,高,2026-09-01,,"94,000元",待核实,https://www.biendata.xyz/competition/jciiot/,2026-08-19T23:02:51
+xfyun,纠错码解码挑战赛,合肥工业大学,算法,中,2026-09-02,2026-07-10,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=ecc-decode-contest,2026-08-17T15:05:28
+xfyun,多模态开放词汇关键词检索挑战赛,国家语音及语言信息处理工程研究中心 中国科学技术大学,算法,中,2026-09-03,2026-07-17,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=MOVKR,2026-08-17T15:05:28
+xfyun,智能量化投资策略建模挑战赛,上海师范大学商学院,算法,中,2026-09-03,2026-07-17,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=AI-QIM,2026-08-17T15:05:28
 xfyun,面向单人演讲的场景下的语音同传Agent设计挑战赛,科大讯飞股份有限公司,算法,高,2026-09-03,2026-07-20,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=lecture-simul-agent,2026-08-17T15:05:28
 xfyun,多模态语音增强挑战赛,科大讯飞股份有限公司,算法,高,2026-09-03,2026-07-17,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=mmse-challenge,2026-08-17T15:05:28
-xfyun,野生东北虎个体识别挑战赛,北京林业大学,算法,高,2026-09-03,2026-06-30,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=WildAmurTigerID,2026-08-17T15:05:28
-xfyun,野生鬣狗个体识别挑战赛,北京林业大学,算法,高,2026-09-03,2026-06-30,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=WildHyenaID,2026-08-17T15:05:28
-xfyun,野生大熊猫个体识别挑战赛,北京林业大学,算法,高,2026-09-03,2026-06-30,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=GiantPandaID,2026-08-17T15:05:28
+xfyun,野生东北虎个体识别挑战赛,北京林业大学,算法,中,2026-09-03,2026-06-30,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=WildAmurTigerID,2026-08-17T15:05:28
+xfyun,野生鬣狗个体识别挑战赛,北京林业大学,算法,中,2026-09-03,2026-06-30,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=WildHyenaID,2026-08-17T15:05:28
+xfyun,野生大熊猫个体识别挑战赛,北京林业大学,算法,中,2026-09-03,2026-06-30,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=GiantPandaID,2026-08-17T15:05:28
 tianchi,余震预测技术国际大赛,,地质科学、地震学、地球物理学,高,2026-09-04,2026-08-01,"¥30,000",报名中,https://tianchi.aliyun.com/competition/entrance/532460,2026-08-17T15:05:25
-xfyun,硬件设备智能化与场景赋能,深圳市康冠科技股份有限公司,应用,高,2026-09-04,2026-07-08,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=edge-smart,2026-08-17T15:05:28
-xfyun,智慧交通调度与出行服务,交控科技股份有限公司,应用,高,2026-09-04,2026-07-08,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=its-dispatch,2026-08-17T15:05:28
-xfyun,企业风险控制与合规管理,厦门供应链数智创新有限公司,应用,高,2026-09-04,2026-07-07,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=Risk-Compliance,2026-08-17T15:05:28
-xfyun,教学管理与教育服务智能化,深圳市云希谷科技有限公司,应用,高,2026-09-04,2026-07-07,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=EduMS,2026-08-17T15:05:28
-xfyun,智慧家居环境感知与自动化控制,海创汇科技创业发展股份有限公司,应用,高,2026-09-04,2026-07-07,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=iHome-Auto,2026-08-17T15:05:28
-xfyun,船体图像的语义分割挑战赛,安徽建筑大学、安徽大学,算法,高,2026-09-04,2026-06-26,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=HullSeg-Challenge,2026-08-17T15:05:28
-xfyun,智慧课堂行为识别的目标检测挑战赛,安徽大学、安徽建筑大学,算法,高,2026-09-04,2026-06-26,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=SCB-Detection,2026-08-17T15:05:28
-xfyun,类脑听觉音频场景分类挑战赛 赛季2,中国科学技术大学,算法,高,2026-09-04,2026-06-18,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=DCASE,2026-08-17T15:05:28
+xfyun,硬件设备智能化与场景赋能,深圳市康冠科技股份有限公司,应用,中,2026-09-04,2026-07-08,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=edge-smart,2026-08-17T15:05:28
+xfyun,智慧交通调度与出行服务,交控科技股份有限公司,应用,中,2026-09-04,2026-07-08,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=its-dispatch,2026-08-17T15:05:28
+xfyun,企业风险控制与合规管理,厦门供应链数智创新有限公司,应用,中,2026-09-04,2026-07-07,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=Risk-Compliance,2026-08-17T15:05:28
+xfyun,教学管理与教育服务智能化,深圳市云希谷科技有限公司,应用,中,2026-09-04,2026-07-07,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=EduMS,2026-08-17T15:05:28
+xfyun,智慧家居环境感知与自动化控制,海创汇科技创业发展股份有限公司,应用,中,2026-09-04,2026-07-07,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=iHome-Auto,2026-08-17T15:05:28
+xfyun,船体图像的语义分割挑战赛,安徽建筑大学、安徽大学,算法,中,2026-09-04,2026-06-26,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=HullSeg-Challenge,2026-08-17T15:05:28
+xfyun,智慧课堂行为识别的目标检测挑战赛,安徽大学、安徽建筑大学,算法,中,2026-09-04,2026-06-26,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=SCB-Detection,2026-08-17T15:05:28
+xfyun,类脑听觉音频场景分类挑战赛 赛季2,中国科学技术大学,算法,中,2026-09-04,2026-06-18,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=DCASE,2026-08-17T15:05:28
 xfyun,从自然语言到可执行工作流的Agent算法挑战赛,科大讯飞股份有限公司,算法,高,2026-09-04,2026-06-18,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=NL2Wf,2026-08-17T15:05:28
 xfyun,岗位胜任力多轮问询与评估报告生成,科大讯飞股份有限公司、遵义师范学院、广东理工学院、河北金融学院,应用,高,2026-09-09,2026-07-09,¥1.5万,报名中,https://challenge.xfyun.cn/topic/info?type=Competency-ARS,2026-08-17T15:05:28
 xfyun,自适应学习路径决策与伴学,科大讯飞股份有限公司、陕西科技大学镐京学院、四川科技职业学院、陕西财经职业技术学院,应用,高,2026-09-09,2026-07-09,¥1.5万,报名中,https://challenge.xfyun.cn/topic/info?type=Adaptive-LPDS,2026-08-17T15:05:28
+AI发现·我爱竞赛网,2026年高教社杯全国大学生数学建模竞赛,中国工业与应用数学学会,比赛,高,2026-09-10,,国家级奖项,待核实,https://www.52jingsai.com/article-23557-1.html,2026-08-17T15:05:35
 xfyun,基于多份材料的信息整合冲突判断与可靠问答挑战赛,科大讯飞股份有限公司,算法,低,2026-09-13,2026-07-31,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=FACT-Challenge,2026-08-17T15:05:28
+xfyun,恶劣场景下的车道线检测挑战赛,中国矿业大学,算法,中,2026-09-14,2026-08-19,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=lane-detection-challenge,2026-08-19T23:02:39
+xfyun,复杂田间环境下妮娜皇后葡萄果粒实例分割挑战赛,中国农业大学 - 农业 AI 研究中心,算法,中,2026-09-14,2026-08-21,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=NinaBerrySeg,2026-08-21T02:45:33
 tianchi,CSIG图像图形技术挑战赛-赛道一：生成式图像增强可控性挑战,,计算机视觉,高,2026-09-15,2026-07-03,"¥200,000",报名中,https://tianchi.aliyun.com/competition/entrance/532499,2026-08-17T15:05:25
 tianchi,CSIG图像图形技术挑战赛-赛道二：生成式图像增强轻量模型设计挑战,,计算机视觉,高,2026-09-15,2026-07-01,"¥200,000",报名中,https://tianchi.aliyun.com/competition/entrance/532500,2026-08-17T15:05:25
+AI发现·我爱竞赛网,2026年大学生新文科实践创新大赛,全国新文科教育研究中心,比赛,中,2026-09-15,,奖项及证书,待核实,https://www.52jingsai.com/article-23999-1.html,2026-08-19T23:05:05
+xfyun,声纹迷雾复杂场景说话人确认挑战赛,声网,算法,中,2026-09-17,2026-08-19,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=SourceSTC,2026-08-19T23:02:39
 tianchi,IEEE AICAS 2026 Grand Challenge,,大语言模型、多模态,高,2026-09-19,,"¥7,100",进行中,https://tianchi.aliyun.com/competition/entrance/34,2026-08-17T15:05:25
 xfyun,基于星评测 Agent 的养虾 Skills 横评挑战赛,科大讯飞股份有限公司,算法,高,2026-09-21,2026-08-14,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=ShrimpAIBench,2026-08-17T15:05:28
-xfyun,语音质量修复挑战赛 赛季2,声网,算法,高,2026-09-24,2026-08-14,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=VoiceFixer,2026-08-17T15:05:28
+xfyun,语音质量修复挑战赛 赛季2,声网,算法,中,2026-09-24,2026-08-14,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=VoiceFixer,2026-08-17T15:05:28
+AI发现·我爱竞赛网,2026年中国国际大学生创新大赛,教育部、中央统战部、中央网信办、国家发展改革委、工业和信息化部等,比赛,高,2026-09-25,,国家级奖项,报名中,https://www.52jingsai.com/article-23927-1.html,2026-08-17T15:05:35
 tianchi,第七届CSIG图像图形技术挑战赛—复杂工业场景异常检测算法挑战赛,,计算机视觉、工业制造,高,2026-09-30,2026-05-13,"¥40,000",报名中,https://tianchi.aliyun.com/competition/entrance/532482,2026-08-17T15:05:25
 tianchi,CCL2026-Eval 任务：第一届跨境电商图像文本翻译大赛,,大语言模型、计算机视觉、学术顶会论文发表、电商,高,2026-09-30,,"¥40,000",进行中,https://tianchi.aliyun.com/competition/entrance/532463,2026-08-16T19:50:51
 tianchi,CCL2026-Eval 任务：第二届古诗词赏析,,自然语言处理、大语言模型、学术顶会论文发表,高,2026-09-30,2026-04-28,"¥6,000",报名中,https://tianchi.aliyun.com/competition/entrance/532470,2026-08-17T15:05:25
-tianchi,天池新人实战赛,,,高,2026-09-30,,,进行中,https://tianchi.aliyun.com/competition/entrance/23,2026-08-17T15:05:25
-tianchi,教学系列赛,,,高,2026-09-30,,,进行中,https://tianchi.aliyun.com/competition/entrance/24,2026-08-17T15:05:25
+tianchi,天池新人实战赛,,,低,2026-09-30,,,进行中,https://tianchi.aliyun.com/competition/entrance/23,2026-08-17T15:05:25
+tianchi,教学系列赛,,,低,2026-09-30,,,进行中,https://tianchi.aliyun.com/competition/entrance/24,2026-08-17T15:05:25
 tianchi,CSS体视学挑战赛：2026 CBCT金属伪影消除挑战赛,,医疗健康、第三方竞赛,高,2026-10-01,,"¥26,000",进行中,https://tianchi.aliyun.com/competition/entrance/532440,2026-08-17T15:05:25
 AI发现·我爱竞赛网,2026年全国大学生科技知识竞赛,全国大学生科技知识竞赛组委会,比赛,低,2026-10-22,,,待核实,https://www.52jingsai.com/article-23677-1.html,2026-08-17T15:05:35
 tianchi,欧莱雅第二届美妆科技黑客松 - 用 AI 造点美,,,高,2026-10-27,,"¥200,000",进行中,https://tianchi.aliyun.com/competition/entrance/38,2026-08-17T15:05:25
-AI发现·我爱竞赛网,2026年第八届全国高校计算机能力挑战赛,全国高等学校计算机教育研究会,挑战赛,高,2026-11-25,,,待核实,https://www.52jingsai.com/article-23886-1.html,2026-08-17T15:05:35
+AI发现·我爱竞赛网,2026年第八届全国高校计算机能力挑战赛,全国高等学校计算机教育研究会,比赛,中,2026-11-25,,奖项及证书,报名中,https://www.52jingsai.com/article-23886-1.html,2026-08-17T15:05:35
 tianchi,2026-具身极限挑战赛,,机器人,高,2026-11-30,,"¥300,000",进行中,https://tianchi.aliyun.com/competition/entrance/41,2026-08-17T15:05:25
-AI发现·我爱竞赛网,2026年第四届“互联网+”技能应用赛,中国技术创业协会技术创新工作委员会,比赛,中,2026-12-10,,,待核实,https://www.52jingsai.com/article-23976-1.html,2026-08-17T15:05:35
-AI发现·我爱竞赛网,2026年第七届全国大学生职业发展大赛,中国商业经济学会教育培训分会,比赛,中,2026-12-20,,,待核实,https://www.52jingsai.com/article-23876-1.html,2026-08-17T15:05:35
-tianchi,2026CCKS系列赛,,自然语言处理、大语言模型、学术顶会论文发表,高,2026-12-31,,,进行中,https://tianchi.aliyun.com/competition/entrance/35,2026-08-17T15:05:25
-tianchi,2026CCL系列赛,,学术顶会论文发表,高,2026-12-31,,"¥40,000",进行中,https://tianchi.aliyun.com/competition/entrance/36,2026-08-17T15:05:25
+AI发现·我爱竞赛网,2026年第四届“互联网+”技能应用赛,中国技术创业协会技术创新工作委员会,比赛,中,2026-12-10,,奖项及证书,报名中,https://www.52jingsai.com/article-23976-1.html,2026-08-17T15:05:35
+AI发现·我爱竞赛网,2026年第七届全国大学生职业发展大赛,中国商业经济学会教育培训分会,比赛,中,2026-12-20,,奖项及证书,待核实,https://www.52jingsai.com/article-23876-1.html,2026-08-17T15:05:35
+tianchi,2026CCKS系列赛,,自然语言处理、大语言模型、学术顶会论文发表,中,2026-12-31,,,进行中,https://tianchi.aliyun.com/competition/entrance/35,2026-08-17T15:05:25
+tianchi,2026CCL系列赛,,学术顶会论文发表,中,2026-12-31,,"¥40,000",进行中,https://tianchi.aliyun.com/competition/entrance/36,2026-08-17T15:05:25
 xfyun,用户新增预测练手赛,科大讯飞股份有限公司,训练,低,2027-01-31,2026-06-09,¥0万,报名中,https://challenge.xfyun.cn/topic/info?type=Train-subscriber-addition2025,2026-08-17T15:05:28
 xfyun,脑PET图像分析和疾病预测练手赛,安徽大学,训练,低,2027-01-31,2026-06-09,¥0万,报名中,https://challenge.xfyun.cn/topic/info?type=Train-pet,2026-08-17T15:05:28
 xfyun,基于论文摘要的文本分类与关键词抽取练手赛,沈阳药科大学,训练,低,2027-01-31,2026-06-09,¥0万,报名中,https://challenge.xfyun.cn/topic/info?type=Train-abstract-of-the-paper,2026-08-17T15:05:28
@@ -102,13 +110,11 @@ xfyun,基于术语词典干预的机器翻译练手赛,小牛翻译,训练,低,2
 xfyun,基于带货视频评论的用户洞察练手赛,科大讯飞股份有限公司,训练,低,2027-01-31,2026-06-09,¥0万,报名中,https://challenge.xfyun.cn/topic/info?type=Train-video-comment-insight,2026-08-17T15:05:28
 xfyun,多模态RAG图文问答练手赛,科大讯飞xDatawhale,训练,低,2027-01-31,2026-06-09,¥0万,报名中,https://challenge.xfyun.cn/topic/info?type=Train-Multimodal-RAG-QA1,2026-08-17T15:05:28
 xfyun,少样本语音合成练手赛,科大讯飞xDatawhale,训练,低,2027-01-31,2026-06-09,¥0万,报名中,https://challenge.xfyun.cn/topic/info?type=Train-FewShot-VoiceSynth,2026-08-17T15:05:28
-tianchi,资金流入流出预测-挑战Baseline,,金融,高,2027-05-06,2016-05-10,,报名中,https://tianchi.aliyun.com/competition/entrance/231573,2026-08-17T15:05:25
-tianchi,【打榜赛】CCL25-Eval  任务2：第三届汉语框架语义解析评测,,自然语言处理,高,2027-05-24,2025-06-20,"¥5,000",报名中,https://tianchi.aliyun.com/competition/entrance/532338,2026-08-17T15:05:25
-tianchi,CCL25-Eval 打榜赛系列赛,,,高,2027-05-25,,"¥11,000",进行中,https://tianchi.aliyun.com/competition/entrance/19,2026-08-17T15:05:25
+tianchi,资金流入流出预测-挑战Baseline,,金融,低,2027-05-06,2016-05-10,,报名中,https://tianchi.aliyun.com/competition/entrance/231573,2026-08-17T15:05:25
+tianchi,【打榜赛】CCL25-Eval  任务2：第三届汉语框架语义解析评测,,自然语言处理,中,2027-05-24,2025-06-20,"¥5,000",报名中,https://tianchi.aliyun.com/competition/entrance/532338,2026-08-17T15:05:25
+tianchi,CCL25-Eval 打榜赛系列赛,,,中,2027-05-25,,"¥11,000",进行中,https://tianchi.aliyun.com/competition/entrance/19,2026-08-17T15:05:25
 tianchi,Q力星期四,,,高,2027-07-31,,,进行中,https://tianchi.aliyun.com/competition/entrance/39,2026-08-17T15:05:25
-AI发现·我爱竞赛网,2026年高教社杯全国大学生数学建模竞赛,中国工业与应用数学学会（高教社杯）,比赛,高,,,,待核实,https://www.52jingsai.com/article-23557-1.html,2026-08-17T15:05:35
-AI发现·我爱竞赛网,2026年中国国际大学生创新大赛,教育部、中央统战部、中央网信办、国家发展改革委、工业和信息化部等,比赛,高,,,,待核实,https://www.52jingsai.com/article-23927-1.html,2026-08-17T15:05:35
-AI发现·我爱竞赛网,第十三届中国青年创青春大赛,共青团中央等,比赛,高,,,,待核实,https://www.52jingsai.com/article-23888-1.html,2026-08-17T15:05:35
+AI发现·我爱竞赛网,第十三届中国青年创青春大赛,共青团中央等,比赛,中,,,,待核实,https://www.52jingsai.com/article-23888-1.html,2026-08-17T15:05:35
 AI发现·我爱竞赛网,第三届“AI宁波”大赛,,比赛,中,,,,待核实,https://www.52jingsai.com/article-24010-1.html,2026-08-17T15:05:35
-AI发现·我爱竞赛网,2026第十届金砖国家技能发展与技术创新大赛,金砖国家工商理事会中方理事会、一带一路暨金砖国家技能发展国际联盟等,比赛,高,,,,待核实,https://www.52jingsai.com/article-23910-1.html,2026-08-17T15:05:35
-AI发现·我爱竞赛网,2027年第十届中国大学生工程实践与创新能力大赛,教育部工程训练教学指导委员会、中国大学生工程实践与创新能力大赛组委会,比赛,高,,,,待核实,https://www.52jingsai.com/article-24009-1.html,2026-08-18T22:09:43
+AI发现·我爱竞赛网,2026第十届金砖国家技能发展与技术创新大赛,金砖国家工商理事会中方理事会、一带一路暨金砖国家技能发展国际联盟等,比赛,高,,,国际奖项,待核实,https://www.52jingsai.com/article-23910-1.html,2026-08-17T15:05:35
+AI发现·我爱竞赛网,2027年第十届中国大学生工程实践与创新能力大赛,教育部工程训练教学指导委员会、中国大学生工程实践与创新能力大赛组委会,比赛,中,,,,待核实,https://www.52jingsai.com/article-24009-1.html,2026-08-18T22:09:43
