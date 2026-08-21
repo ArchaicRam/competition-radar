@@ -86,7 +86,6 @@ def run(
         "new": len(new),
         "updated": len(updated),
         "errors": errors,
-        "dropped": len(dropped),
     }
 
     if dry_run:
@@ -214,17 +213,6 @@ def _apply_official_keywords(config) -> None:
 
 _BAD_YEAR_PREFIX = ("1999", "1970", "0000", "1900", "2099")
 
-
-def _sanitize(comps: List[Competition]) -> Tuple[List[Competition], List[Tuple[Competition, str]]]:
-    ok: List[Competition] = []
-    dropped: List[Tuple[Competition, str]] = []
-    for c in comps:
-        reason = _why_bad(c)
-        if reason:
-            dropped.append((c, reason))
-        else:
-            ok.append(c)
-    return ok, dropped
 
 
 def _why_bad(c: Competition) -> Optional[str]:
