@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 """执行器：抓取 -> 校验 -> 排序 -> 增量对比 -> 推送日报 -> 落库 -> 导出台账。"""
 from __future__ import annotations
 
@@ -86,6 +86,7 @@ def run(
         "new": len(new),
         "updated": len(updated),
         "errors": errors,
+        "dropped": len(dropped),
     }
 
     if dry_run:
@@ -214,6 +215,17 @@ def _apply_official_keywords(config) -> None:
 _BAD_YEAR_PREFIX = ("1999", "1970", "0000", "1900", "2099")
 
 
+def _sanitize(comps: List[Competition]) -> Tuple[List[Competition], List[Tuple[Competition, str]]]:
+    ok: List[Competition] = []
+    dropped: List[Tuple[Competition, str]] = []
+    for c in comps:
+        reason = _why_bad(c)
+        if reason:
+            dropped.append((c, reason))
+        else:
+            ok.append(c)
+    return ok, dropped
+
 
 def _why_bad(c: Competition) -> Optional[str]:
     title = (c.title or "").strip()
@@ -312,3 +324,5 @@ def _dry_run_text(new, updated, all_comps) -> str:
         for c in updated[:10]:
             lines.append(f"- {c}")
     return "\n".join(lines)
+
+
