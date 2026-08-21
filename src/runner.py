@@ -85,9 +85,7 @@ def run(
         "total": len(all_comps),
         "new": len(new),
         "updated": len(updated),
-        "errors": errors,
-        "dropped": len(dropped),
-    }
+        "errors": errors,    }
 
     if dry_run:
         print(_dry_run_text(new, updated, all_comps))
