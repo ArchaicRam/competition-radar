@@ -11,21 +11,30 @@ from typing import Any, Dict, List, Optional
 
 log = logging.getLogger("lark")
 
-# 本机 Windows npm 全局路径兜底（优先走 PATH，不绑定个人目录）
-_WIN_NPM_BIN = os.path.join(os.environ.get("APPDATA", ""), "npm")
+# Windows npm 全局安装的候选位置（优先走 PATH，找不到再逐个探测，不绑定用户名）
+_NPM_BIN = os.path.join(os.environ.get("APPDATA", ""), "npm")
+_LARK_CANDIDATES = [
+    os.path.join(_NPM_BIN, "node_modules", "@larksuite", "cli", "bin", "lark-cli.exe"),
+    os.path.join(_NPM_BIN, "lark-cli.cmd"),
+    os.path.join(_NPM_BIN, "lark-cli.exe"),
+]
 
 
 def lark_exe() -> str:
+    """定位 lark-cli。
+
+    Windows 上优先直连 node_modules 里的 .exe：npm 的 .cmd/.ps1 垫片会经
+    cmd.exe 重新解析参数，卡片 JSON 里的引号/特殊字符会被搅坏；
+    PATH 兜底主要服务 Linux/CI。
+    """
+    for cand in _LARK_CANDIDATES:
+        if cand and os.path.exists(cand):
+            return cand
     import shutil
 
     p = shutil.which("lark-cli")
     if p:
         return p
-    # npm 全局安装的常见位置（shutil.which 已覆盖 PATHEXT，这里只做补充）
-    for ext in (".cmd", ".exe", ".bat", ""):
-        cand = os.path.join(_WIN_NPM_BIN, f"lark-cli{ext}")
-        if ext and os.path.exists(cand):
-            return cand
     return "lark-cli"  # 最后交给 PATH；仍找不到会抛 FileNotFoundError
 
 
@@ -42,6 +51,7 @@ def lark(args: List[str], stdin_text: Optional[str] = None, retries: int = 3) ->
                 capture_output=True,
                 text=True,
                 encoding="utf-8",
+                errors="replace",  # Windows 命令行报错可能是 GBK，避免读线程解码崩溃
                 timeout=150,
                 cwd=project_dir,
             )
