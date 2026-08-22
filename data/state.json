@@ -203,11 +203,12 @@
       "platform": "tianchi",
       "organizer": "",
       "url": "https://tianchi.aliyun.com/competition/entrance/532463",
-      "deadline": "2026-09-30",
+      "deadline": "2026-09-27",
       "reward": "¥40,000",
       "comp_type": "大语言模型、计算机视觉‌、学术顶会论文发表、电商",
-      "status": "进行中",
-      "enabled_date": "",
+      "status": "报名中",
+      "enabled_date": "2026-08-20",
+      "rating": "",
       "detected_at": "2026-08-16T19:50:51"
     },
     "tianchi:532470": {
@@ -1347,7 +1348,7 @@
       "key": "ai:14d5d1e9f240",
       "title": "2026年中国国际大学生创新大赛",
       "platform": "AI发现·我爱竞赛网",
-      "organizer": "教育部、中央统战部、中央网信办、国家发展改革委、工业和信息化部、人力资源社会保障部、农业农村部、中国科学院、中国工程院、国家知识产权局、共青团中央、江苏省人民政府等",
+      "organizer": "教育部、中央统战部、中央网信办、国家发展改革委、工业和信息化部等",
       "url": "https://www.52jingsai.com/article-23927-1.html",
       "deadline": "2026-09-25",
       "reward": "国家级奖项，含金量高",
@@ -1364,7 +1365,7 @@
       "organizer": "中国商业经济学会教育培训分会",
       "url": "https://www.52jingsai.com/article-23876-1.html",
       "deadline": "2026-12-20",
-      "reward": "职业发展相关奖项",
+      "reward": "学会证书，职业发展相关",
       "comp_type": "比赛",
       "status": "报名中",
       "enabled_date": "",
@@ -1690,7 +1691,63 @@
       "enabled_date": "",
       "rating": "高",
       "detected_at": "2026-08-21T04:34:36"
+    },
+    "ai:597807a03ab3": {
+      "key": "ai:597807a03ab3",
+      "title": "2026年第四届“外文奖”大学生英语词汇大赛",
+      "platform": "AI发现·我爱竞赛网",
+      "organizer": "中国外文局亚太传播中心",
+      "url": "https://www.52jingsai.com/article-23427-1.html",
+      "deadline": "2026-09-18",
+      "reward": "多校认可加分，高博会参展赛事",
+      "comp_type": "比赛",
+      "status": "报名中",
+      "enabled_date": "",
+      "rating": "高",
+      "detected_at": "2026-08-22T04:32:27"
+    },
+    "ai:6e1a40bde1e3": {
+      "key": "ai:6e1a40bde1e3",
+      "title": "2026年数字交互媒体设计赛",
+      "platform": "AI发现·我爱竞赛网",
+      "organizer": "中国技术创业协会技术创新工作委员会",
+      "url": "https://www.52jingsai.com/article-24021-1.html",
+      "deadline": "2026-12-03",
+      "reward": "协会证书，设计类奖项",
+      "comp_type": "比赛",
+      "status": "报名中",
+      "enabled_date": "",
+      "rating": "中",
+      "detected_at": "2026-08-22T04:32:27"
+    },
+    "ai:6335be90782b": {
+      "key": "ai:6335be90782b",
+      "title": "2026年第五届大学生普通话大赛",
+      "platform": "AI发现·我爱竞赛网",
+      "organizer": "中国语文报刊协会读写教学分会",
+      "url": "https://www.52jingsai.com/article-23889-1.html",
+      "deadline": "",
+      "reward": "多校学科竞赛目录",
+      "comp_type": "比赛",
+      "status": "待核实",
+      "enabled_date": "",
+      "rating": "中",
+      "detected_at": "2026-08-22T04:32:27"
+    },
+    "ai:bda9aa546896": {
+      "key": "ai:bda9aa546896",
+      "title": "2026年第八届大学生语言文字能力大赛（写作/规范字/诵读专项赛）",
+      "platform": "AI发现·我爱竞赛网",
+      "organizer": "中国语文报刊协会读写教学分会等",
+      "url": "https://www.52jingsai.com/",
+      "deadline": "2026-11-27",
+      "reward": "榜单赛事，多校认可",
+      "comp_type": "比赛",
+      "status": "报名中",
+      "enabled_date": "",
+      "rating": "中",
+      "detected_at": "2026-08-22T04:32:27"
     }
   },
-  "last_run": "2026-08-21T04:37:43"
+  "last_run": "2026-08-22T04:32:47"
 }
