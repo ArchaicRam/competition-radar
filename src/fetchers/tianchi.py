@@ -31,7 +31,12 @@ class TianchiFetcher(BaseFetcher):
         try:
             payloads = self._call_api(max_pages, page_size)
         except Exception as e:  # noqa: BLE001
-            raise FetcherSkip(f"天池接口被反爬拦截（{e}），本次跳过；可手动查看 {self.PAGE}") from e
+            # 只有明确的反爬/风控信号才按 FetcherSkip 处理（记日志、不算失败）；
+            # 其余异常（代码 bug、DNS、JSON 解析等）原样抛出，进入 result["errors"]
+            msg = str(e).lower()
+            if "403" in msg or "forbidden" in msg or "csrf" in msg or "captcha" in msg:
+                raise FetcherSkip(f"天池接口被反爬拦截（{e}），本次跳过；可手动查看 {self.PAGE}") from e
+            raise
         out: List[Competition] = []
         for payload in payloads:
             for rec in (payload.get("data") or {}).get("list") or []:

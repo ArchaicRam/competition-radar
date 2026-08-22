@@ -35,6 +35,8 @@ DEFAULT_CONFIG: Dict[str, Any] = {
     "deadline_alert_days": 14,
     "data_file": "data/state.json",
     "http_timeout": 30,
+    "kaggle_username": "",
+    "kaggle_key": "",
     "user_agent": (
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
         "(KHTML, like Gecko) Chrome/120.0 Safari/537.36"

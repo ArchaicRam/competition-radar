@@ -134,6 +134,45 @@ def is_low_value(title: str = "") -> bool:
     return any(k in (title or "") for k in LOW_VALUE_TITLE_PATTERNS)
 
 
+# 与计算机/科技主题明显无关的标题关键词（外语/人文/文体类）。
+# 综合类聚合站（我爱竞赛网、赛氪等）和 LLM 提取都会漏进这类条目，
+# 这里做确定性兜底：命中即剔除，不依赖 LLM 自觉。
+_OFF_TOPIC_TITLE_KEYS = [
+    # 外语类
+    "外语", "英语", "词汇", "翻译", "日语", "法语", "德语", "俄语", "韩语",
+    "泰语", "西班牙语", "阿拉伯语", "涉外",
+    # 人文/语言表达类
+    "演讲", "朗诵", "辩论", "征文", "写作", "作文", "文学", "诗词", "诗歌",
+    "普通话", "口译", "笔译",
+    # 文体/传媒类
+    "书法", "绘画", "摄影", "短视频", "微电影", "配音", "主持", "导游",
+    "声乐", "舞蹈", "歌唱", "动漫",
+]
+
+# 科技属性覆盖：标题含这些词时不按跑题处理（如"AI 英语口语训练平台开发赛"）
+_TECH_OVERRIDE_KEYS = [
+    "编程", "程序设计", "代码", "算法", "人工智能", "AI", "大模型", "LLM",
+    "大数据", "数据挖掘", "数据分析", "软件", "计算机", "网络安全", "信息安全",
+    "黑客", "机器人", "物联网", "嵌入式", "芯片", "集成电路", "智能车",
+    "数学建模", "电子设计",
+]
+
+
+def is_off_topic(title: str = "", organizer: str = "", platform: str = "") -> bool:
+    """标题明显属于外语/人文/文体类且无任何科技属性 → 与本项目无关。
+
+    仅用于综合来源（AI 发现 / 赛氪等聚合站）；
+    tianchi/xfyun/datafountain/kaggle 等技术平台本身只发数据/AI 赛事，
+    标题里的"翻译""词汇"等词多为 NLP 任务名，不做跑题过滤。
+    """
+    if (platform or "").split("·")[0] in ("tianchi", "xfyun", "datafountain", "kaggle"):
+        return False
+    t = title or ""
+    if any(k in t for k in _TECH_OVERRIDE_KEYS):
+        return False
+    return any(k in t for k in _OFF_TOPIC_TITLE_KEYS)
+
+
 def prestige(title: str = "", organizer: str = "", platform: str = "", rating: str = "") -> str:
     """含金量：高 / 中 / 低。
 

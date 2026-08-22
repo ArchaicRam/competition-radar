@@ -3,11 +3,18 @@
 from __future__ import annotations
 
 import json
+import logging
 import os
-from datetime import datetime
+import shutil
+from datetime import datetime, timedelta
 from typing import Dict, List, Tuple
 
 from .models import Competition
+
+log = logging.getLogger("storage")
+
+# 已截止超过该天数的条目会被清理，防止 state.json / 台账无限增长
+PRUNE_AFTER_DAYS = 90
 
 
 class Store:
@@ -22,7 +29,13 @@ class Store:
                     data = json.load(f)
                 if isinstance(data, dict) and "competitions" in data:
                     return data
-            except Exception:
+                log.warning("state.json 格式异常（缺少 competitions 字段），已备份并重建空状态")
+            except Exception as e:  # noqa: BLE001
+                log.warning("state.json 读取失败（%s），已备份并重建空状态", e)
+            # 备份损坏文件，避免直接覆盖丢失现场；下次运行会重新发现所有比赛
+            try:
+                shutil.copy2(self.path, self.path + ".bak")
+            except OSError:
                 pass
         return {"version": 1, "competitions": {}, "last_run": None}
 
@@ -57,8 +70,23 @@ class Store:
             if old and old.get("detected_at"):
                 d["detected_at"] = old["detected_at"]
             known[c.key] = d
+        self._prune()
         self.data["last_run"] = datetime.now().isoformat(timespec="seconds")
         self._save()
+
+    def _prune(self) -> int:
+        """清理截止日期已过去超过 PRUNE_AFTER_DAYS 天的条目，防止状态无限膨胀。"""
+        cutoff = (datetime.now() - timedelta(days=PRUNE_AFTER_DAYS)).strftime("%Y-%m-%d")
+        stale = [
+            key
+            for key, d in self.known().items()
+            if ((d.get("deadline") or "").strip()[:10] or "") and (d.get("deadline") or "").strip()[:10] < cutoff
+        ]
+        for key in stale:
+            del self.known()[key]
+        if stale:
+            log.info("清理了 %d 条过期状态（截止超过 %d 天）", len(stale), PRUNE_AFTER_DAYS)
+        return len(stale)
 
     def _save(self) -> None:
         os.makedirs(os.path.dirname(os.path.abspath(self.path)), exist_ok=True)

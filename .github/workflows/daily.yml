@@ -2,9 +2,13 @@ name: daily-competition-scan
 
 on:
   schedule:
-    # 每天 UTC 22:00 = 北京时间 06:00
-    - cron: "0 4 * * *"  # 北京时间中午 12:00（UTC 04:00）
+    - cron: "0 4 * * *" # UTC 04:00 = 北京时间中午 12:00
   workflow_dispatch: {}
+
+# 同一时刻只允许一次扫描，避免并发运行互相覆盖 data/ 状态
+concurrency:
+  group: daily-scan
+  cancel-in-progress: true
 
 permissions:
   contents: write
@@ -21,6 +25,7 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+          cache: pip
 
       - name: Install dependencies
         run: pip install -r requirements.txt
@@ -69,6 +74,8 @@ jobs:
             echo "no state changes"
           else
             git commit -m "chore: 更新竞赛状态 [skip ci]"
+            # 先拉取远端变更再推，避免与手动触发等并发提交冲突丢数据
+            git pull --rebase --autostash
             git push
           fi
 

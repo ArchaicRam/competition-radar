@@ -12,6 +12,18 @@ from __future__ import annotations
 from datetime import datetime
 from typing import List, Optional
 
+try:
+    from zoneinfo import ZoneInfo
+
+    TZ_SH = ZoneInfo("Asia/Shanghai")
+except ImportError:  # pragma: no cover
+    TZ_SH = None
+
+
+def _now() -> datetime:
+    """统一用北京时间比较，避免 CI（UTC）上状态偏移 8 小时。"""
+    return datetime.now(TZ_SH) if TZ_SH else datetime.now()
+
 from .. import http
 from ..models import Competition
 from .base import BaseFetcher
@@ -48,9 +60,9 @@ class NowcoderFetcher(BaseFetcher):
         start = _ms_to_dt(item.get("startTime"))
         end = _ms_to_dt(item.get("endTime"))
         # 只保留未开始/进行中的（结束时间在未来）
-        if end and _parse(end) < datetime.now():
+        if end and _parse(end) < _now():
             return None
-        status = "进行中" if start and _parse(start) <= datetime.now() else "未开始"
+        status = "进行中" if start and _parse(start) <= _now() else "未开始"
         return Competition(
             key=f"nowcoder:{oj}:{item.get('contestId') or name}",
             title=name,
@@ -66,10 +78,11 @@ class NowcoderFetcher(BaseFetcher):
 
 
 def _ms_to_dt(v) -> str:
-    """毫秒时间戳 -> 'YYYY-MM-DD HH:MM'（本地时区），便于看清比赛时间段。"""
+    """毫秒时间戳 -> 'YYYY-MM-DD HH:MM'（北京时间），便于看清比赛时间段。"""
     try:
         ts = int(v)
-        return datetime.fromtimestamp(ts / 1000).strftime("%Y-%m-%d %H:%M")
+        dt = datetime.fromtimestamp(ts / 1000, tz=TZ_SH) if TZ_SH else datetime.fromtimestamp(ts / 1000)
+        return dt.strftime("%Y-%m-%d %H:%M")
     except (TypeError, ValueError, OSError):
         return ""
 

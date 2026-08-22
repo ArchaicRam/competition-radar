@@ -32,21 +32,27 @@ if (-not (git remote -v)) {
 
 # ---------- 4. 配置 Secrets（从本地配置自动读取，无需手打） ----------
 Write-Host ">> 配置仓库 Secrets..."
+# 密钥一律通过管道（stdin）传给 gh，避免出现在进程命令行 / PowerShell 历史里
+function Set-Secret([string]$Name, [string]$Value) {
+    if (-not $Value) { return }
+    $Value | gh secret set $Name
+    if ($LASTEXITCODE -ne 0) { throw "gh secret set $Name 失败" }
+}
 $cfg = Get-Content config.json -Raw -Encoding UTF8 | ConvertFrom-Json
-if ($cfg.feishu_webhook) { gh secret set FEISHU_WEBHOOK -b $cfg.feishu_webhook }
-if ($cfg.feishu_secret)  { gh secret set FEISHU_SECRET -b $cfg.feishu_secret }
-if ($cfg.feishu_chat_id) { gh secret set FEISHU_CHAT_ID -b $cfg.feishu_chat_id }
-if ($cfg.feishu_sheet_url) { gh secret set FEISHU_SHEET_URL -b $cfg.feishu_sheet_url }
-if ($cfg.llm_api_key)    { gh secret set LLM_API_KEY -b $cfg.llm_api_key }
-if ($cfg.kaggle_username){ gh secret set KAGGLE_USERNAME -b $cfg.kaggle_username }
-if ($cfg.kaggle_key)     { gh secret set KAGGLE_KEY -b $cfg.kaggle_key }
+Set-Secret FEISHU_WEBHOOK $cfg.feishu_webhook
+Set-Secret FEISHU_SECRET  $cfg.feishu_secret
+Set-Secret FEISHU_CHAT_ID $cfg.feishu_chat_id
+Set-Secret FEISHU_SHEET_URL $cfg.feishu_sheet_url
+Set-Secret LLM_API_KEY    $cfg.llm_api_key
+Set-Secret KAGGLE_USERNAME $cfg.kaggle_username
+Set-Secret KAGGLE_KEY     $cfg.kaggle_key
 $larkCfg = Join-Path $env:USERPROFILE ".lark-cli\config.json"
 if (Test-Path $larkCfg) {
     $lark = Get-Content $larkCfg -Raw -Encoding UTF8 | ConvertFrom-Json
     $app = $lark.apps | Where-Object { $_.name -eq "jingsai" } | Select-Object -First 1
     if ($app) {
-        gh secret set LARK_APP_ID -b $app.appId
-        gh secret set LARK_APP_SECRET -b $app.appSecret
+        Set-Secret LARK_APP_ID $app.appId
+        Set-Secret LARK_APP_SECRET $app.appSecret
     }
 }
 

@@ -10,6 +10,13 @@ from __future__ import annotations
 from datetime import datetime
 from typing import List, Optional
 
+try:
+    from zoneinfo import ZoneInfo
+
+    TZ_SH = ZoneInfo("Asia/Shanghai")
+except ImportError:  # pragma: no cover
+    TZ_SH = None
+
 from .. import http
 from ..models import Competition
 from .base import BaseFetcher
@@ -60,7 +67,7 @@ class DataFountainFetcher(BaseFetcher):
         orgs = [o.get("name", "").strip() for o in (c.get("organizers") or [])]
         organizer = "、".join([o for o in orgs if o])
         tags = [t.get("nameCn", "").strip() for t in (c.get("tags") or [])]
-        comp_type = (c.get("typeLabel") or tags[0] if tags else "") or ""
+        comp_type = (c.get("typeLabel") or (tags[0] if tags else "")) or ""
         reward = c.get("reward")
         reward_str = ""
         if reward not in (None, ""):
@@ -86,24 +93,27 @@ class DataFountainFetcher(BaseFetcher):
 
 
 def _is_past(date_str: str) -> bool:
+    """截止日期（纯日期）是否已过：按北京时间比较，且截止日当天不算过期。"""
     if not date_str:
         return False
     try:
-        return datetime.strptime(date_str, "%Y-%m-%d") < datetime.now()
+        now = datetime.now(TZ_SH) if TZ_SH else datetime.now()
+        return datetime.strptime(date_str, "%Y-%m-%d").date() < now.date()
     except ValueError:
         return False
 
 
 def _norm_date(iso: str | None) -> str:
-    """ISO 时间 -> YYYY-MM-DD，解析失败原样返回。"""
+    """ISO 时间 -> YYYY-MM-DD（转成北京时间），解析失败原样返回。"""
     if not iso:
         return ""
     try:
-        from datetime import datetime
-
         s = iso
         if s.endswith("Z"):
             s = s[:-1] + "+00:00"
-        return datetime.fromisoformat(s).strftime("%Y-%m-%d")
+        dt = datetime.fromisoformat(s)
+        if dt.tzinfo is not None and TZ_SH is not None:
+            dt = dt.astimezone(TZ_SH)
+        return dt.strftime("%Y-%m-%d")
     except Exception:  # noqa: BLE001
         return iso

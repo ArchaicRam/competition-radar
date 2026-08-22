@@ -20,7 +20,7 @@ from urllib.parse import urlparse
 
 from . import http, llm
 from .models import Competition
-from .official import clean_text, is_low_value
+from .official import clean_text, is_low_value, is_off_topic
 
 log = logging.getLogger("ai_discover")
 
@@ -138,10 +138,17 @@ def normalize_date(s) -> str:
         m = re.search(pat, s)
         if m:
             return fmt(m.groups())
-    # 无年份："8月31日" -> 今年
+    # 无年份："8月31日" -> 今年；若已过去超过 45 天，视为去年的公告、归到明年
     m = re.search(r"(\d{1,2})月(\d{1,2})日", s)
     if m:
-        return f"{datetime.now().year}-{int(m.group(1)):02d}-{int(m.group(2)):02d}"
+        try:
+            now = datetime.now()
+            dt = datetime(now.year, int(m.group(1)), int(m.group(2)))
+            if (now - dt).days > 45:
+                dt = datetime(now.year + 1, int(m.group(1)), int(m.group(2)))
+            return dt.strftime("%Y-%m-%d")
+        except ValueError:
+            return ""
     return ""
 
 
@@ -210,6 +217,9 @@ def _to_competition(it: dict, page_url: str, site: str, anchors: List[tuple] = N
         return None
     # 答题/知识竞赛类硬过滤（不依赖 LLM 评级）
     if is_low_value(title):
+        return None
+    # 外语/人文/文体类硬过滤（LLM 提示词约束不可靠，这里确定性兜底）
+    if is_off_topic(title):
         return None
     org = clean_text(it.get("organizer"))
     comp_type = clean_text(it.get("type")) or "其他"

@@ -92,60 +92,64 @@ def run(
         return result
 
     bot_name = config.get("bot_name", "竞赛雷达")
-    if config.get("send_table_daily", True):
-        excel_path = _export_excel(config, all_comps, new)
-        if excel_path:
-            result["excel"] = excel_path
+    # 推送环节的失败不应阻断状态落库，否则同样的内容会重复推送
+    try:
+        if config.get("send_table_daily", True):
+            excel_path = _export_excel(config, all_comps, new)
+            if excel_path:
+                result["excel"] = excel_path
 
-        # 同步飞书在线表格（可选，配了 feishu_sheet_url 才启用）
-        sheet_url = config.get("feishu_sheet_url") or ""
-        if sheet_url:
-            try:
-                from .feishu_sheet import sync_sheet
+            # 同步飞书在线表格（可选，配了 feishu_sheet_url 才启用）
+            sheet_url = config.get("feishu_sheet_url") or ""
+            if sheet_url:
+                try:
+                    from .feishu_sheet import sync_sheet
 
-                sync_sheet(
-                    all_comps,
-                    {c.key for c in new},
-                    sheet_url,
-                    profile=config.get("lark_profile", "jingsai"),
-                )
-                result["sheet_url"] = sheet_url
-            except Exception as e:  # noqa: BLE001
-                log.warning("飞书在线表格同步失败: %s", e)
+                    sync_sheet(
+                        all_comps,
+                        {c.key for c in new},
+                        sheet_url,
+                        profile=config.get("lark_profile", "jingsai"),
+                    )
+                    result["sheet_url"] = sheet_url
+                except Exception as e:  # noqa: BLE001
+                    log.warning("飞书在线表格同步失败: %s", e)
 
-        card_excel_link = sheet_url or config.get("excel_link", "") or ""
-        ai_digest_text = ""
-        if config.get("ai_digest"):
-            from .ai_digest import digest
+            card_excel_link = sheet_url or config.get("excel_link", "") or ""
+            ai_digest_text = ""
+            if config.get("ai_digest"):
+                from .ai_digest import digest
 
-            ai_digest_text = digest(new, config)
-        card = build_digest_card(
-            all_comps,
-            {c.key for c in new},
-            bot_name=bot_name,
-            deadline_alert_days=int(config.get("deadline_alert_days", 7)),
-            excel_link=card_excel_link,
-            excel_path=excel_path or "",
-            ai_digest_text=ai_digest_text,
-        )
-        if _push_card(config, notifier, card):
-            log.info("已推送情报日报卡片（%d 场，今日新增 %d）", len(all_comps), len(new))
-        else:
-            log.info("未配置发送通道（feishu_chat_id 或 feishu_webhook），跳过推送")
-    else:
-        message = build_message(
-            new, updated,
-            max_items=int(config.get("max_items_per_push", 20)),
-            deadline_alert_days=int(config.get("deadline_alert_days", 7)),
-            bot_name=bot_name,
-        )
-        if message:
-            if _push_text(config, notifier, message):
-                log.info("已推送 %d 字消息到飞书", len(message))
+                ai_digest_text = digest(new, config)
+            card = build_digest_card(
+                all_comps,
+                {c.key for c in new},
+                bot_name=bot_name,
+                deadline_alert_days=int(config.get("deadline_alert_days", 7)),
+                excel_link=card_excel_link,
+                excel_path=excel_path or "",
+                ai_digest_text=ai_digest_text,
+            )
+            if _push_card(config, notifier, card):
+                log.info("已推送情报日报卡片（%d 场，今日新增 %d）", len(all_comps), len(new))
             else:
                 log.info("未配置发送通道（feishu_chat_id 或 feishu_webhook），跳过推送")
-        elif config.get("digest_when_no_new"):
-            _push_text(config, notifier, build_no_new_message(bot_name))
+        else:
+            message = build_message(
+                new, updated,
+                max_items=int(config.get("max_items_per_push", 20)),
+                deadline_alert_days=int(config.get("deadline_alert_days", 7)),
+                bot_name=bot_name,
+            )
+            if message:
+                if _push_text(config, notifier, message):
+                    log.info("已推送 %d 字消息到飞书", len(message))
+                else:
+                    log.info("未配置发送通道（feishu_chat_id 或 feishu_webhook），跳过推送")
+            elif config.get("digest_when_no_new"):
+                _push_text(config, notifier, build_no_new_message(bot_name))
+    except Exception as e:  # noqa: BLE001
+        log.warning("推送环节失败（状态仍会落库）: %s", e)
 
     store.update(all_comps)
     if export_csv_path:
@@ -229,6 +233,10 @@ def _why_bad(c: Competition) -> Optional[str]:
     title = (c.title or "").strip()
     if not title:
         return "标题为空"
+    # 外语/人文/文体类硬过滤：综合聚合站（赛氪等）和 LLM 提取都可能混入；
+    # 技术平台（天池/讯飞等）不适用——它们的"翻译/词汇"多为 NLP 任务名
+    if official.is_off_topic(title, platform=c.platform):
+        return "与计算机主题无关"
 
     deadline = (c.deadline or "").strip()
     enabled = (c.enabled_date or "").strip()
@@ -242,7 +250,9 @@ def _why_bad(c: Competition) -> Optional[str]:
 
     st = _parse_dt(enabled)
     dl = _parse_dt(deadline)
-    if dl and dl < datetime.now():
+    # 只按"日期"比较：截止日当天仍视为可报名（与各平台抓取器的口径一致），
+    # 避免 _parse_dt 把纯日期解析成当天 00:00 导致截止日当天的比赛被误删
+    if dl and dl.date() < datetime.now().date():
         return f"已截止: {deadline}"
     if st and dl and st > dl:
         return f"开始晚于截止: {enabled} > {deadline}"
@@ -299,11 +309,11 @@ def postprocess(comps: List[Competition], config: Dict[str, Any]) -> List[Compet
         kept.append(c)
 
     # 状态补齐：有真实截止日期且未过期 → "报名中"（AI 初版的"待核实"改为明确状态）
-    now = datetime.now()
+    today = datetime.now().date()
     for c in kept:
         if (c.status or "").strip() in ("", "待核实") and (c.deadline or "").strip():
             dl = _parse_dt(c.deadline)
-            if dl and dl >= now:
+            if dl and dl.date() >= today:
                 c.status = "报名中"
     return official.sort_competitions(kept)
 

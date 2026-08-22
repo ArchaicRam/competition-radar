@@ -119,6 +119,10 @@ def _esc(s: str) -> str:
         .replace("<", "＜")
         .replace(">", "＞")
         .replace("**", "＊＊")
+        # markdown 链接文本里的括号/反斜杠会破坏 [text](url) 结构
+        .replace("\\", "＼")
+        .replace("(", "（")
+        .replace(")", "）")
         .replace("\u200b", "")
         .replace("\u200c", "")
         .replace("\ufeff", "")

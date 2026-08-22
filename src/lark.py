@@ -11,19 +11,22 @@ from typing import Any, Dict, List, Optional
 
 log = logging.getLogger("lark")
 
-# 本机 Windows npm 全局路径；找不到时退回 PATH（Linux/CI）
-_WIN_LARK_EXE = r"C:\Users\firef\AppData\Roaming\npm\node_modules\@larksuite\cli\bin\lark-cli.exe"
+# 本机 Windows npm 全局路径兜底（优先走 PATH，不绑定个人目录）
+_WIN_NPM_BIN = os.path.join(os.environ.get("APPDATA", ""), "npm")
 
 
 def lark_exe() -> str:
     import shutil
 
-    if os.path.exists(_WIN_LARK_EXE):
-        return _WIN_LARK_EXE
     p = shutil.which("lark-cli")
     if p:
         return p
-    return _WIN_LARK_EXE  # 触发 FileNotFoundError 后走 PATH 兜底
+    # npm 全局安装的常见位置（shutil.which 已覆盖 PATHEXT，这里只做补充）
+    for ext in (".cmd", ".exe", ".bat", ""):
+        cand = os.path.join(_WIN_NPM_BIN, f"lark-cli{ext}")
+        if ext and os.path.exists(cand):
+            return cand
+    return "lark-cli"  # 最后交给 PATH；仍找不到会抛 FileNotFoundError
 
 
 def lark(args: List[str], stdin_text: Optional[str] = None, retries: int = 3) -> Dict[str, Any]:
@@ -53,23 +56,9 @@ def lark(args: List[str], stdin_text: Optional[str] = None, retries: int = 3) ->
                 time.sleep(2 * (attempt + 1))
                 continue
             raise RuntimeError(f"lark-cli 调用失败: {out.strip()[-600:]}")
-        except FileNotFoundError:
-            proc = subprocess.run(
-                ["lark-cli"] + args,
-                input=stdin_text,
-                capture_output=True,
-                text=True,
-                encoding="utf-8",
-                timeout=150,
-                cwd=project_dir,
-                shell=True,
-            )
-            if proc.returncode == 0:
-                try:
-                    return json.loads(proc.stdout or "{}")
-                except json.JSONDecodeError:
-                    return {"raw": proc.stdout}
-            raise RuntimeError(f"lark-cli 调用失败: {(proc.stderr or '')[-400:]}")
+        except FileNotFoundError as e:
+            # 绝不退回 shell=True：参数来自抓取/LLM 内容，经 cmd.exe 会被注入
+            raise RuntimeError(f"找不到 lark-cli 可执行文件（cmd={[lark_exe()] + args[:1]}）") from e
         except Exception as e:  # noqa: BLE001
             last_err = e
             time.sleep(2 * (attempt + 1))
