@@ -2,7 +2,7 @@ name: daily-competition-scan
 
 on:
   schedule:
-    - cron: "0 4 * * *" # UTC 04:00 = 北京时间中午 12:00
+    - cron: "23 4 * * *" # UTC 04:23 = 北京时间 12:23，错开整点调度高峰
   workflow_dispatch: {}
 
 # 同一时刻只允许一次扫描，避免并发运行互相覆盖 data/ 状态
