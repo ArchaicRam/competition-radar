@@ -1570,7 +1570,7 @@
       "key": "ai:93ca4c2edd13",
       "title": "2027年第十届中国大学生工程实践与创新能力大赛",
       "platform": "AI发现·我爱竞赛网",
-      "organizer": "教育部工程训练教学指导委员会",
+      "organizer": "教育部工程训练教学指导委员会等",
       "url": "https://www.52jingsai.com/article-24009-1.html",
       "deadline": "",
       "reward": "",
@@ -1783,7 +1783,7 @@
       "organizer": "中国对外贸易经济合作企业协会",
       "url": "https://www.52jingsai.com/article-24024-1.html",
       "deadline": "2026-11-13",
-      "reward": "奖项及证书",
+      "reward": "",
       "comp_type": "比赛",
       "status": "报名中",
       "enabled_date": "",
@@ -2071,5 +2071,5 @@
       "detected_at": "2026-09-08T08:54:12"
     }
   },
-  "last_run": "2026-09-08T08:54:42"
+  "last_run": "2026-09-09T09:00:32"
 }
