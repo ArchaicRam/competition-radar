@@ -234,8 +234,8 @@
       "deadline": "2026-10-01",
       "reward": "¥30,000",
       "comp_type": "地质科学、地震学、地球物理学",
-      "status": "进行中",
-      "enabled_date": "",
+      "status": "报名中",
+      "enabled_date": "2026-09-01",
       "rating": "",
       "detected_at": "2026-08-17T15:05:25"
     },
@@ -819,7 +819,7 @@
       "platform": "xfyun",
       "organizer": "科大讯飞股份有限公司",
       "url": "https://challenge.xfyun.cn/topic/info?type=FACT-Challenge",
-      "deadline": "2026-09-13",
+      "deadline": "2026-09-17",
       "reward": "¥1万",
       "comp_type": "algorithem",
       "status": "报名中",
@@ -1393,7 +1393,7 @@
       "url": "https://www.52jingsai.com/article-23886-1.html",
       "deadline": "2026-11-25",
       "reward": "",
-      "comp_type": "挑战赛",
+      "comp_type": "比赛",
       "status": "报名中",
       "enabled_date": "",
       "rating": "高",
@@ -2083,7 +2083,35 @@
       "enabled_date": "",
       "rating": "中",
       "detected_at": "2026-09-10T08:59:29"
+    },
+    "ai:221cd8a3bb1c": {
+      "key": "ai:221cd8a3bb1c",
+      "title": "2026年第四届大学生汉语大赛协办院校招募",
+      "platform": "AI发现·我爱竞赛网",
+      "organizer": "华夏文化促进会文化产业工作委员会、大学生汉语大赛组委会",
+      "url": "https://www.52jingsai.com/article-24028-1.html",
+      "deadline": "2026-12-10",
+      "reward": "",
+      "comp_type": "项目招募",
+      "status": "报名中",
+      "enabled_date": "",
+      "rating": "中",
+      "detected_at": "2026-09-11T08:57:10"
+    },
+    "xfyun:Spark-X25": {
+      "key": "xfyun:Spark-X25",
+      "title": "Spark-X2.5端侧模型创新挑战赛",
+      "platform": "xfyun",
+      "organizer": "词元星火科技有限公司",
+      "url": "https://challenge.xfyun.cn/topic/info?type=Spark-X25",
+      "deadline": "2026-11-10",
+      "reward": "¥10万",
+      "comp_type": "application",
+      "status": "报名中",
+      "enabled_date": "2026-09-11",
+      "rating": "",
+      "detected_at": "2026-09-11T08:57:03"
     }
   },
-  "last_run": "2026-09-10T08:59:46"
+  "last_run": "2026-09-11T08:57:32"
 }
