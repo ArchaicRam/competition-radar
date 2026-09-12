@@ -1393,7 +1393,7 @@
       "url": "https://www.52jingsai.com/article-23886-1.html",
       "deadline": "2026-11-25",
       "reward": "",
-      "comp_type": "比赛",
+      "comp_type": "挑战赛",
       "status": "报名中",
       "enabled_date": "",
       "rating": "高",
@@ -2113,5 +2113,5 @@
       "detected_at": "2026-09-11T08:57:03"
     }
   },
-  "last_run": "2026-09-11T08:57:32"
+  "last_run": "2026-09-12T08:40:50"
 }
