@@ -57,6 +57,7 @@ class Store:
                     or old.get("status") != c.status
                     or old.get("reward") != c.reward
                     or old.get("title") != c.title
+                    or old.get("url") != c.url
                 ):
                     updated.append(c)
         return new, updated
@@ -75,17 +76,26 @@ class Store:
         self._save()
 
     def _prune(self) -> int:
-        """清理截止日期已过去超过 PRUNE_AFTER_DAYS 天的条目，防止状态无限膨胀。"""
+        """清理过期条目，防止状态无限膨胀。
+
+        - 有截止日期：截止超过 PRUNE_AFTER_DAYS 天即清理
+        - 无截止日期（AI 发现的线索常见）：入表超过 PRUNE_AFTER_DAYS 天仍无进展也清理
+        """
         cutoff = (datetime.now() - timedelta(days=PRUNE_AFTER_DAYS)).strftime("%Y-%m-%d")
-        stale = [
-            key
-            for key, d in self.known().items()
-            if ((d.get("deadline") or "").strip()[:10] or "") and (d.get("deadline") or "").strip()[:10] < cutoff
-        ]
+        stale = []
+        for key, d in self.known().items():
+            dl = (d.get("deadline") or "").strip()[:10]
+            if dl:
+                if dl < cutoff:
+                    stale.append(key)
+                continue
+            det = (d.get("detected_at") or "").strip()[:10]
+            if det and det < cutoff:
+                stale.append(key)
         for key in stale:
             del self.known()[key]
         if stale:
-            log.info("清理了 %d 条过期状态（截止超过 %d 天）", len(stale), PRUNE_AFTER_DAYS)
+            log.info("清理了 %d 条过期状态（超过 %d 天）", len(stale), PRUNE_AFTER_DAYS)
         return len(stale)
 
     def _save(self) -> None:

@@ -64,12 +64,19 @@ def sync_sheet(
                   "--range", f"A1:{_LAST_COL}1", "--font-weight", "bold",
                   "--background-color", "#D9D9D9", "--horizontal-alignment", "center"])
 
-    # 4. 今日新增行红底红字（行号 = 表头1 + 序号）
+    # 4. 今日新增行红底红字（相邻新增行合并成区间，减少 lark-cli 调用次数）
+    runs: List[List[int]] = []
     for i, c in enumerate(comps, start=2):
         if c.key in new_keys:
-            lark_mod.lark(args + ["+cells-set-style", "--url", sheet_url, "--sheet-name", sheet_name,
-                          "--range", f"A{i}:{_LAST_COL}{i}", "--background-color", "#FFC7CE",
-                          "--font-color", "#9C0006"])
+            if runs and runs[-1][1] == i - 1:
+                runs[-1][1] = i
+            else:
+                runs.append([i, i])
+    for start, end in runs:
+        rng = f"A{start}:{_LAST_COL}{end}"
+        lark_mod.lark(args + ["+cells-set-style", "--url", sheet_url, "--sheet-name", sheet_name,
+                      "--range", rng, "--background-color", "#FFC7CE",
+                      "--font-color", "#9C0006"])
 
     # 5. 列宽
     lark_mod.lark(args + ["+cols-resize", "--url", sheet_url, "--sheet-name", sheet_name,

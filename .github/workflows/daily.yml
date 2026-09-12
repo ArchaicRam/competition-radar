@@ -16,7 +16,8 @@ permissions:
 jobs:
   scan:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    # AI 情报员有 19 个种子源（并行 4 路），加各平台抓取与表格同步，留足余量
+    timeout-minutes: 15
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -26,6 +27,10 @@ jobs:
         with:
           python-version: "3.12"
           cache: pip
+
+      # 测试不过就不发日报：把问题拦在推送之前
+      - name: Run tests
+        run: python tests/test_core.py
 
       - name: Install dependencies
         run: pip install -r requirements.txt

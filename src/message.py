@@ -30,7 +30,7 @@ def build_message(
     new: List[Competition],
     updated: List[Competition],
     max_items: int = 20,
-    deadline_alert_days: int = 7,
+    deadline_alert_days: int = 14,
     bot_name: str = "竞赛雷达",
 ) -> str:
     """拼接新比赛 + 更新比赛的推送文案。"""

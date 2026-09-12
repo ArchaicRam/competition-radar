@@ -14,6 +14,7 @@ from __future__ import annotations
 import hashlib
 import logging
 import re
+from concurrent.futures import ThreadPoolExecutor
 from html.parser import HTMLParser
 from typing import Dict, List, Optional
 from urllib.parse import urlparse
@@ -158,36 +159,53 @@ def site_name(url: str) -> str:
 
 
 def discover(seed_sources: List[Dict[str, str]], cfg: Dict[str, Any]) -> List[Competition]:
-    """扫描种子源，返回 AI 发现的比赛列表。seed_sources: [{"name","url"}, ...]"""
+    """扫描种子源，返回 AI 发现的比赛列表。seed_sources: [{"name","url"}, ...]
+
+    各种子源互相独立，并行抓取+提炼（每个种子 = 1 次抓页 + 1 次 LLM 调用，
+    种子多时串行会显著拖长总耗时）。
+    """
     api_key = (cfg.get("llm_api_key") or "").strip()
     if not api_key:
         log.info("未配置 llm_api_key，AI 情报员跳过")
         return []
-    out: List[Competition] = []
-    timeout = int(cfg.get("http_timeout", 30))
+    tasks = []
     for src in seed_sources or []:
         url = (src.get("url") or "").strip()
         name = (src.get("name") or site_name(url)).strip()
-        if not url:
-            continue
-        try:
-            status, raw, _ = http.get(url, timeout=timeout)
-            if status != 200:
-                log.warning("[AI:%s] 抓取失败 status=%s", name, status)
-                continue
-            text, anchors = extract_page(raw)
-            if len(text) < 80:
-                log.warning("[AI:%s] 页面文本过短(%d)，跳过", name, len(text))
-                continue
-            items = _extract(text, url, cfg)
-            for it in items:
-                comp = _to_competition(it, url, name, anchors)
-                if comp is not None:
-                    out.append(comp)
-            log.info("[AI:%s] 发现 %d 条（锚点 %d 个）", name, len(items), len(anchors))
-        except Exception as e:  # noqa: BLE001
-            log.warning("[AI:%s] 失败: %s", name, e)
+        if url:
+            tasks.append((name, url))
+    out: List[Competition] = []
+    if not tasks:
+        return out
+    with ThreadPoolExecutor(max_workers=4) as pool:
+        for comps in pool.map(_discover_one, [(name, url, cfg) for name, url in tasks]):
+            out.extend(comps)
     return out
+
+
+def _discover_one(task: tuple) -> List[Competition]:
+    name, url, cfg = task
+    timeout = int(cfg.get("http_timeout", 30))
+    try:
+        status, raw, _ = http.get(url, timeout=timeout)
+        if status != 200:
+            log.warning("[AI:%s] 抓取失败 status=%s", name, status)
+            return []
+        text, anchors = extract_page(raw)
+        if len(text) < 80:
+            log.warning("[AI:%s] 页面文本过短(%d)，跳过", name, len(text))
+            return []
+        items = _extract(text, url, cfg)
+        comps = []
+        for it in items:
+            comp = _to_competition(it, url, name, anchors)
+            if comp is not None:
+                comps.append(comp)
+        log.info("[AI:%s] 发现 %d 条（锚点 %d 个）", name, len(comps), len(anchors))
+        return comps
+    except Exception as e:  # noqa: BLE001
+        log.warning("[AI:%s] 失败: %s", name, e)
+        return []
 
 
 def _extract(text: str, url: str, cfg: Dict[str, Any]) -> List[dict]:

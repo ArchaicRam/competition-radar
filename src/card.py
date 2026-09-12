@@ -17,7 +17,7 @@ def build_digest_card(
     competitions: List,
     new_keys: Set[str],
     bot_name: str = "竞赛雷达",
-    deadline_alert_days: int = 7,
+    deadline_alert_days: int = 14,
     excel_link: str = "",
     excel_path: str = "",
     ai_digest_text: str = "",

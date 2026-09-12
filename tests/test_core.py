@@ -1,8 +1,17 @@
 # -*- coding: utf-8 -*-
-"""自测：消息模板 + 增量存储逻辑（不联网）。"""
+"""自测：消息模板 + 增量存储 + 官方赛事规则 + 卡片/Excel（不联网）。
+
+两种跑法等价（CI 用第二种）：
+  python tests/test_core.py   # 零依赖直接跑
+  pytest tests/ -q            # 兼容 pytest 收集
+"""
+import json
 import os
+import shutil
 import sys
-import tempfile
+import xml.dom.minidom as minidom
+import zipfile
+from datetime import date, datetime, timedelta
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -11,15 +20,21 @@ from src.message import build_message, build_no_new_message
 from src.storage import Store
 from src.csv_export import export_csv
 
+_TMP_ROOT = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "_tmp_test")
 
-def main():
-    from datetime import date, timedelta
 
+def _tmpdir(name: str) -> str:
+    """每个测试用独立子目录（不用系统临时目录，兼容沙箱环境）。"""
+    path = os.path.join(_TMP_ROOT, name)
+    shutil.rmtree(path, ignore_errors=True)
+    os.makedirs(path, exist_ok=True)
+    return path
+
+
+def _sample_new() -> list:
     # 截止日期用相对"今天"的未来时间，避免测试随日期漂移失败
     soon = (date.today() + timedelta(days=5)).isoformat()
-
-    # ---- 消息模板 ----
-    new = [
+    return [
         Competition(
             key="tianchi:1", title="AI+跨境黑客松巅峰赛", platform="tianchi",
             organizer="阿里云", url="https://tianchi.aliyun.com/competition/entrance/1",
@@ -38,6 +53,10 @@ def main():
             deadline="2099-01-01", comp_type="算法竞赛", status="未开始",
         ),
     ]
+
+
+def test_message():
+    new = _sample_new()
     updated = [
         Competition(
             key="df:999", title="某竞赛", platform="datafountain", organizer="某企业",
@@ -45,46 +64,47 @@ def main():
         )
     ]
     msg = build_message(new, updated, max_items=20, deadline_alert_days=7)
-    print("===== 推送消息预览 =====")
-    print(msg)
     assert "AI+跨境黑客松" in msg
     assert "⏰" in msg  # 有即将截止标记
     assert "🔄" in msg  # 有更新列表
-    print("===== 无新比赛消息 =====")
-    print(build_no_new_message())
     assert build_message([], []) == ""
+    assert build_no_new_message()
 
-    # ---- 增量存储 ----
-    # 沙箱环境无法写系统临时目录，这里用工作区内的临时目录（先清空上次残留）
-    import shutil
-    tmp = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "_tmp_test")
-    shutil.rmtree(tmp, ignore_errors=True)
-    os.makedirs(tmp, exist_ok=True)
+
+def test_store():
+    tmp = _tmpdir("store")
     state = os.path.join(tmp, "state.json")
     store = Store(state)
-    fetched = [new[0], new[1]]
+    fetched = _sample_new()[:2]
     n, u = store.diff(fetched)
     assert len(n) == 2 and len(u) == 0, (n, u)
     store.update(fetched)
     # 第二次：只新增一条
-    fetched2 = [new[0], new[1], new[2]]
+    fetched2 = _sample_new()
     n2, u2 = store.diff(fetched2)
-    assert len(n2) == 1 and n2[0].key == new[2].key, (n2, u2)
+    assert len(n2) == 1 and n2[0].key == fetched2[2].key, (n2, u2)
     # 状态变化检测
-    changed = Competition(**{**new[0].to_dict(), "deadline": "2026-08-19"})
-    n3, u3 = store.diff([changed, new[1]])
+    changed = Competition(**{**fetched2[0].to_dict(), "deadline": "2026-08-19"})
+    n3, u3 = store.diff([changed, fetched2[1]])
     assert len(n3) == 0 and len(u3) == 1, (n3, u3)
+    # url 变化也应视为更新
+    moved = Competition(**{**fetched2[0].to_dict(), "url": "https://example.com/new"})
+    n4, u4 = store.diff([moved])
+    assert len(n4) == 0 and len(u4) == 1, (n4, u4)
+    # last_total 元数据可用于骤降检测
+    store.data["last_total"] = 2
+    store.update([])
+    assert Store(state).data["last_total"] == 2
+
     # CSV 导出
     csv_path = export_csv(store, os.path.join(tmp, "out.csv"))
     with open(csv_path, encoding="utf-8-sig") as f:
         content = f.read()
     assert "AI+跨境黑客松" in content
-    print("\n===== 存储/CSV 自测通过 =====")
-    print("csv sample:", content[:200].replace("\n", " | "))
 
-    # ---- 卡片构建（情报日报） ----
-    from src.card import build_digest_card
-    from src.official import sort_competitions, is_official, prestige
+
+def test_official_rules():
+    from src.official import is_official, prestige
 
     assert is_official("蓝桥杯全国软件和信息技术专业人才大赛", "") is True
     assert is_official("某某企业AI挑战赛", "某科技公司") is False
@@ -123,8 +143,8 @@ def main():
     assert prestige("野生东北虎个体识别挑战赛", "北京林业大学", "xfyun") == "中"
     assert prestige("智慧生活助理Skill开发挑战赛", "科大讯飞股份有限公司", "xfyun") == "高"
 
-    # ---- 官方赛事报名时间（往届经验推断） ----
-    from datetime import datetime
+
+def test_schedules():
     from src.schedules import enrich_official
 
     today = datetime(2026, 8, 19)  # 模拟"当前"为 2026-08
@@ -147,11 +167,16 @@ def main():
     note, keep = enrich_official("某某冷门官方赛事", "", {}, today)
     assert not keep
 
+
+def test_sort_order():
+    from src.official import prestige, sort_competitions
+
+    new = _sample_new()
     sorted_comps = sort_competitions(new)
     # 官方A类排最前（本测试数据里没有官方赛，验证不报错即可）
     assert len(sorted_comps) == 3
 
-    # ---- 排序：官方赛事 > 含金量 > 主办方聚合（用户示例 ACBD） ----
+    # 排序：官方赛事 > 含金量 > 主办方聚合（用户示例 ACBD）
     A = Competition(key="A", title="蓝桥杯全国软件和信息技术专业人才大赛", organizer="E", platform="tianchi")
     B = Competition(key="B", title="大学生创新创业训练计划年会展示", organizer="F", platform="tianchi")
     C = Competition(key="C", title="中国大学生计算机设计大赛", organizer="G", platform="tianchi")
@@ -162,23 +187,28 @@ def main():
     order = [c.key for c in sort_competitions([B, D, C, A])]
     assert order == ["A", "C", "B", "D"], order  # 官方(ABC)在前且按含金量 A,C > B，D 企业赛最后
 
+
+def test_digest_card():
+    new = _sample_new()
+    from src.card import build_digest_card
+
     card = build_digest_card(new, {new[0].key}, bot_name="竞赛雷达", excel_link="", excel_path="data/competitions.xlsx")
     md = [e["text"]["content"] for e in card["elements"] if e.get("text", {}).get("tag") == "lark_md"]
     assert any("共 **3** 场" in m for m in md)
     assert any("今日新增" in m and "1" in m for m in md)  # 摘要含新增数
     assert card["header"]["template"] == "red"  # 有新增表头变红
     assert any("数据来源" in m for m in md)  # 来源说明
-    import json
     assert len(json.dumps(card, ensure_ascii=False)) < 30000
 
     # 无新增时表头蓝色
     card2 = build_digest_card(new, set(), bot_name="竞赛雷达")
     assert card2["header"]["template"] == "blue"
 
-    # ---- Excel 生成（纯标准库 xlsx，校验 zip 结构） ----
+
+def test_excel_export():
+    tmp = _tmpdir("excel")
+    new = _sample_new()
     from src.excel_export import export_excel
-    import zipfile
-    import xml.dom.minidom as minidom
 
     xlsx = os.path.join(tmp, "out.xlsx")
     export_excel(new, {new[0].key}, path=xlsx)
@@ -198,7 +228,29 @@ def main():
         assert "AI+跨境黑客松" in sheet1  # 数据写入
         assert 's="2"' in sheet1  # 新增行样式存在
         assert "蓝桥杯" not in sheet1
-    print("===== 卡片/Excel 自测通过 =====")
+
+
+def test_sanitize():
+    from src.runner import postprocess
+
+    good = Competition(
+        key="x:1", title="某AI数据挑战赛", platform="datafountain",
+        deadline=(date.today() + timedelta(days=10)).isoformat(),
+    )
+    dropped_c = Competition(key="x:2", title="全国大学生英语翻译大赛", platform="AI发现·示例")
+    empty_c = Competition(key="x:3", title="", platform="tianchi")
+    kept, dropped = postprocess([good, dropped_c, empty_c], {})
+    assert [c.key for c in kept] == ["x:1"]
+    reasons = {c.key: r for c, r in dropped}
+    assert "与计算机主题无关" in reasons["x:2"]
+    assert "标题为空" in reasons["x:3"]
+
+
+def main():
+    tests = [v for k, v in sorted(globals().items()) if k.startswith("test_") and callable(v)]
+    for t in tests:
+        t()
+        print(f"PASS {t.__name__}")
     print("\nALL TESTS PASSED")
 
 

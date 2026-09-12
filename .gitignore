@@ -3,6 +3,7 @@ __pycache__/
 *.py[cod]
 .venv/
 venv/
+.pytest_cache/
 
 # 含飞书 Webhook 密钥的本地配置 —— 绝不入库
 config.json

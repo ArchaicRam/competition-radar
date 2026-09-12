@@ -39,7 +39,6 @@ python run_daily.py --export-csv
 | `feishu_webhook` | 飞书群机器人 Webhook（必填，否则不会推送） |
 | `feishu_secret` | 机器人创建时若勾选"签名校验"，填这里的密钥（不勾就留空） |
 | `sources` | 启用的平台列表：`tianchi, datafountain, nowcoder, xfyun, kaggle, saikr` |
-| `only_new` | `true` 只推新发现的比赛（配合 `send_table_daily` 时用于高亮判断） |
 | `digest_when_no_new` | `false` 且未开表格推送时，当天没有新比赛也发一条"今日无新" |
 | `send_table_daily` | `true`（默认）：每天发一张**情报日报卡片**（摘要+今日新增+即将截止+数据来源） |
 | `max_table_rows` | 保留兼容字段（新版卡片不再用大表格，明细都在 Excel 里） |
@@ -132,6 +131,40 @@ python run_daily.py --export-csv     # 导出台账 data/competitions.csv（Exce
 
 > 抓取依然全在本地/CI 执行；LLM 只负责"读页面+提炼"和"写看点"两件事。
 > AI 发现的结果是线索，不是权威信息，报名前请以原链接页面为准。
+
+## 权威竞赛目录与来源清单
+
+**"教育部认可"的权威依据**是 [中国高等教育学会](https://www.cahe.edu.cn) 每年发布的
+《全国普通高校大学生竞赛分析报告》竞赛目录（2025 版共 **84 项**主目录 + 34 项观察目录，
+可在各高校教务处网站检索"全国普通高校大学生竞赛目录"获取最新版，
+汇总页示例见 [锦州医科大学教务处整理](https://jwc.jzmu.edu.cn/info/1207/2099.htm)）。
+
+其中计算机/信息类相关的官方赛事官网（已配置为 AI 情报员种子源，`config.json` 可增删）：
+
+| 赛事 | 官网 | 说明 |
+|---|---|---|
+| 中国国际大学生创新大赛（原"互联网+"） | [cy.ncss.cn](https://cy.ncss.cn/) | 目录第 1 项，教育部等主办 |
+| "挑战杯"课外学术科技作品/创业计划 | [tiaozhanbei.net](http://www.tiaozhanbei.net/) | 含"揭榜挂帅"擂台赛（需求征集类） |
+| 中国大学生计算机设计大赛 | [jsjds.blcu.edu.cn](http://jsjds.blcu.edu.cn/) | 目录第 25 项 |
+| 中国高校计算机大赛（C4） | [c4best.cn](http://www.c4best.cn/) | 天梯/大数据/移动应用/网络技术/AI 创意五赛道 |
+| 蓝桥杯软件和信息技术人才大赛 | [dasai.lanqiao.cn](https://dasai.lanqiao.cn/) | 每年 10 月左右开报名 |
+| 服务外包创新创业大赛 | [fwwb.org.cn](http://www.fwwb.org.cn/) | 企业命题（含"计算机委托"性质的需求发布） |
+| 全国大学生信息安全竞赛 | [ciscn.cn](http://www.ciscn.cn/) | 网络安全方向 CTF |
+| 计算机系统能力大赛（CCF） | [compiler.educg.net](https://compiler.educg.net/) | 编译/OS/数据库等系统方向 |
+| 中国研究生创新实践系列大赛 | [cpipc.acge.org.cn](https://cpipc.acge.org.cn/) | 研电赛/研数模/AI 创新赛等（研究生） |
+| CCF 中国计算机学会 | [ccf.org.cn](https://www.ccf.org.cn/) | CCF BDCI 大数据竞赛、CSP 认证等 |
+| 百度之星 | [star.baidu.com](https://star.baidu.com/) | 老牌程序设计大赛 |
+| 开源之夏 | [summer-ospp.ac.cn](https://summer-ospp.ac.cn/) | 中科院软件所，开源项目/社区编程活动 |
+
+**"计算机委托"类（需求征集/揭榜挂帅/项目招募）**的主要入口：
+
+- 挑战杯"揭榜挂帅"擂台赛（[2026.tiaozhanbei.net](https://2026.tiaozhanbei.net/)，企业发榜、学生揭榜）
+- 中国创新挑战赛（科技部火炬中心，"揭榜比拼"解决企业技术需求，各地科技厅/科技大市场发布需求）
+- 服务外包大赛企业命题（fwwb.org.cn 赛题均为真实企业需求）
+- 开源之夏/GSoC 等开源社区的项目招募（导师制，"委托开发"性质）
+
+> 这些来源走的是 AI 情报员通道（每天抓首页 → LLM 提炼），发现条目标"AI发现·站点名"，
+> 报名前请以官网原文为准。想再加来源：往 `config.json` 的 `seed_sources` 里添一行即可。
 
 ## 数据质量自检
 

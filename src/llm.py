@@ -44,6 +44,7 @@ def chat(
         data=json.dumps(payload, ensure_ascii=False),
         headers={"Content-Type": "application/json", "Authorization": f"Bearer {api_key}"},
         timeout=timeout,
+        retries=1,  # LLM 接口偶发 5xx/超时很常见，幂等推理请求可安全重试
     )
     if status != 200:
         raise LLMError(f"LLM 接口错误 {status}: {raw.decode('utf-8', 'ignore')[:300]}")

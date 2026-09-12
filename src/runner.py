@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import logging
 import re
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
 from typing import Any, Dict, List, Optional, Tuple
 
@@ -47,17 +48,28 @@ def run(
 
     all_comps: List[Competition] = []
     errors: List[Dict[str, str]] = []
-    for name in enabled:
+
+    def _fetch_one(name: str):
         try:
             f = fetchers_mod.build(name, config)
             comps = f.fetch()
             log.info("[%s] 抓到 %d 场", name, len(comps))
-            all_comps.extend(comps)
+            return name, comps, None
         except FetcherSkip as e:
             log.info("[%s] 跳过: %s", name, e)
+            return name, [], None
         except Exception as e:  # noqa: BLE001
-            errors.append({"source": name, "error": str(e)})
             log.warning("[%s] 抓取失败: %s", name, e)
+            return name, [], str(e)
+
+    if enabled:
+        # 各平台互相独立，并行抓取缩短总时长；pool.map 保持 enabled 顺序
+        with ThreadPoolExecutor(max_workers=min(6, len(enabled))) as pool:
+            for name, comps, err in pool.map(_fetch_one, enabled):
+                if err:
+                    errors.append({"source": name, "error": err})
+                else:
+                    all_comps.extend(comps)
 
     all_comps = _dedup(all_comps)
 
@@ -73,28 +85,41 @@ def run(
         except Exception as e:  # noqa: BLE001
             log.warning("AI 情报员失败: %s", e)
 
-    all_comps = postprocess(all_comps, config)
-
-    # 排序：教育部A类优先 -> 同一主办方聚合 -> 截止日期升序
-    all_comps = official.sort_competitions(all_comps)
+    all_comps, dropped = postprocess(all_comps, config)
 
     new, updated = store.diff(all_comps)
     log.info("共 %d 场，其中新 %d 场、更新 %d 场", len(all_comps), len(new), len(updated))
+
+    # 异常检测：全部数据源失败，或总数比上一轮骤降过半 → 显式告警，避免平台改版后默默空跑
+    prev_total = int(store.data.get("last_total") or 0)
+    all_failed = bool(enabled) and len(errors) >= len(enabled)
+    collapsed = not all_failed and prev_total >= 10 and len(all_comps) < prev_total // 2
 
     result: Dict[str, Any] = {
         "total": len(all_comps),
         "new": len(new),
         "updated": len(updated),
-        "errors": errors,    }
+        "dropped": len(dropped),
+        "errors": errors,
+    }
 
     if dry_run:
         print(_dry_run_text(new, updated, all_comps))
         return result
 
+    if all_failed or collapsed:
+        try:
+            _alert_anomaly(config, notifier, errors, len(all_comps), prev_total, collapsed)
+        except Exception as e:  # noqa: BLE001
+            log.warning("告警发送失败: %s", e)
+
     bot_name = config.get("bot_name", "竞赛雷达")
     # 推送环节的失败不应阻断状态落库，否则同样的内容会重复推送
     try:
-        if config.get("send_table_daily", True):
+        if all_failed and not all_comps:
+            # 无任何可用数据，推日报只会误导（"共 0 场"）；告警已发，等下轮恢复
+            log.warning("全部数据源失败且无数据，跳过正常日报推送")
+        elif config.get("send_table_daily", True):
             excel_path = _export_excel(config, all_comps, new)
             if excel_path:
                 result["excel"] = excel_path
@@ -118,14 +143,18 @@ def run(
             card_excel_link = sheet_url or config.get("excel_link", "") or ""
             ai_digest_text = ""
             if config.get("ai_digest"):
-                from .ai_digest import digest
+                # AI 看点只是锦上添花：失败就降级为空文本，不能拖垮整张日报卡
+                try:
+                    from .ai_digest import digest
 
-                ai_digest_text = digest(new, config)
+                    ai_digest_text = digest(new, config)
+                except Exception as e:  # noqa: BLE001
+                    log.warning("AI 今日看点失败（日报照发）: %s", e)
             card = build_digest_card(
                 all_comps,
                 {c.key for c in new},
                 bot_name=bot_name,
-                deadline_alert_days=int(config.get("deadline_alert_days", 7)),
+                deadline_alert_days=int(config.get("deadline_alert_days", 14)),
                 excel_link=card_excel_link,
                 excel_path=excel_path or "",
                 ai_digest_text=ai_digest_text,
@@ -138,7 +167,7 @@ def run(
             message = build_message(
                 new, updated,
                 max_items=int(config.get("max_items_per_push", 20)),
-                deadline_alert_days=int(config.get("deadline_alert_days", 7)),
+                deadline_alert_days=int(config.get("deadline_alert_days", 14)),
                 bot_name=bot_name,
             )
             if message:
@@ -151,6 +180,7 @@ def run(
     except Exception as e:  # noqa: BLE001
         log.warning("推送环节失败（状态仍会落库）: %s", e)
 
+    store.data["last_total"] = len(all_comps)
     store.update(all_comps)
     if export_csv_path:
         path = export_csv(store, export_csv_path)
@@ -191,6 +221,30 @@ def _push_text(config, notifier, text) -> bool:
         notifier.send_text(text)
         return True
     return False
+
+
+def _alert_anomaly(config, notifier, errors, total, prev_total, collapsed) -> None:
+    """扫描结果异常时发显式告警，区别于正常的"今日无新"。
+
+    触发条件：全部数据源抓取失败（all_failed），
+    或总数比上一轮骤降过半（collapsed，通常是平台改版/网络异常）。
+    """
+    bot_name = config.get("bot_name", "竞赛雷达")
+    lines = [f"⚠️ {bot_name} 扫描异常，请留意", ""]
+    if errors:
+        lines.append(f"抓取失败的数据源（{len(errors)} 个）：")
+        lines.extend(f"- {e['source']}: {e['error'][:100]}" for e in errors)
+    if collapsed:
+        lines.append(
+            f"本轮仅 {total} 场（上一轮 {prev_total} 场，骤降过半），"
+            "可能有平台改版或网络异常。"
+        )
+    lines.append("")
+    lines.append("可在 GitHub Actions 页面查看日志，或本地 `python run_daily.py --dry-run` 排查。")
+    if not _push_text(config, notifier, "\n".join(lines)):
+        log.warning("告警未发送：未配置发送通道")
+    else:
+        log.warning("已发送扫描异常告警（errors=%d, total=%d, prev=%d）", len(errors), total, prev_total)
 
 
 def _export_excel(config, all_comps, new) -> Optional[str]:
@@ -282,11 +336,15 @@ def _dedup(comps: List[Competition]) -> List[Competition]:
     return out
 
 
-def postprocess(comps: List[Competition], config: Dict[str, Any]) -> List[Competition]:
+def postprocess(
+    comps: List[Competition],
+    config: Dict[str, Any],
+) -> Tuple[List[Competition], List[Tuple[Competition, str]]]:
     """共享后处理：去重 -> 数据校验 -> 官方赛事报名时间兜底 -> 排序。
 
     定时任务（runner.run）和手动同步（resync_sheet）都走这里，
     保证表格/卡片与真实运行行为一致。
+    返回 (保留的比赛, 被数据质量拦截的 (比赛, 原因) 列表)。
     """
     comps = _dedup(comps)
     comps, dropped = _sanitize(comps)
@@ -315,7 +373,7 @@ def postprocess(comps: List[Competition], config: Dict[str, Any]) -> List[Compet
             dl = _parse_dt(c.deadline)
             if dl and dl.date() >= today:
                 c.status = "报名中"
-    return official.sort_competitions(kept)
+    return official.sort_competitions(kept), dropped
 
 
 def _dry_run_text(new, updated, all_comps) -> str:

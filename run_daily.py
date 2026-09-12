@@ -93,7 +93,7 @@ def main():
         card = build_digest_card(
             demo_comps, demo_new,
             bot_name=config.get("bot_name", "竞赛雷达"),
-            deadline_alert_days=int(config.get("deadline_alert_days", 7)),
+            deadline_alert_days=int(config.get("deadline_alert_days", 14)),
             excel_link=config.get("excel_link", "") or "",
             excel_path="data/competitions.xlsx",
         )
@@ -102,9 +102,13 @@ def main():
         return
 
     if args.reset:
-        from src.storage import Store
-        Store(config["data_file"]).reset()
-        print("已清空已见记录。")
+        if args.dry_run:
+            # --dry-run 承诺"不改状态"，reset 优先级服从它
+            print("--dry-run 模式下忽略 --reset（不修改状态）。")
+        else:
+            from src.storage import Store
+            Store(config["data_file"]).reset()
+            print("已清空已见记录。")
 
     sources = [s.strip() for s in args.sources.split(",") if s.strip()] if args.sources else None
     result = run(
