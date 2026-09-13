@@ -143,8 +143,7 @@ a{color:inherit;text-decoration:none}
 header{position:sticky;top:0;z-index:9;background:rgba(255,255,255,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
 header .wrap{display:flex;align-items:center;justify-content:space-between;height:58px}
 .logo{font-weight:800;font-size:16px;letter-spacing:-.01em}
-.logo .m{font-family:var(--mono);color:var(--accent)}
-.logo .caret{display:inline-block;width:8px;height:15px;background:var(--accent);vertical-align:-2px;margin-left:3px;animation:blink 1.1s steps(1) infinite}
+.logo .m{font-family:var(--mono);color:var(--accent);animation:blink 1.1s steps(1) infinite}
 header .upd{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);letter-spacing:.06em}
 @keyframes blink{50%{opacity:0}}
 
@@ -202,9 +201,6 @@ h2 .n{font-family:var(--mono);font-size:12px;color:var(--ink-3);font-weight:400;
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:12px}
 .card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;display:flex;flex-direction:column;gap:9px;transition:all .15s}
 .card:hover{transform:translateY(-2px);border-color:var(--ink)}
-.card.r3{border-top:3px solid var(--red)}
-.card.r2{border-top:3px solid var(--orange)}
-.card.r1{border-top:3px solid var(--green)}
 .card.today{box-shadow:0 0 0 2px var(--accent)}
 .card .top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
 .card .title{font-weight:700;font-size:14.5px;line-height:1.45}
@@ -225,13 +221,12 @@ h2 .n{font-family:var(--mono);font-size:12px;color:var(--ink-3);font-weight:400;
 .empty{color:var(--ink-3);text-align:center;padding:48px 0;font-family:var(--mono);font-size:13px}
 footer{border-top:1px solid var(--line);margin-top:54px;padding:24px 0 44px;color:var(--ink-3);font-size:12.5px}
 footer .m{font-family:var(--mono);color:var(--accent)}
-footer .caret{display:inline-block;width:7px;height:13px;background:var(--accent);vertical-align:-2px;margin-left:2px;animation:blink 1.1s steps(1) infinite}
 @media (max-width:720px){.banner{padding:34px 24px 30px;border-radius:18px}}
 </style>
 </head>
 <body>
 <header><div class="wrap">
-  <div class="logo">竞赛雷达<span class="m">_</span><span class="caret"></span></div>
+  <div class="logo">竞赛雷达<span class="m">_</span></div>
   <div class="upd">updated __UPDATED__</div>
 </div></header>
 
@@ -264,7 +259,7 @@ footer .caret{display:inline-block;width:7px;height:13px;background:var(--accent
 
 <footer><div class="wrap">
   <div>数据由「竞赛雷达」每日自动抓取与 AI 复核，仅供参考；报名前请以赛事官网原文为准。</div>
-  <div>来源：阿里云天池 · DataFountain · 科大讯飞 · 牛客 · Kaggle · CTFtime · 官方赛事渠道 · AI 情报员 <span class="m">EOF</span><span class="caret"></span></div>
+  <div>来源：阿里云天池 · DataFountain · 科大讯飞 · 牛客 · Kaggle · CTFtime · 官方赛事渠道 · AI 情报员 <span class="m">EOF _</span></div>
 </div></footer>
 
 <script id="data" type="application/json">__DATA__</script>
@@ -274,13 +269,17 @@ const q = document.getElementById('q'), chipsEl = document.getElementById('chips
 const GROUPS = [["报名中","SIGN-UP","var(--green)"],["进行中","LIVE","var(--accent)"],["未开始","UPCOMING","var(--ink-3)"]];
 let active = {tag:null};
 
-/* 打字机：像终端一样循环输出，55ms 打字 / 停 2.2s / 逐字删除 */
+/* 打字机：循环播报实时数据摘要，55ms 打字 / 停 2.2s / 逐字删除 */
+const nTotal = DATA.length,
+      nNew = DATA.filter(x=>x.today).length,
+      nDl = DATA.filter(x=>{const n=daysLeft(x.deadline);return n!==null&&n>=0&&n<=7}).length,
+      nOff = DATA.filter(x=>x.official).length,
+      nSrc = new Set(DATA.map(x=>x.platform)).size;
 const LINES = [
-  "$ python run_daily.py --scan",
-  "$ [tianchi] 已抓取 26 场 | [ctftime] 已抓取 30 场",
-  "$ AI 阶段核实完成 —— 已结束赛事已剔除",
-  "$ cat 今日新增.txt",
-  "$ flag{deadline_is_coming}",
+  "正在监控 " + nSrc + " 个赛事渠道，已收录 " + nTotal + " 场比赛",
+  "今日新增 " + nNew + " 场，" + nDl + " 场将在 7 天内截止",
+  "其中教育部认定的官方赛事 " + nOff + " 场",
+  "报名倒计时，已同步到每一张卡片",
 ];
 (function(){ const el = document.getElementById('typewriter'); let li=0, ci=0, del=false;
   (function tick(){ const line = LINES[li];
@@ -315,9 +314,8 @@ function dlTag(x){ const n=daysLeft(x.deadline);
   const cls=n<=3?"soon":n<=7?"week":"ok";
   return '<span class="tag dl '+cls+'">⏰ '+n+' 天后截止</span>'; }
 function card(x){
-  const r={"高":3,"中":2,"低":1}[x.rating]||0;
   const a=x.url?'<a class="title" href="'+x.url+'" target="_blank" rel="noopener">'+x.title+'</a>':'<span class="title">'+x.title+'</span>';
-  return '<div class="card r'+r+(x.today?' today':'')+'">'
+  return '<div class="card'+(x.today?' today':'')+'">'
     +'<div class="top">'+a+'<span class="badge '+x.rating+'">'+x.rating+'</span></div>'
     +'<div class="meta"><b>'+(x.organizer||"主办方未知")+'</b>'+(x.type?' · '+x.type:'')+' · '+x.category+'</div>'
     +'<div class="foot">'+(x.official?'<span class="tag official">教育部目录</span>':'')
