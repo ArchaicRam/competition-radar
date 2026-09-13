@@ -152,6 +152,17 @@ def is_low_value(title: str = "") -> bool:
     return any(k in (title or "") for k in LOW_VALUE_TITLE_PATTERNS)
 
 
+def is_irrelevant(title: str = "", platform: str = "") -> bool:
+    """统一的相关性兜底：跑题（语言/文科/设计/招募公告等）一律剔除；
+    知识竞赛类低质模式只作用于聚合来源——技术平台（天池/讯飞等）的
+    "问答""答疑"是合法 NLP 任务名，不做低质过滤。"""
+    if is_off_topic(title, platform=platform):
+        return True
+    if (platform or "").split("·")[0] in ("tianchi", "xfyun", "datafountain", "kaggle", "ctftime"):
+        return False
+    return is_low_value(title)
+
+
 def concrete_stage(status: str = "", deadline: str = "") -> str:
     """阶段列规范化：只允许具体状态，绝不输出"待核实"或空值（硬性要求）。
 
@@ -181,12 +192,31 @@ _OFF_TOPIC_TITLE_KEYS = [
     # 外语类
     "外语", "英语", "词汇", "翻译", "日语", "法语", "德语", "俄语", "韩语",
     "泰语", "西班牙语", "阿拉伯语", "涉外",
-    # 人文/语言表达类
+    # 人文/语言表达类（含中语言文字类）
     "演讲", "朗诵", "辩论", "征文", "写作", "作文", "文学", "诗词", "诗歌",
-    "普通话", "口译", "笔译",
+    "普通话", "口译", "笔译", "语言文字", "汉语", "诵读", "规范字",
     # 文体/传媒类
     "书法", "绘画", "摄影", "短视频", "微电影", "配音", "主持", "导游",
     "声乐", "舞蹈", "歌唱", "动漫",
+]
+
+# 与计算机"稍有关系但技术性弱"的赛（商科/文科/设计/职业类）以及
+# 根本不是比赛的公告（招募/招聘）——同样确定性剔除。
+_WEAK_TECH_TITLE_KEYS = [
+    # 商科/营销/文科
+    "跨境电商", "外贸", "市场营销", "市场调查", "营销", "直播", "带货",
+    "广告艺术", "新文科", "金融挑战", "投资理财",
+    # 设计类（视觉/媒体，技术性弱）
+    "数字交互媒体", "媒体设计", "视觉传达", "平面设计", "包装设计",
+    "环境设计", "服装设计", "影视", "编导",
+    # 职业发展/综合技能（非技术赛道为主）
+    "职业发展", "职业规划", "职业生涯", "职业院校技能", "求职",
+    "创青春", "技能应用赛",
+    # 纯考试类数学（数学建模保留，编程强相关）
+    "数学竞赛",
+    # 不是比赛的公告
+    "招募", "宣传大使", "校园大使", "协办院校", "联合招聘", "招聘会",
+    "双选会", "夏季招聘", "秋季招聘",
 ]
 
 # 科技属性覆盖：标题含这些词时不按跑题处理（如"AI 英语口语训练平台开发赛"）
@@ -199,17 +229,20 @@ _TECH_OVERRIDE_KEYS = [
 
 
 def is_off_topic(title: str = "", organizer: str = "", platform: str = "") -> bool:
-    """标题明显属于外语/人文/文体类且无任何科技属性 → 与本项目无关。
+    """标题明显属于外语/人文/文体类，或属于技术性弱的商科/设计/职业类，
+    或根本是招募/招聘公告 → 与本项目无关。
 
     仅用于综合来源（AI 发现 / 赛氪等聚合站）；
-    tianchi/xfyun/datafountain/kaggle 等技术平台本身只发数据/AI 赛事，
+    tianchi/xfyun/datafountain/kaggle/ctftime 等技术平台本身只发技术赛事，
     标题里的"翻译""词汇"等词多为 NLP 任务名，不做跑题过滤。
     """
-    if (platform or "").split("·")[0] in ("tianchi", "xfyun", "datafountain", "kaggle"):
+    if (platform or "").split("·")[0] in ("tianchi", "xfyun", "datafountain", "kaggle", "ctftime"):
         return False
     t = title or ""
     if any(k in t for k in _TECH_OVERRIDE_KEYS):
         return False
+    if any(k in t for k in _WEAK_TECH_TITLE_KEYS):
+        return True
     return any(k in t for k in _OFF_TOPIC_TITLE_KEYS)
 
 

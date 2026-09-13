@@ -20,7 +20,12 @@ from datetime import datetime
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from src.official import categorize, concrete_stage, prestige  # noqa: E402
+from src.official import (
+    categorize,
+    concrete_stage,
+    is_irrelevant,
+    prestige,
+)  # noqa: E402
 from src.platforms import PLATFORM_NAMES  # noqa: E402
 
 # 含金量颜色（与在线表格一致：高=红、中=橙、低=绿）
@@ -50,6 +55,11 @@ def load_competitions(state_path: str) -> list:
     today = datetime.now().date()
     items = []
     for d in state.get("competitions", {}).values():
+        title = (d.get("title") or "").strip()
+        platform = d.get("platform", "")
+        # 与日报同一套相关性兜底：语言/文科/设计/职业类与招募公告不上网页
+        if not title or is_irrelevant(title, platform=platform):
+            continue
         deadline = (d.get("deadline") or "").strip()
         try:
             dl_date = datetime.strptime(deadline[:10], "%Y-%m-%d").date() if deadline else None

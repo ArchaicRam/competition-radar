@@ -287,11 +287,13 @@ def test_sanitize():
         key="x:1", title="某AI数据挑战赛", platform="datafountain",
         deadline=(date.today() + timedelta(days=10)).isoformat(),
     )
-    undated = Competition(key="x:4", title="某开源活动项目招募", platform="AI发现·示例")
+    undated = Competition(key="x:4", title="某云原生开发者活动", platform="AI发现·示例")
     pending = Competition(key="x:5", title="某黑客松活动", platform="AI发现·示例", status="待核实")
     dropped_c = Competition(key="x:2", title="全国大学生英语翻译大赛", platform="AI发现·示例")
     empty_c = Competition(key="x:3", title="", platform="tianchi")
-    kept, dropped = postprocess([good, undated, pending, dropped_c, empty_c], {})
+    recruit = Competition(key="x:6", title="某大赛校园大使招募", platform="AI发现·示例")
+    weak = Competition(key="x:7", title="全国大学生跨境电商专业能力大赛", platform="AI发现·示例")
+    kept, dropped = postprocess([good, undated, pending, dropped_c, empty_c, recruit, weak], {})
     assert [c.key for c in kept] == ["x:1", "x:4", "x:5"]
     by_key = {c.key: c for c in kept}
     # 阶段硬性要求：绝不出现"待核实"/空值
@@ -300,6 +302,8 @@ def test_sanitize():
     assert by_key["x:5"].status == "进行中"   # 待核实 + 无截止 → 具体化
     reasons = {c.key: r for c, r in dropped}
     assert "与计算机主题无关" in reasons["x:2"]
+    assert "与计算机主题无关" in reasons["x:6"]  # 招募公告不是比赛
+    assert "与计算机主题无关" in reasons["x:7"]  # 技术性弱的商科类
     assert "标题为空" in reasons["x:3"]
 
     # concrete_stage 各分支
