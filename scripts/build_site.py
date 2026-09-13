@@ -94,13 +94,15 @@ def load_competitions(state_path: str) -> list:
 
 
 def build_html(items: list, sheet_url: str = "", generated_at: str = "") -> str:
+    # "</" 转义成 "<\/"，防止内嵌 JSON 里出现 </script> 提前闭合标签
     data_json = json.dumps(items, ensure_ascii=False).replace("</", "<\\/")
     sheet_btn = (
-        f'<a class="btn ghost" href="{_esc(sheet_url)}" target="_blank" rel="noopener">📊 在线表格</a>'
+        f'<a class="btn line" href="{_esc(sheet_url)}" target="_blank" rel="noopener">在线表格 <span class="arr">→</span></a>'
         if sheet_url else ""
     )
-    return _TEMPLATE.replace("__DATA__", data_json).replace("__SHEET_BTN__", sheet_btn) \
-                    .replace("__UPDATED__", _esc(generated_at))
+    return (_TEMPLATE.replace("__DATA__", data_json)
+            .replace("__SHEET_BTN__", sheet_btn)
+            .replace("__UPDATED__", _esc(generated_at)))
 
 
 def _esc(s: str) -> str:
@@ -112,104 +114,189 @@ _TEMPLATE = """<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>竞赛雷达 · 大学生计算机竞赛聚合</title>
+<title>竞赛雷达 — 大学生计算机竞赛，一页看完</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0a0e14;--panel:#111826;--panel2:#0d1320;--line:#1e2a3d;
-  --text:#d6deeb;--muted:#8b98ab;--accent:#4ade80;--accent2:#38bdf8;
-  --red:#ff5c5c;--orange:#ffb020;--green:#26de81;--blue:#5b9dff;
+  color-scheme: light;
+  --paper:#ffffff; --wash:#f8fafc; --line:#e6eaf1;
+  --ink:#0f172a; --ink-2:#475569; --ink-3:#94a3b8;
+  --accent:#2563eb; --accent-soft:#eff6ff; --hl:#bfdbfe;
+  --red:#dc2626; --red-soft:#fef2f2;
+  --orange:#d97706; --orange-soft:#fffbeb;
+  --green:#059669; --green-soft:#ecfdf5;
+  --mono:"JetBrains Mono","SFMono-Regular",Consolas,Menlo,monospace;
+  --sans:Inter,-apple-system,"PingFang SC","Microsoft YaHei","Segoe UI",sans-serif;
+  --radius:14px;
 }
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg);color:var(--text);font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;line-height:1.6}
-code,.mono{font-family:ui-monospace,Consolas,"JetBrains Mono",monospace}
-a{color:var(--accent2);text-decoration:none}a:hover{text-decoration:underline}
-.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
-header{border-bottom:1px solid var(--line);background:rgba(10,14,20,.85);position:sticky;top:0;backdrop-filter:blur(8px);z-index:9}
-header .wrap{display:flex;align-items:center;justify-content:space-between;height:56px}
-.logo{font-weight:700;font-size:17px;color:var(--text)}.logo span{color:var(--accent)}
-.hero{padding:56px 0 28px}
-.hero h1{font-size:34px;line-height:1.25}
-.hero h1 em{font-style:normal;color:var(--accent)}
-.hero p.sub{color:var(--muted);margin:10px 0 22px;font-size:15px}
-.btns{display:flex;gap:10px;flex-wrap:wrap}
-.btn{display:inline-block;padding:9px 18px;border-radius:8px;font-weight:600;font-size:14px;border:1px solid var(--line)}
-.btn.primary{background:var(--accent);color:#06210f;border-color:transparent}
-.btn.primary:hover{filter:brightness(1.08);text-decoration:none}
-.btn.ghost{color:var(--text)}.btn.ghost:hover{border-color:var(--accent2);text-decoration:none}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:26px 0 8px}
-.stat{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
-.stat b{display:block;font-size:26px;color:var(--accent)}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7}
+::selection{background:var(--hl)}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1060px;margin:0 auto;padding:0 22px}
+.mono{font-family:var(--mono)}
+
+/* 顶栏 */
+header{position:sticky;top:0;z-index:9;background:rgba(255,255,255,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:58px}
+.logo{font-weight:800;font-size:16px;letter-spacing:-.01em}
+.logo .m{font-family:var(--mono);color:var(--accent)}
+.logo .caret{display:inline-block;width:8px;height:15px;background:var(--accent);vertical-align:-2px;margin-left:3px;animation:blink 1.1s steps(1) infinite}
+header .upd{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);letter-spacing:.06em}
+@keyframes blink{50%{opacity:0}}
+
+/* Hero banner：圆角大卡片 + 点阵纹理 + 柔光 */
+.banner{position:relative;margin-top:26px;border:1px solid var(--line);border-radius:26px;overflow:hidden;
+  background:
+    radial-gradient(640px 320px at 88% -10%, rgba(37,99,235,.09), transparent 62%),
+    radial-gradient(520px 280px at -5% 110%, rgba(34,211,238,.08), transparent 60%),
+    var(--wash);
+  padding:52px 54px 44px}
+.banner::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:radial-gradient(rgba(37,99,235,.14) 1px,transparent 1px);background-size:22px 22px;
+  -webkit-mask-image:linear-gradient(115deg,transparent 30%,#000 90%);mask-image:linear-gradient(115deg,transparent 30%,#000 90%)}
+.banner-grid{position:relative}
+.kicker{font-family:var(--mono);font-size:14px;color:var(--accent);min-height:24px;letter-spacing:.02em}
+.cursor{display:inline-block;width:9px;height:17px;background:var(--accent);vertical-align:-3px;margin-left:2px;animation:blink 1s steps(1) infinite}
+.hero h1{font-size:clamp(30px,3.6vw,42px);font-weight:800;letter-spacing:-.03em;line-height:1.2;margin:10px 0 14px}
+.hl{background:linear-gradient(transparent 62%,var(--hl) 62%)}
+.hero .sub{font-size:15.5px;color:var(--ink-2);max-width:560px}
+.cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:10px;font-weight:600;font-size:14px;border:1.5px solid transparent;transition:all .15s}
+.btn.dark{background:var(--ink);color:var(--paper);box-shadow:0 12px 26px -12px rgba(15,23,42,.55)}
+.btn.dark:hover{transform:translateY(-2px)}
+.btn.line{border-color:var(--line);color:var(--ink);background:transparent}
+.btn.line:hover{border-color:var(--ink);transform:translateY(-2px)}
+.btn .arr{font-family:var(--mono)}
+
+/* 统计条 */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:22px}
+.stat{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:14px 18px}
+.stat b{display:block;font-family:var(--mono);font-size:26px;font-weight:700;letter-spacing:-.02em}
 .stat.hot b{color:var(--red)}
-.stat span{font-size:13px;color:var(--muted)}
-.filters{position:sticky;top:56px;background:var(--bg);padding:12px 0;z-index:8;border-bottom:1px solid var(--line)}
-.search{width:100%;padding:9px 14px;border-radius:8px;border:1px solid var(--line);background:var(--panel2);color:var(--text);font-size:14px;outline:none}
-.search:focus{border-color:var(--accent2)}
-.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
-.chip{padding:4px 12px;border-radius:999px;border:1px solid var(--line);background:var(--panel2);color:var(--muted);font-size:12.5px;cursor:pointer;user-select:none}
-.chip.on{color:#06210f;background:var(--accent);border-color:transparent;font-weight:700}
-.chip.on.red{background:var(--red);color:#2b0505}
-.chip.on.orange{background:var(--orange);color:#2b1a02}
-.chip.on.blue{background:var(--blue);color:#04162e}
-section{margin:30px 0}
-h2{font-size:19px;margin-bottom:14px;display:flex;align-items:center;gap:8px}
-h2 .n{color:var(--muted);font-weight:400;font-size:14px}
-.dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+.stat span{font-size:12.5px;color:var(--ink-2)}
+.stat .lbl{font-family:var(--mono);font-size:10px;color:var(--ink-3);letter-spacing:.16em}
+
+/* 筛选区 */
+.filters{position:sticky;top:58px;z-index:8;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:13px 0;margin-top:34px}
+.search{width:100%;padding:10px 16px;border-radius:10px;border:1px solid var(--line);background:var(--wash);color:var(--ink);font-family:var(--mono);font-size:13.5px;outline:none;transition:border-color .15s}
+.search:focus{border-color:var(--accent);background:var(--paper)}
+.search::placeholder{color:var(--ink-3)}
+.chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:11px}
+.chip{padding:4px 13px;border-radius:999px;border:1px solid var(--line);background:var(--paper);color:var(--ink-2);font-size:12px;font-family:var(--mono);cursor:pointer;user-select:none;transition:all .12s}
+.chip:hover{border-color:var(--ink)}
+.chip.on{background:var(--ink);border-color:var(--ink);color:#fff;font-weight:600}
+.chip.on.blue{background:var(--accent);border-color:var(--accent)}
+.chip.on.red{background:var(--red);border-color:var(--red)}
+.chip.on.orange{background:var(--orange);border-color:var(--orange)}
+.chip.on.green{background:var(--green);border-color:var(--green)}
+
+/* 分组与卡片 */
+section{margin:38px 0 10px}
+h2{font-size:20px;font-weight:800;letter-spacing:-.02em;display:flex;align-items:baseline;gap:10px;margin-bottom:16px}
+h2 .en{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--ink-3);letter-spacing:.16em}
+h2 .n{font-family:var(--mono);font-size:12px;color:var(--ink-3);font-weight:400;margin-left:auto}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:12px}
-.card{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--line);border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:8px}
-.card:hover{border-color:#2d3d57}
-.card.高{border-left-color:var(--red)}.card.中{border-left-color:var(--orange)}.card.低{border-left-color:var(--green)}
-.card.today{box-shadow:0 0 0 1px var(--accent2)}
-.card .top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
-.card .title{font-weight:700;font-size:15px;color:var(--text)}
-.card .title:hover{color:var(--accent2)}
-.badge{flex-shrink:0;font-size:11.5px;padding:2px 9px;border-radius:999px;font-weight:700}
-.badge.高{background:rgba(255,92,92,.14);color:var(--red)}
-.badge.中{background:rgba(255,176,32,.14);color:var(--orange)}
-.badge.低{background:rgba(38,222,129,.14);color:var(--green)}
-.meta{font-size:13px;color:var(--muted)}
-.meta b{color:var(--text);font-weight:600}
-.foot{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:auto;padding-top:4px}
-.tag{font-size:11.5px;padding:2px 9px;border-radius:6px;background:var(--panel2);border:1px solid var(--line);color:var(--muted)}
-.tag.dl.soon{background:rgba(255,92,92,.14);color:var(--red);border-color:transparent;font-weight:700}
-.tag.dl.week{background:rgba(255,176,32,.14);color:var(--orange);border-color:transparent}
-.tag.dl.ok{color:var(--green)}
-.tag.new{background:rgba(56,189,248,.14);color:var(--accent2);border-color:transparent;font-weight:700}
-.tag.official{background:rgba(255,215,0,.12);color:#ffd700;border-color:transparent}
-.empty{color:var(--muted);text-align:center;padding:40px 0}
-footer{border-top:1px solid var(--line);margin-top:50px;padding:22px 0 40px;color:var(--muted);font-size:13px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;display:flex;flex-direction:column;gap:9px;transition:all .15s}
+.card:hover{transform:translateY(-2px);border-color:var(--ink)}
+.card.r3{border-top:3px solid var(--red)}
+.card.r2{border-top:3px solid var(--orange)}
+.card.r1{border-top:3px solid var(--green)}
+.card.today{box-shadow:0 0 0 2px var(--accent)}
+.card .top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.card .title{font-weight:700;font-size:14.5px;line-height:1.45}
+.card .title:hover{color:var(--accent)}
+.badge{flex-shrink:0;font-family:var(--mono);font-size:11px;font-weight:700;padding:2px 10px;border-radius:999px}
+.badge.高{background:var(--red-soft);color:var(--red)}
+.badge.中{background:var(--orange-soft);color:var(--orange)}
+.badge.低{background:var(--green-soft);color:var(--green)}
+.meta{font-size:13px;color:var(--ink-2)}
+.meta b{color:var(--ink);font-weight:600}
+.foot{display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin-top:auto;padding-top:4px}
+.tag{font-family:var(--mono);font-size:11px;padding:2px 9px;border-radius:7px;background:var(--wash);border:1px solid var(--line);color:var(--ink-2)}
+.tag.dl.soon{background:var(--red-soft);color:var(--red);border-color:transparent;font-weight:700}
+.tag.dl.week{background:var(--orange-soft);color:var(--orange);border-color:transparent;font-weight:600}
+.tag.dl.ok{background:var(--green-soft);color:var(--green);border-color:transparent}
+.tag.new{background:var(--accent-soft);color:var(--accent);border-color:transparent;font-weight:700}
+.tag.official{background:#fffbeb;color:#b45309;border-color:#fde68a;font-weight:600}
+.empty{color:var(--ink-3);text-align:center;padding:48px 0;font-family:var(--mono);font-size:13px}
+footer{border-top:1px solid var(--line);margin-top:54px;padding:24px 0 44px;color:var(--ink-3);font-size:12.5px}
+footer .m{font-family:var(--mono);color:var(--accent)}
+footer .caret{display:inline-block;width:7px;height:13px;background:var(--accent);vertical-align:-2px;margin-left:2px;animation:blink 1.1s steps(1) infinite}
+@media (max-width:720px){.banner{padding:34px 24px 30px;border-radius:18px}}
 </style>
 </head>
 <body>
-<header><div class="wrap"><div class="logo">📡 竞赛<span>雷达</span></div><div class="mono" style="font-size:12.5px;color:var(--muted)">updated __UPDATED__</div></div></header>
-<div class="hero"><div class="wrap">
-  <h1>大学生计算机竞赛，<br><em>一页看完，不再错过。</em></h1>
-  <p class="sub">每天自动扫描天池 / DataFountain / 讯飞 / 牛客 / Kaggle / CTFtime 与权威官方赛事渠道，AI 复核阶段与含金量，一条不漏。</p>
-  <div class="btns"><a class="btn primary" href="#报名中">看正在报名的</a>__SHEET_BTN__</div>
-  <div class="stats">
-    <div class="stat"><b id="st-total">-</b><span>进行中总览</span></div>
-    <div class="stat hot"><b id="st-new">-</b><span>今日新增</span></div>
-    <div class="stat"><b id="st-dl">-</b><span>7 天内截止</span></div>
-    <div class="stat"><b id="st-official">-</b><span>官方赛事</span></div>
-  </div>
-</div></div>
+<header><div class="wrap">
+  <div class="logo">竞赛雷达<span class="m">_</span><span class="caret"></span></div>
+  <div class="upd">updated __UPDATED__</div>
+</div></header>
+
+<div class="wrap">
+  <div class="banner"><div class="banner-grid">
+    <div>
+      <div class="kicker"><span id="typewriter"></span><span class="cursor"></span></div>
+      <h1>大学生计算机竞赛，<br>一页看完，<span class="hl">不再错过。</span></h1>
+      <p class="sub">每天自动扫描天池 / DataFountain / 讯飞 / 牛客 / Kaggle / CTFtime 与权威官方渠道，AI 复核阶段与含金量，只收录技术性强的比赛。</p>
+      <div class="cta-row">
+        <a class="btn dark" href="#报名中">看正在报名的 <span class="arr">→</span></a>
+        __SHEET_BTN__
+      </div>
+    </div>
+    <div class="stats">
+      <div class="stat"><span class="lbl">TOTAL</span><b id="st-total">-</b><span>进行中总览</span></div>
+      <div class="stat hot"><span class="lbl">NEW</span><b id="st-new">-</b><span>今日新增</span></div>
+      <div class="stat"><span class="lbl">DEADLINE</span><b id="st-dl">-</b><span>7 天内截止</span></div>
+      <div class="stat"><span class="lbl">OFFICIAL</span><b id="st-official">-</b><span>官方赛事</span></div>
+    </div>
+  </div></div>
+</div>
+
 <div class="filters"><div class="wrap">
-  <input class="search" id="q" type="search" placeholder="搜索赛事名称 / 主办方…">
+  <input class="search" id="q" type="search" placeholder="$ grep 赛事名称 / 主办方 ...">
   <div class="chips" id="chips"></div>
 </div></div>
+
 <main class="wrap" id="main"></main>
-<footer><div class="wrap">数据由「竞赛雷达」每日自动抓取与 AI 复核，仅供参考；报名前请以赛事官网原文为准。<br>来源：阿里云天池 · DataFountain · 科大讯飞 · 牛客 · Kaggle · CTFtime · 官方赛事渠道 · AI 情报员</div></footer>
+
+<footer><div class="wrap">
+  <div>数据由「竞赛雷达」每日自动抓取与 AI 复核，仅供参考；报名前请以赛事官网原文为准。</div>
+  <div>来源：阿里云天池 · DataFountain · 科大讯飞 · 牛客 · Kaggle · CTFtime · 官方赛事渠道 · AI 情报员 <span class="m">EOF</span><span class="caret"></span></div>
+</div></footer>
+
 <script id="data" type="application/json">__DATA__</script>
 <script>
 const DATA = JSON.parse(document.getElementById('data').textContent);
 const q = document.getElementById('q'), chipsEl = document.getElementById('chips'), main = document.getElementById('main');
-const GROUPS = [["报名中","var(--green)"],["进行中","var(--blue)"],["未开始","var(--muted)"]];
+const GROUPS = [["报名中","SIGN-UP","var(--green)"],["进行中","LIVE","var(--accent)"],["未开始","UPCOMING","var(--ink-3)"]];
 let active = {tag:null};
 
-// 筛选 chips：类别 / 含金量 / 来源 / 今日新增
+/* 打字机：像终端一样循环输出，55ms 打字 / 停 2.2s / 逐字删除 */
+const LINES = [
+  "$ python run_daily.py --scan",
+  "$ [tianchi] 已抓取 26 场 | [ctftime] 已抓取 30 场",
+  "$ AI 阶段核实完成 —— 已结束赛事已剔除",
+  "$ cat 今日新增.txt",
+  "$ flag{deadline_is_coming}",
+];
+(function(){ const el = document.getElementById('typewriter'); let li=0, ci=0, del=false;
+  (function tick(){ const line = LINES[li];
+    if(!del){ el.textContent = line.slice(0, ++ci);
+      if(ci === line.length){ del = true; return setTimeout(tick, 2200); }
+      setTimeout(tick, 55);
+    } else { el.textContent = line.slice(0, --ci);
+      if(ci === 0){ del = false; li = (li+1) % LINES.length; }
+      setTimeout(tick, 22); }
+  })();
+})();
+
 const catSet=[...new Set(DATA.map(x=>x.category))], ratSet=["高","中","低"], srcSet=[...new Set(DATA.map(x=>x.platform))];
 const chips=[...catSet.map(c=>({k:"category",v:c,cls:"blue"})),
-             ...ratSet.map(r=>({k:"rating",v:r,cls:r==="高"?"red":r==="中"?"orange":""})),
              {k:"today",v:"🆕 今日新增",cls:"blue"},
+             ...ratSet.map(r=>({k:"rating",v:r,cls:r==="高"?"red":r==="中"?"orange":"green"})),
              ...srcSet.map(s=>({k:"platform",v:s,cls:""}))];
 chips.forEach(c=>{
   const el=document.createElement("span");el.className="chip";el.textContent=c.v;
@@ -228,8 +315,9 @@ function dlTag(x){ const n=daysLeft(x.deadline);
   const cls=n<=3?"soon":n<=7?"week":"ok";
   return '<span class="tag dl '+cls+'">⏰ '+n+' 天后截止</span>'; }
 function card(x){
+  const r={"高":3,"中":2,"低":1}[x.rating]||0;
   const a=x.url?'<a class="title" href="'+x.url+'" target="_blank" rel="noopener">'+x.title+'</a>':'<span class="title">'+x.title+'</span>';
-  return '<div class="card '+x.rating+(x.today?' today':'')+'">'
+  return '<div class="card r'+r+(x.today?' today':'')+'">'
     +'<div class="top">'+a+'<span class="badge '+x.rating+'">'+x.rating+'</span></div>'
     +'<div class="meta"><b>'+(x.organizer||"主办方未知")+'</b>'+(x.type?' · '+x.type:'')+' · '+x.category+'</div>'
     +'<div class="foot">'+(x.official?'<span class="tag official">教育部目录</span>':'')
@@ -246,13 +334,13 @@ function render(){
     return t.k==="today" ? x.today : x[t.k]===t.v;
   });
   let html="", shown=0;
-  for(const [name,color] of GROUPS){
+  for(const [name,en,color] of GROUPS){
     const g=list.filter(x=>x.status===name);
     if(!g.length) continue;
     shown+=g.length;
-    html+='<section id="'+name+'"><h2><span class="dot" style="background:'+color+'"></span>'+name+' <span class="n">'+g.length+' 场</span></h2><div class="grid">'+g.map(card).join("")+'</div></section>';
+    html+='<section id="'+name+'"><h2>'+name+' <span class="en">'+en+'</span><span class="n">'+g.length+' 场</span></h2><div class="grid">'+g.map(card).join("")+'</div></section>';
   }
-  main.innerHTML = shown ? html : '<div class="empty">没有符合条件的赛事，换个筛选试试。</div>';
+  main.innerHTML = shown ? html : '<div class="empty">[0 results] 没有符合条件的赛事，换个筛选试试_</div>';
   document.getElementById("st-total").textContent=DATA.length;
   document.getElementById("st-new").textContent=DATA.filter(x=>x.today).length;
   document.getElementById("st-dl").textContent=DATA.filter(x=>{const n=daysLeft(x.deadline);return n!==null&&n>=0&&n<=7}).length;
