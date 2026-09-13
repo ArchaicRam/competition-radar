@@ -177,7 +177,7 @@ def discover(seed_sources: List[Dict[str, str]], cfg: Dict[str, Any]) -> List[Co
     out: List[Competition] = []
     if not tasks:
         return out
-    with ThreadPoolExecutor(max_workers=4) as pool:
+    with ThreadPoolExecutor(max_workers=6) as pool:
         for comps in pool.map(_discover_one, [(name, url, cfg) for name, url in tasks]):
             out.extend(comps)
     return out

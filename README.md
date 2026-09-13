@@ -38,7 +38,7 @@ python run_daily.py --export-csv
 |---|---|
 | `feishu_webhook` | 飞书群机器人 Webhook（必填，否则不会推送） |
 | `feishu_secret` | 机器人创建时若勾选"签名校验"，填这里的密钥（不勾就留空） |
-| `sources` | 启用的平台列表：`tianchi, datafountain, nowcoder, xfyun, kaggle, saikr` |
+| `sources` | 启用的平台列表：`tianchi, datafountain, nowcoder, xfyun, kaggle, ctftime, saikr` |
 | `digest_when_no_new` | `false` 且未开表格推送时，当天没有新比赛也发一条"今日无新" |
 | `send_table_daily` | `true`（默认）：每天发一张**情报日报卡片**（摘要+今日新增+即将截止+数据来源） |
 | `max_table_rows` | 保留兼容字段（新版卡片不再用大表格，明细都在 Excel 里） |
@@ -163,6 +163,32 @@ python run_daily.py --export-csv     # 导出台账 data/competitions.csv（Exce
 - 服务外包大赛企业命题（fwwb.org.cn 赛题均为真实企业需求）
 - 开源之夏/GSoC 等开源社区的项目招募（导师制，"委托开发"性质）
 
+### 网络安全专项来源
+
+**CTF 赛事**走正式抓取器（`ctftime` 平台，CTFtime 官方 API，无需 LLM）：
+全球日历一站覆盖，国内权威赛（强网杯、XCTF 联盟分站赛 SCTF/SUCTF/ACTF 等）
+登记后自动进表，"含金量"默认为中、标题命中国内权威安全赛的为高。
+
+**国内官方/部委级安全赛事**（已配为 AI 情报员种子源）：
+
+| 赛事 | 官网 | 说明 |
+|---|---|---|
+| 长城杯·信息安全铁人三项赛 | [ccb.itsec.gov.cn](https://ccb.itsec.gov.cn/) | 国家网信/安全部门指导，线上初赛+分赛区+决赛 |
+| 网鼎杯网络安全大赛 | [wangdingcup.com](https://wangdingcup.com/) | 号称"网络安全奥运会"，规模最大 |
+| 全国大学生信息安全竞赛（CISCN） | [ciscn.cn](http://www.ciscn.cn/) | 教育部目录内高校安全赛事（学校组队报名） |
+| XCTF 国际联赛 | [xctf.org.cn](http://www.xctf.org.cn/) | 亚洲最大网络攻防联赛，对标 DEF CON |
+| 数据安全职业技能竞赛 | [js.afdata.org.cn](https://js.afdata.org.cn/) | 全国行业职业技能竞赛 |
+| 数字中国创新大赛·数字安全赛道 | [szzg.gov.cn](https://www.szzg.gov.cn/) | 网络安全+数据安全双方向 |
+| 工业信息安全技能大赛 | 工信部国家工业信息安全发展研究中心主办 | 工控/车联网安全（官网随届次变化，AI 情报员从资讯站捕获） |
+| 看雪 KCTF | [kanxue.com](https://www.kanxue.com/) | 老牌攻防对抗赛 |
+
+**安全资讯站**（赛讯/报名通知常在这里首发）：FreeBuf、安全客。
+
+**"安全委托"类**（众测/SRC，真实企业漏洞赏金需求）：
+补天漏洞响应平台（[butian.net](https://www.butian.net/)）、漏洞盒子（[vulbox.com](https://www.vulbox.com/)）；
+国际平台 HackerOne / Bugcrowd 可按需自行加进 `seed_sources`。
+这类是"企业委托安全测试"性质的持续需求，不是一次性比赛，报名前注意平台规则与合规要求。
+
 > 这些来源走的是 AI 情报员通道（每天抓首页 → LLM 提炼），发现条目标"AI发现·站点名"，
 > 报名前请以官网原文为准。想再加来源：往 `config.json` 的 `seed_sources` 里添一行即可。
 
@@ -184,6 +210,7 @@ python run_daily.py --export-csv     # 导出台账 data/competitions.csv（Exce
 | **科大讯飞** challenge.xfyun.cn | 官方接口 `/2020/ai-contest/api/contests/contests-list` | 稳定，含全部赛事 |
 | **Kaggle** kaggle.com | 官方 API v1 `/api/v1/competitions/list` | **需要 Kaggle 账号**：kaggle.com -> Settings -> API -> Create New Token，把 username/key 填入配置；未配置则自动跳过 |
 | **牛客** nowcoder.com | 全网 OJ 比赛日历官方接口 `/acm/calendar/contest` | 稳定；含牛客周赛/挑战赛 + AtCoder/Codeforces/LeetCode 等算法赛 |
+| **CTFtime** ctftime.org | 官方 API `/api/v1/events` | 全球 CTF 赛事日历（含国内强网杯/XCTF 分站赛等登记赛事）；deadline 为比赛结束日，报名以官网为准 |
 | **赛氪** saikr.com | — | **暂未接入**：前端为 SPA 且竞赛列表接口未公开，可手动浏览 [saikr.com/contests](https://www.saikr.com/contests) |
 
 ### 飞书机器人怎么建（不需要在开放平台发布任何版本）

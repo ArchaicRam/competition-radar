@@ -12,6 +12,7 @@ SOURCE_INFO: Dict[str, Tuple[str, str]] = {
     "nowcoder": ("牛客竞赛", "https://ac.nowcoder.com/acm/contest/calendar"),
     "xfyun": ("科大讯飞开发者大赛", "https://challenge.xfyun.cn/"),
     "kaggle": ("全球算法竞赛", "https://www.kaggle.com/competitions"),
+    "ctftime": ("CTF赛事日历", "https://ctftime.org/events"),
     "saikr": ("赛氪竞赛网（暂未接入）", "https://www.saikr.com/contests"),
 }
 

@@ -188,6 +188,55 @@ def test_sort_order():
     assert order == ["A", "C", "B", "D"], order  # 官方(ABC)在前且按含金量 A,C > B，D 企业赛最后
 
 
+def test_ctftime_convert():
+    from src.fetchers.ctftime import CtfTimeFetcher
+
+    f = CtfTimeFetcher({})
+    # 用 CTFtime API 真实字段结构的样例（离线验证转换逻辑）
+    ev = {
+        "id": 3265,
+        "title": "VolgaCTF 2026 Final",
+        "start": "2026-09-17T05:00:00+00:00",
+        "finish": "2026-09-17T15:00:00+00:00",
+        "organizers": [{"id": 27094, "name": "VolgaCTF.org"}],
+        "url": "https://volgactf.ru/en/volgactf-2026/final/",
+        "ctftime_url": "https://ctftime.org/event/3265/",
+        "format": "Attack-Defense",
+        "onsite": True,
+        "location": "Russia, Samara",
+        "prizes": "TBA",
+    }
+    c = f._convert(ev)
+    assert c is not None
+    assert c.key == "ctftime:3265"
+    assert c.platform == "ctftime"
+    assert c.title == "VolgaCTF 2026 Final"
+    assert c.deadline == "2026-09-17" and c.enabled_date == "2026-09-17"
+    assert c.organizer == "VolgaCTF.org"
+    assert c.url == "https://volgactf.ru/en/volgactf-2026/final/"  # 官网优先
+    assert c.comp_type == "网络安全·攻防"
+    assert c.reward == ""  # TBA 不展示
+
+    # 缺 finish / 无标题 的坏数据要被拦
+    assert f._convert({**ev, "finish": ""}) is None
+    assert f._convert({**ev, "id": 9, "title": " "}) is None
+    # prizes 文本保留并截断
+    c2 = f._convert({**ev, "id": 7, "format": "Jeopardy",
+                     "prizes": "现金奖励与纪念品，决赛资格与证书，" * 5})
+    assert 0 < len(c2.reward) <= 60
+    assert c2.comp_type == "网络安全"
+
+    # 含金量：ctftime 平台默认中；国内权威安全赛标题命中规则为高
+    from src.official import prestige
+    assert prestige("某国际CTF", "某战队", "ctftime") == "中"
+    assert prestige("第九届强网杯全国网络安全挑战赛", "", "ctftime") == "高"
+    # 安全专项关键词识别
+    from src.official import is_official
+    for t in ["第四届网鼎杯网络安全大赛", "信息安全铁人三项赛（长城杯）",
+              "第四届天网杯网络安全大赛", "第十届工业信息安全技能大赛"]:
+        assert is_official(t, ""), t
+
+
 def test_digest_card():
     new = _sample_new()
     from src.card import build_digest_card

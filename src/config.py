@@ -11,7 +11,7 @@ DEFAULT_CONFIG: Dict[str, Any] = {
     "feishu_secret": "",
     "feishu_chat_id": "",
     "bot_name": "竞赛雷达",
-    "sources": ["tianchi", "datafountain", "nowcoder", "xfyun", "kaggle"],
+    "sources": ["tianchi", "datafountain", "nowcoder", "xfyun", "kaggle", "ctftime"],
     "digest_when_no_new": False,
     "send_table_daily": True,
     "max_table_rows": 0,
@@ -40,6 +40,17 @@ DEFAULT_CONFIG: Dict[str, Any] = {
         {"name": "CCF中国计算机学会", "url": "https://www.ccf.org.cn/"},
         {"name": "百度之星", "url": "https://star.baidu.com/"},
         {"name": "开源之夏", "url": "https://summer-ospp.ac.cn/"},
+        # 网络安全专项（官方赛官网 / 安全资讯站 / 众测委托平台）
+        {"name": "长城杯铁人三项", "url": "https://ccb.itsec.gov.cn/"},
+        {"name": "网鼎杯", "url": "https://wangdingcup.com/"},
+        {"name": "XCTF联赛", "url": "http://www.xctf.org.cn/"},
+        {"name": "看雪安全社区", "url": "https://www.kanxue.com/"},
+        {"name": "FreeBuf", "url": "https://www.freebuf.com/"},
+        {"name": "安全客", "url": "https://www.anquanke.com/"},
+        {"name": "数据安全职业技能竞赛", "url": "https://js.afdata.org.cn/"},
+        {"name": "数字中国创新大赛", "url": "https://www.szzg.gov.cn/"},
+        {"name": "补天漏洞响应平台", "url": "https://www.butian.net/"},
+        {"name": "漏洞盒子", "url": "https://www.vulbox.com/"},
         # 聚合站 / 企业赛 / 高校教务处（可按需增删）
         {"name": "中国软件杯", "url": "https://www.cnsoftbei.com/"},
         {"name": "我爱竞赛网", "url": "https://www.52jingsai.com/"},
@@ -96,7 +107,7 @@ def load_config(path: str = "config.json") -> Dict[str, Any]:
 
 
 def normalize_sources(sources: List[str]) -> List[str]:
-    known = {"tianchi", "datafountain", "nowcoder", "xfyun", "kaggle", "saikr"}
+    known = {"tianchi", "datafountain", "nowcoder", "xfyun", "kaggle", "saikr", "ctftime"}
     out = []
     for s in sources:
         s = (s or "").strip().lower()
