@@ -271,7 +271,7 @@ def _to_competition(it: dict, page_url: str, site: str, anchors: List[tuple] = N
         deadline=deadline,
         reward=reward,
         comp_type=comp_type,
-        status="待核实",
+        status="",  # 阶段由 postprocess 统一补成具体状态（绝不出"待核实"）
         enabled_date="",
         rating=rating,
     )

@@ -366,13 +366,11 @@ def postprocess(
                 c.status = note
         kept.append(c)
 
-    # 状态补齐：有真实截止日期且未过期 → "报名中"（AI 初版的"待核实"改为明确状态）
+    # 阶段补齐：只允许具体状态流出（用户硬性要求：绝不出现"待核实"）。
+    # 有有效截止日期 → 报名中；无截止/截止不可解析 → 进行中
     today = datetime.now().date()
     for c in kept:
-        if (c.status or "").strip() in ("", "待核实") and (c.deadline or "").strip():
-            dl = _parse_dt(c.deadline)
-            if dl and dl.date() >= today:
-                c.status = "报名中"
+        c.status = official.concrete_stage(c.status, c.deadline)
     return official.sort_competitions(kept), dropped
 
 

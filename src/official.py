@@ -152,6 +152,28 @@ def is_low_value(title: str = "") -> bool:
     return any(k in (title or "") for k in LOW_VALUE_TITLE_PATTERNS)
 
 
+def concrete_stage(status: str = "", deadline: str = "") -> str:
+    """阶段列规范化：只允许具体状态，绝不输出"待核实"或空值（硬性要求）。
+
+    - 已是具体状态（报名中/进行中/未开始…）→ 原样保留
+    - "待核实"/空值：有有效截止日期 → "报名中"；无截止或截止不可解析 → "进行中"
+      （"待人工复核"的语义由来源标注"AI发现·站点名"承担，不占用阶段列）
+    """
+    from datetime import datetime
+
+    s = (status or "").strip()
+    if s and s != "待核实":
+        return s
+    d = (deadline or "").strip()
+    if d:
+        try:
+            if datetime.strptime(d[:10], "%Y-%m-%d").date() >= datetime.now().date():
+                return "报名中"
+        except ValueError:
+            pass
+    return "进行中"
+
+
 # 与计算机/科技主题明显无关的标题关键词（外语/人文/文体类）。
 # 综合类聚合站（我爱竞赛网、赛氪等）和 LLM 提取都会漏进这类条目，
 # 这里做确定性兜底：命中即剔除，不依赖 LLM 自觉。

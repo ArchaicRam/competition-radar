@@ -6,7 +6,7 @@ import csv
 import os
 
 from .storage import Store
-from .official import normalize_comp_type, prestige
+from .official import concrete_stage, normalize_comp_type, prestige
 
 _COLUMNS = [
     "平台", "比赛名称", "主办方", "类型", "含金量", "报名截止", "开始日期",
@@ -29,7 +29,8 @@ def export_csv(store: Store, path: str = "data/competitions.csv") -> str:
                 d.get("deadline", ""),
                 d.get("enabled_date", ""),
                 d.get("reward", ""),
-                d.get("status", ""),
+                # 历史存量里可能有"待核实"，导出时统一规范成具体阶段
+                concrete_stage(d.get("status", ""), d.get("deadline", "")),
                 d.get("url", ""),
                 d.get("detected_at", ""),
             ])
