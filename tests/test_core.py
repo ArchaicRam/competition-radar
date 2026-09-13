@@ -309,6 +309,25 @@ def test_sanitize():
     assert concrete_stage("", "") == "进行中"
 
 
+def test_ai_stage_filter():
+    from src.ai_discover import _to_competition
+
+    soon = (date.today() + timedelta(days=10)).isoformat()
+    base = {"title": "某开源活动", "organizer": "某研究所", "type": "开源活动"}
+
+    # 提取阶段=已结束 → 直接剔除
+    assert _to_competition({**base, "stage": "已结束"}, "https://x.example", "示例") is None
+    # 提取阶段=报名中 → 保留并作为具体状态
+    c = _to_competition({**base, "stage": "报名中", "deadline": soon}, "https://x.example", "示例")
+    assert c is not None and c.status == "报名中"
+    # 阶段看不出 → 状态留空（后续核实/兜底）
+    c2 = _to_competition(dict(base), "https://x.example", "示例")
+    assert c2 is not None and c2.status == ""
+    # 乱值阶段不进入状态
+    c3 = _to_competition({**base, "stage": "不知道"}, "https://x.example", "示例")
+    assert c3 is not None and c3.status == ""
+
+
 def main():
     tests = [v for k, v in sorted(globals().items()) if k.startswith("test_") and callable(v)]
     for t in tests:

@@ -44,8 +44,22 @@ _SYSTEM_PROMPT = (
     "- 只输出一个 JSON 对象：{\"items\": [{\"title\": \"活动标题\", "
     "\"organizer\": \"主办方\", \"type\": \"类型\", \"deadline\": \"报名截止，可空\", "
     "\"reward\": \"奖励/奖金，可空\", \"url\": \"报名链接，可空\", "
-    "\"intro\": \"一句话简介，可空\", \"rating\": \"高\"}]}\n"
+    "\"intro\": \"一句话简介，可空\", \"rating\": \"高\", "
+    "\"stage\": \"活动阶段：报名中/进行中/已结束，从页面判断，看不出留空\"}]}\n"
+    "- **页面明确写着已结束、获奖名单公示、已颁奖的不要输出**\n"
     "- 无有效活动时输出 {\"items\": []}"
+)
+
+# 阶段核实提示词：对阶段不确定的条目，抓详情页让 LLM 判断（DeepSeek 单条几分钱）
+_VERIFY_PROMPT = (
+    "你是竞赛信息审核员。根据给定网页文本，判断该活动**现在**处于什么阶段。\n"
+    "规则：\n"
+    "- 页面明确写着已结束、获奖名单/获奖公示、颁奖典礼已举行、赛程已完结 → \"已结束\"\n"
+    "- 正在报名/征集作品/开放组队，且未过截止 → \"报名中\"\n"
+    "- 活动已开始进行（比赛进行中、训练营已开营、公示期中）→ \"进行中\"\n"
+    "- 页面内容与该活动无关，或完全看不出阶段 → \"无关\"\n"
+    "- 若页面给出报名/提交截止日期，一并提取为 YYYY-MM-DD，没有则留空\n"
+    "只输出一个 JSON 对象：{\"stage\": \"报名中\", \"deadline\": \"\"}"
 )
 
 
@@ -180,7 +194,55 @@ def discover(seed_sources: List[Dict[str, str]], cfg: Dict[str, Any]) -> List[Co
     with ThreadPoolExecutor(max_workers=6) as pool:
         for comps in pool.map(_discover_one, [(name, url, cfg) for name, url in tasks]):
             out.extend(comps)
+
+    # 阶段核实：阶段不确定的条目抓详情页让 LLM 判断（页面写"已结束"的直接剔除）。
+    # 这是防"早结束的比赛还躺在表里"的关键环节——列表页文本里通常没有逐条的阶段信息
+    uncertain = [(c, cfg) for c in out if not (c.status or "").strip() and (c.url or "").startswith("http")]
+    if uncertain:
+        log.info("AI 阶段核实：%d 条阶段不确定，逐条读详情页判断", len(uncertain))
+        with ThreadPoolExecutor(max_workers=6) as pool:
+            results = list(pool.map(_verify_one, uncertain))
+        gone = {id(c) for c in results if c is None}
+        out = [c for c in out if id(c) not in gone]
+        log.info("AI 阶段核实完成：剔除 %d 条，剩余 %d 条", len(gone), len(out))
     return out
+
+
+def _verify_one(task: tuple) -> Optional[Competition]:
+    """读条目详情页，让 LLM 判断当前阶段。返回 None 表示应剔除。"""
+    comp, cfg = task
+    timeout = int(cfg.get("http_timeout", 30))
+    try:
+        status, raw, _ = http.get(comp.url, timeout=timeout)
+        if status != 200:
+            log.warning("[AI核实] %s 抓取失败 status=%s（保留，走兜底阶段）", comp.title, status)
+            return comp
+        text, _anchors = extract_page(raw, max_chars=4000)
+        if len(text) < 80:
+            return comp
+        user = f"活动：{comp.title}\n来源页面：{comp.url}\n\n网页文本：\n{text}\n\n请判断该活动当前阶段并输出 JSON。"
+        resp = llm.chat_json(
+            [
+                {"role": "system", "content": _VERIFY_PROMPT},
+                {"role": "user", "content": user},
+            ],
+            cfg,
+            max_tokens=200,
+        )
+        stage = str(resp.get("stage") or "").strip() if isinstance(resp, dict) else ""
+        dl = normalize_date(resp.get("deadline")) if isinstance(resp, dict) else ""
+        if dl and not comp.deadline:
+            comp.deadline = dl
+        if stage in ("已结束", "无关"):
+            log.info("[AI核实] %s —— %s，剔除", comp.title, stage)
+            return None
+        if stage in ("报名中", "进行中"):
+            comp.status = stage
+        return comp
+    except Exception as e:  # noqa: BLE001
+        # 核实失败不拦数据：保留条目，阶段由 postprocess 兜底成具体状态
+        log.warning("[AI核实] %s 失败（保留）: %s", comp.title, e)
+        return comp
 
 
 def _discover_one(task: tuple) -> List[Competition]:
@@ -233,6 +295,11 @@ def _to_competition(it: dict, page_url: str, site: str, anchors: List[tuple] = N
     title = clean_text(it.get("title"))
     if not title:
         return None
+    # 提取阶段：页面已明确写"已结束"的直接剔除（不靠后续兜底）
+    stage = clean_text(it.get("stage"))
+    if stage == "已结束":
+        return None
+    status = stage if stage in ("报名中", "进行中") else ""
     # 答题/知识竞赛类硬过滤（不依赖 LLM 评级）
     if is_low_value(title):
         return None
@@ -271,7 +338,7 @@ def _to_competition(it: dict, page_url: str, site: str, anchors: List[tuple] = N
         deadline=deadline,
         reward=reward,
         comp_type=comp_type,
-        status="",  # 阶段由 postprocess 统一补成具体状态（绝不出"待核实"）
+        status=status,  # 空表示阶段不确定，后续核实/兜底补成具体状态
         enabled_date="",
         rating=rating,
     )
