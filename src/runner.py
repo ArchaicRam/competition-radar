@@ -158,6 +158,7 @@ def run(
                 excel_link=card_excel_link,
                 excel_path=excel_path or "",
                 ai_digest_text=ai_digest_text,
+                site_link=(config.get("site_url") or "").strip(),
             )
             if _push_card(config, notifier, card):
                 log.info("已推送情报日报卡片（%d 场，今日新增 %d）", len(all_comps), len(new))

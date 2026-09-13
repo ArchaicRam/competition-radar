@@ -328,6 +328,29 @@ def test_ai_stage_filter():
     assert c3 is not None and c3.status == ""
 
 
+def test_build_site():
+    import subprocess
+
+    sys_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    out = os.path.join(_tmpdir("site"), "index.html")
+    r = subprocess.run(
+        [sys.executable, os.path.join(sys_path, "scripts", "build_site.py"),
+         "--state", os.path.join(sys_path, "data", "state.json"), "--out", out],
+        capture_output=True, text=True,
+    )
+    assert r.returncode == 0, r.stderr
+    html = open(out, encoding="utf-8").read()
+    assert "竞赛雷达" in html and "<script id=\"data\"" in html
+    # 占位符全部替换、无待核实
+    assert "__DATA__" not in html and "__SHEET_BTN__" not in html and "__UPDATED__" not in html
+    import re
+    m = re.search(r'<script id="data" type="application/json">(.*?)</script>', html, re.S)
+    data = json.loads(m.group(1).replace("<\\/", "</"))
+    assert all(x["status"] in ("报名中", "进行中", "未开始") for x in data)
+    assert all(x["rating"] in ("高", "中", "低") for x in data)
+    assert len(html) < 500 * 1024  # 单文件别超过 Pages 轻松承载的范围
+
+
 def main():
     tests = [v for k, v in sorted(globals().items()) if k.startswith("test_") and callable(v)]
     for t in tests:

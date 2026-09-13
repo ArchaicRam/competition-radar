@@ -21,6 +21,7 @@ def build_digest_card(
     excel_link: str = "",
     excel_path: str = "",
     ai_digest_text: str = "",
+    site_link: str = "",
     max_list: int = 10,
 ) -> Dict:
     """构建情报日报卡片。"""
@@ -73,15 +74,20 @@ def build_digest_card(
     )
     elements.append({"tag": "div", "text": {"tag": "lark_md", "content": src_text}})
 
-    # Excel/在线表格：有链接才显示可点链接；否则如实标注本机路径
+    # 卡片底部链接区：网页版总览 / 在线表格 / Excel 路径
+    links = []
+    if site_link:
+        links.append(f"**[🌐 网页版总览]({site_link})**")
     if excel_link:
         label = "📊 查看在线表格" if "/sheets/" in excel_link else "📊 下载 Excel 台账"
+        links.append(f"**[{label}]({excel_link})**")
+    if links:
         elements.append(
             {
                 "tag": "div",
                 "text": {
                     "tag": "lark_md",
-                    "content": f"**[{label}]({excel_link})**（每日更新，红底=今日新增）",
+                    "content": " ｜ ".join(links) + "（每日更新，红底=今日新增）",
                 },
             }
         )

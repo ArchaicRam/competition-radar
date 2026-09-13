@@ -135,6 +135,17 @@ python run_daily.py --export-csv     # 导出台账 data/competitions.csv（Exce
 > 抓取依然全在本地/CI 执行；LLM 只负责"读页面+提炼"和"写看点"两件事。
 > AI 发现的结果是线索，不是权威信息，报名前请以原链接页面为准。
 
+## 网页版总览（GitHub Pages）
+
+每天扫描完成后自动生成静态网站并发布到 **https://archaicram.github.io/competition-radar/**：
+
+- 深色单页站，赛事按 **报名中 / 进行中 / 未开始** 分组，卡片带截止倒计时徽标
+- 按 **类别 / 含金量 / 来源 / 今日新增** 一键筛选，支持名称/主办方搜索
+- 顶部统计：总场数、今日新增、7 天内截止、官方赛事数
+- 数据与飞书表格同源同口径（同一份 `data/state.json`），公开只读、无任何密钥
+
+本地预览：`python scripts/build_site.py` 然后用浏览器打开 `site/index.html`（单文件，双击即可）。
+
 ## 权威竞赛目录与来源清单
 
 **"教育部认可"的权威依据**是 [中国高等教育学会](https://www.cahe.edu.cn) 每年发布的

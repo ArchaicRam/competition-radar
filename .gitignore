@@ -13,6 +13,7 @@ _probe/
 logs/
 .tmp/
 _tmp_test/
+site/
 *.log
 
 # 本地临时安装缓存（npm 等）

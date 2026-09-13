@@ -18,6 +18,7 @@ DEFAULT_CONFIG: Dict[str, Any] = {
     "excel_file": "data/competitions.xlsx",
     "excel_link": "",
     "feishu_sheet_url": "",
+    "site_url": "",
     "lark_profile": "jingsai",
     "official_keywords": [],
     "llm_api_key": "",

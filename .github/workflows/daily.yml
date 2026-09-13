@@ -12,11 +12,13 @@ concurrency:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 jobs:
   scan:
     runs-on: ubuntu-latest
-    # AI 情报员有 19 个种子源（并行 4 路），加各平台抓取与表格同步，留足余量
+    # AI 情报员有 29 个种子源（并行 6 路），加各平台抓取与表格同步，留足余量
     timeout-minutes: 15
     steps:
       - name: Checkout
@@ -70,6 +72,17 @@ jobs:
           # DeepSeek API Key（可选）：启用 AI 情报员 + AI 今日看点
           LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
 
+      # 生成静态网站（单文件内嵌数据），供 GitHub Pages 发布
+      - name: Build site
+        run: python scripts/build_site.py --sheet-url "$FEISHU_SHEET_URL"
+        env:
+          FEISHU_SHEET_URL: ${{ secrets.FEISHU_SHEET_URL }}
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
       - name: Commit state back (增量去重依据)
         run: |
           git config user.name "github-actions[bot]"
@@ -84,3 +97,14 @@ jobs:
             git push
           fi
 
+  deploy-pages:
+    needs: scan
+    if: ${{ !cancelled() && needs.scan.result == 'success' }}
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
