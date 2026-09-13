@@ -1334,7 +1334,7 @@
       "key": "ai:14d5d1e9f240",
       "title": "2026年中国国际大学生创新大赛",
       "platform": "AI发现·我爱竞赛网",
-      "organizer": "教育部、中央统战部、中央网信办、国家发展改革委、工业和信息化部、人力资源社会保障部、农业农村部、中国科学院、中国工程院、国家知识产权局、共青团中央和江苏省人民政府",
+      "organizer": "教育部、中央统战部、中央网信办、国家发展改革委、工业和信息化部等",
       "url": "https://www.52jingsai.com/article-23927-1.html",
       "deadline": "2026-09-25",
       "reward": "",
@@ -2159,7 +2159,7 @@
       "key": "ai:b43b9f0fd857",
       "title": "“创新湖北·青力青为”湖北挑战杯省赛",
       "platform": "AI发现·挑战杯",
-      "organizer": "共青团湖北省委等",
+      "organizer": "湖北团省委等",
       "url": "http://www.tiaozhanbei.net/",
       "deadline": "",
       "reward": "",
@@ -2644,8 +2644,36 @@
       "enabled_date": "",
       "rating": "高",
       "detected_at": "2026-09-13T14:29:06"
+    },
+    "ai:47f66026791d": {
+      "key": "ai:47f66026791d",
+      "title": "2026年第八届全国高校计算机能力挑战赛大数据挑战赛",
+      "platform": "AI发现·我爱竞赛网",
+      "organizer": "全国高等学校计算机教育研究会",
+      "url": "https://www.52jingsai.com/",
+      "deadline": "2026-11-06",
+      "reward": "",
+      "comp_type": "比赛",
+      "status": "报名中",
+      "enabled_date": "",
+      "rating": "高",
+      "detected_at": "2026-09-13T15:06:04"
+    },
+    "ai:ef6966f6540c": {
+      "key": "ai:ef6966f6540c",
+      "title": "2026年第十二届全国大学生生命科学竞赛（科学探究类）",
+      "platform": "AI发现·我爱竞赛网",
+      "organizer": "全国大学生生命科学竞赛组织委员会",
+      "url": "https://www.52jingsai.com/",
+      "deadline": "2027-01-15",
+      "reward": "",
+      "comp_type": "比赛",
+      "status": "报名中",
+      "enabled_date": "",
+      "rating": "高",
+      "detected_at": "2026-09-13T15:06:04"
     }
   },
-  "last_run": "2026-09-13T14:29:37",
-  "last_total": 102
+  "last_run": "2026-09-13T15:06:32",
+  "last_total": 103
 }
