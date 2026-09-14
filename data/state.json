@@ -2735,7 +2735,7 @@
       "platform": "AI发现·我爱竞赛网",
       "organizer": "中国计量大学、全国标准化大学联盟等",
       "url": "http://bzh.moocollege.com/home",
-      "deadline": "",
+      "deadline": "2026-10-31",
       "reward": "",
       "comp_type": "比赛",
       "status": "报名中",
@@ -2770,8 +2770,22 @@
       "enabled_date": "",
       "rating": "高",
       "detected_at": "2026-09-14T08:34:53"
+    },
+    "ai:f25a4e9806ca": {
+      "key": "ai:f25a4e9806ca",
+      "title": "2026第十二届全国大学生物理实验竞赛（创新）",
+      "platform": "AI发现·我爱竞赛网",
+      "organizer": "全国高等学校实验物理教学研究会、全国大学生物理实验竞赛组织委员会",
+      "url": "https://wlsycx.moocollege.com/home/homepage",
+      "deadline": "2026-09-15",
+      "reward": "",
+      "comp_type": "比赛",
+      "status": "报名中",
+      "enabled_date": "",
+      "rating": "中",
+      "detected_at": "2026-09-14T10:11:42"
     }
   },
-  "last_run": "2026-09-14T09:59:26",
-  "last_total": 103
+  "last_run": "2026-09-14T10:12:38",
+  "last_total": 105
 }
