@@ -130,7 +130,7 @@ _TEMPLATE = """<!DOCTYPE html>
   --mono:"JetBrains Mono","SFMono-Regular",Consolas,Menlo,monospace;
   --sans:Inter,-apple-system,"PingFang SC","Microsoft YaHei","Segoe UI",sans-serif;
   --radius:14px;
-  --glass:rgba(255,255,255,.6); /* 面板透明度：60%（覆盖在背景图上） */
+  --glass:rgba(255,255,255,.4); /* 面板透明度：40%（覆盖在背景图上） */
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -149,21 +149,13 @@ header .upd{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);letter-s
 @keyframes blink{50%{opacity:0}}
 
 /* Hero banner：圆角大卡片 + 点阵纹理 + 柔光 */
-.banner{position:relative;margin-top:26px;border:1px solid var(--line);border-radius:26px;overflow:hidden;
-  background:
-    radial-gradient(640px 320px at 88% -10%, rgba(37,99,235,.09), transparent 62%),
-    radial-gradient(520px 280px at -5% 110%, rgba(34,211,238,.08), transparent 60%),
-    var(--wash);
-  padding:52px 54px 44px}
-.banner::before{content:"";position:absolute;inset:0;pointer-events:none;
-  background-image:radial-gradient(rgba(37,99,235,.14) 1px,transparent 1px);background-size:22px 22px;
-  -webkit-mask-image:linear-gradient(115deg,transparent 30%,#000 90%);mask-image:linear-gradient(115deg,transparent 30%,#000 90%)}
+.banner{position:relative;margin-top:26px;border:1px solid var(--line);border-radius:26px;overflow:hidden;background:transparent;padding:52px 54px 44px}
 .banner-grid{position:relative}
-.kicker{font-family:var(--mono);font-size:14px;color:var(--accent);min-height:24px;letter-spacing:.02em;white-space:pre;display:block;line-height:1.5}
+.kicker{font-family:var(--mono);font-size:14px;color:var(--accent);min-height:24px;letter-spacing:.02em;white-space:pre;display:block;line-height:1.5;text-shadow:0 1px 3px rgba(255,255,255,.9),0 0 8px rgba(255,255,255,.7)}
 .cursor{display:inline-block;width:9px;height:17px;background:var(--accent);vertical-align:-3px;margin-left:2px;animation:blink 1s steps(1) infinite}
 .hero h1{font-size:clamp(30px,3.6vw,42px);font-weight:800;letter-spacing:-.03em;line-height:1.2;margin:10px 0 14px}
 .hl{background:linear-gradient(transparent 62%,var(--hl) 62%)}
-.hero .sub{font-size:15.5px;color:var(--ink-2);max-width:560px}
+.hero .sub{font-size:15.5px;color:var(--ink-2);max-width:560px;text-shadow:0 1px 2px rgba(255,255,255,.85)}
 .cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
 .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:10px;font-weight:600;font-size:14px;border:1.5px solid transparent;transition:all .15s}
 .btn.dark{background:var(--ink);color:var(--paper);box-shadow:0 12px 26px -12px rgba(15,23,42,.55)}
@@ -177,8 +169,8 @@ header .upd{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);letter-s
 .stat{background:var(--glass);border:1px solid var(--line);border-radius:var(--radius);padding:14px 18px;backdrop-filter:blur(4px)}
 .stat b{display:block;font-family:var(--mono);font-size:26px;font-weight:700;letter-spacing:-.02em}
 .stat.hot b{color:var(--red)}
-.stat span{font-size:12.5px;color:var(--ink-2)}
-.stat .lbl{font-family:var(--mono);font-size:10px;color:var(--ink-3);letter-spacing:.16em}
+.stat span{font-size:12.5px;color:var(--ink-2);text-shadow:0 1px 2px rgba(255,255,255,.9)}
+.stat .lbl{font-family:var(--mono);font-size:10px;color:#475569;letter-spacing:.16em;text-shadow:0 1px 2px rgba(255,255,255,.9)}
 
 /* 筛选区 */
 .filters{position:sticky;top:58px;z-index:8;background:var(--glass);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:13px 0;margin-top:34px}
