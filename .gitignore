@@ -24,3 +24,7 @@ node_modules/
 # 系统
 .DS_Store
 Thumbs.db
+
+# IDE / 临时文件
+.idea/
+live_check.html
