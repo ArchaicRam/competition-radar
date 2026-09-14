@@ -174,11 +174,11 @@ header .upd{font-family:var(--mono);font-size:11.5px;color:#33d3eb;letter-spacin
 
 /* 筛选区 */
 .filters{position:sticky;top:58px;z-index:8;background:rgba(255,255,255,.05);backdrop-filter:blur(4px);border-bottom:1px solid var(--line);padding:13px 0;margin-top:34px}
-.search{width:100%;padding:10px 16px;border-radius:10px;border:1px solid #5b37b7;background:rgba(255,255,255,.05);color:rgb(250,148,148);font-family:var(--mono);font-size:13.5px;outline:none;transition:border-color .15s}
+.search{width:100%;padding:10px 16px;border-radius:10px;border:1px solid #5b37b7;background:rgba(255,255,255,.05);color:#fff;font-family:var(--mono);font-size:13.5px;outline:none;transition:border-color .15s}
 .search:focus{border-color:var(--accent);background:var(--paper)}
-.search::placeholder{color:rgba(250,148,148,.85)}
+.search::placeholder{color:rgba(255,255,255,.8)}
 .chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:11px}
-.chip{padding:4px 13px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:rgb(250,148,148);font-size:12px;font-family:var(--mono);cursor:pointer;user-select:none;transition:all .12s}
+.chip{padding:4px 13px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:#fff;font-size:12px;font-family:var(--mono);cursor:pointer;user-select:none;transition:all .12s}
 .chip:hover{border-color:var(--ink)}
 .chip.on{background:var(--ink);border-color:var(--ink);color:#fff;font-weight:600}
 .chip.on.blue{background:var(--accent);border-color:var(--accent)}
