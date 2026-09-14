@@ -33,6 +33,13 @@ _PROMPT = (
     "links:\n{links}\n\n页面文本：\n{text}"
 )
 
+# LLM 找不到时的已知官网兜底（公开事实，按标题关键词匹配）
+_KNOWN_OFFICIAL = [
+    ("数学建模竞赛", "https://www.mcm.edu.cn/"),          # 高教社杯全国大学生数学建模竞赛
+    ("计算机能力挑战赛", "http://www.ncccu.org.cn"),      # 全国高校计算机能力挑战赛（含大数据等分赛道）
+    ("生命科学竞赛", "http://www.culsc.cn/"),             # 全国大学生生命科学竞赛
+]
+
 
 def _host(u: str) -> str:
     return (urlparse(u or "").netloc or "").lower().replace("www.", "", 1)
@@ -80,6 +87,11 @@ def main():
                 cfg, max_tokens=200,
             )
             new_url = str(resp.get("official_url") or "").strip() if isinstance(resp, dict) else ""
+            if not new_url:
+                for kw, url in _KNOWN_OFFICIAL:
+                    if kw in title:
+                        new_url = url
+                        break
             if new_url.startswith("http") and _is_better_link(new_url, old_url):
                 print(f"  ✓ {title[:36]}\n      {old_url}\n      -> {new_url}")
                 if not args.dry_run:

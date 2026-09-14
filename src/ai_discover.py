@@ -208,11 +208,20 @@ def discover(seed_sources: List[Dict[str, str]], cfg: Dict[str, Any]) -> List[Co
 
     # 阶段核实：阶段不确定的条目抓详情页让 LLM 判断（页面写"已结束"的直接剔除）。
     # 这是防"早结束的比赛还躺在表里"的关键环节——列表页文本里通常没有逐条的阶段信息
-    uncertain = [(c, cfg) for c in out if not (c.status or "").strip() and (c.url or "").startswith("http")]
+    # 链接指向聚合站的条目无论阶段是否明确都进核实：顺带提取官网链接替换聚合站链接
+    def _needs_verify(c: Competition) -> bool:
+        if not (c.url or "").startswith("http"):
+            return False
+        if not (c.status or "").strip():
+            return True
+        host = (urlparse(c.url).netloc or "").lower()
+        return any(a in host for a in _AGGREGATOR_HOSTS)
+
+    uncertain = [c for c in out if _needs_verify(c)]
     if uncertain:
-        log.info("AI 阶段核实：%d 条阶段不确定，逐条读详情页判断", len(uncertain))
+        log.info("AI 阶段核实：%d 条需要核实，逐条读详情页判断", len(uncertain))
         with ThreadPoolExecutor(max_workers=6) as pool:
-            results = list(pool.map(_verify_one, uncertain))
+            results = list(pool.map(_verify_one, [(c, cfg) for c in uncertain]))
         gone = {id(c) for c in results if c is None}
         out = [c for c in out if id(c) not in gone]
         log.info("AI 阶段核实完成：剔除 %d 条，剩余 %d 条", len(gone), len(out))
