@@ -192,7 +192,7 @@ h2{font-size:20px;font-weight:800;letter-spacing:-.02em;display:flex;align-items
 h2 .en{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--ink-3);letter-spacing:.16em}
 h2 .n{font-family:var(--mono);font-size:12px;color:var(--ink-3);font-weight:400;margin-left:auto}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:12px}
-.card{background:var(--glass);backdrop-filter:blur(4px);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;display:flex;flex-direction:column;gap:9px;transition:all .15s}
+.card{background:rgba(255,255,255,.2);backdrop-filter:blur(2px);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;display:flex;flex-direction:column;gap:9px;transition:all .15s}
 .card:hover{transform:translateY(-2px);border-color:var(--ink)}
 .card.today{box-shadow:0 0 0 2px var(--accent)}
 .card .top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
