@@ -36,7 +36,7 @@ def main():
 
     if args.test_notify:
         chat_id = (config.get("feishu_chat_id") or "").strip()
-        msg = f"✅ {config.get('bot_name', '竞赛雷达')}已接通！\n以后每天扫描到新比赛会自动推送到本群。\n（这是一条测试消息）"
+        msg = f"✅ {config.get('bot_name', '赛探')}已接通！\n以后每天扫描到新比赛会自动推送到本群。\n（这是一条测试消息）"
         if chat_id:
             from src.feishu_app import send_text
 
@@ -92,7 +92,7 @@ def main():
         ]
         card = build_digest_card(
             demo_comps, demo_new,
-            bot_name=config.get("bot_name", "竞赛雷达"),
+            bot_name=config.get("bot_name", "赛探"),
             deadline_alert_days=int(config.get("deadline_alert_days", 14)),
             excel_link=config.get("excel_link", "") or "",
             excel_path="data/competitions.xlsx",

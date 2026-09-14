@@ -76,7 +76,7 @@ class FeishuNotifier:
         """发送交互卡片（含原生表格组件）。"""
         return self._post({"msg_type": "interactive", "card": card}, retries)
 
-    def send_test(self, bot_name: str = "竞赛雷达") -> Optional[dict]:
+    def send_test(self, bot_name: str = "赛探") -> Optional[dict]:
         return self.send_text(
             f"✅ {bot_name}已接通！\n"
             "以后每天扫描到新比赛会自动推送到本群。\n"

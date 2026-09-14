@@ -241,7 +241,7 @@ def test_digest_card():
     new = _sample_new()
     from src.card import build_digest_card
 
-    card = build_digest_card(new, {new[0].key}, bot_name="竞赛雷达", excel_link="", excel_path="data/competitions.xlsx")
+    card = build_digest_card(new, {new[0].key}, bot_name="赛探", excel_link="", excel_path="data/competitions.xlsx")
     md = [e["text"]["content"] for e in card["elements"] if e.get("text", {}).get("tag") == "lark_md"]
     assert any("共 **3** 场" in m for m in md)
     assert any("今日新增" in m and "1" in m for m in md)  # 摘要含新增数
@@ -250,7 +250,7 @@ def test_digest_card():
     assert len(json.dumps(card, ensure_ascii=False)) < 30000
 
     # 无新增时表头蓝色
-    card2 = build_digest_card(new, set(), bot_name="竞赛雷达")
+    card2 = build_digest_card(new, set(), bot_name="赛探")
     assert card2["header"]["template"] == "blue"
 
 
@@ -344,7 +344,7 @@ def test_build_site():
     )
     assert r.returncode == 0, r.stderr
     html = open(out, encoding="utf-8").read()
-    assert "竞赛雷达" in html and "<script id=\"data\"" in html
+    assert "赛探" in html and "<script id=\"data\"" in html
     # 占位符全部替换、无待核实
     assert "__DATA__" not in html and "__SHEET_BTN__" not in html and "__UPDATED__" not in html
     import re

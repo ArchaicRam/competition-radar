@@ -113,7 +113,7 @@ def run(
         except Exception as e:  # noqa: BLE001
             log.warning("告警发送失败: %s", e)
 
-    bot_name = config.get("bot_name", "竞赛雷达")
+    bot_name = config.get("bot_name", "赛探")
     # 推送环节的失败不应阻断状态落库，否则同样的内容会重复推送
     try:
         if all_failed and not all_comps:
@@ -230,7 +230,7 @@ def _alert_anomaly(config, notifier, errors, total, prev_total, collapsed) -> No
     触发条件：全部数据源抓取失败（all_failed），
     或总数比上一轮骤降过半（collapsed，通常是平台改版/网络异常）。
     """
-    bot_name = config.get("bot_name", "竞赛雷达")
+    bot_name = config.get("bot_name", "赛探")
     lines = [f"⚠️ {bot_name} 扫描异常，请留意", ""]
     if errors:
         lines.append(f"抓取失败的数据源（{len(errors)} 个）：")

@@ -10,7 +10,7 @@ DEFAULT_CONFIG: Dict[str, Any] = {
     "feishu_webhook": "",
     "feishu_secret": "",
     "feishu_chat_id": "",
-    "bot_name": "竞赛雷达",
+    "bot_name": "赛探",
     "sources": ["tianchi", "datafountain", "nowcoder", "xfyun", "kaggle", "ctftime"],
     "digest_when_no_new": False,
     "send_table_daily": True,

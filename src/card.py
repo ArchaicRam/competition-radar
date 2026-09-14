@@ -16,7 +16,7 @@ from .platforms import SOURCE_INFO
 def build_digest_card(
     competitions: List,
     new_keys: Set[str],
-    bot_name: str = "竞赛雷达",
+    bot_name: str = "赛探",
     deadline_alert_days: int = 14,
     excel_link: str = "",
     excel_path: str = "",

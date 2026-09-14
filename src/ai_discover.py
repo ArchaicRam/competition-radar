@@ -63,7 +63,14 @@ _VERIFY_PROMPT = (
     "- 活动已开始进行（比赛进行中、训练营已开营、公示期中）→ \"进行中\"\n"
     "- 页面内容与该活动无关，或完全看不出阶段 → \"无关\"\n"
     "- 若页面给出报名/提交截止日期，一并提取为 YYYY-MM-DD，没有则留空\n"
-    "只输出一个 JSON 对象：{\"stage\": \"报名中\", \"deadline\": \"\"}"
+    "- 若页面中出现了该活动的**官方网站/官方报名页**链接（主办方自建域名，"
+    "而非新闻站/聚合站/公众号页面），提取为 official_url；没有则留空\n"
+    "只输出一个 JSON 对象：{\"stage\": \"报名中\", \"deadline\": \"\", \"official_url\": \"\"}"
+)
+
+# 已知的第三方聚合站域名：AI 提取到的官网链接若来自这些站点，视为非官网
+_AGGREGATOR_HOSTS = (
+    "52jingsai.com", "saikr.com", "52jingsai.net",
 )
 
 
@@ -231,12 +238,17 @@ def _verify_one(task: tuple) -> Optional[Competition]:
                 {"role": "user", "content": user},
             ],
             cfg,
-            max_tokens=200,
+            max_tokens=300,
         )
         stage = str(resp.get("stage") or "").strip() if isinstance(resp, dict) else ""
         dl = normalize_date(resp.get("deadline")) if isinstance(resp, dict) else ""
         if dl and not comp.deadline:
             comp.deadline = dl
+        # 官网链接优先：详情页里出现主办方自建域名时，替换掉聚合站/种子页链接
+        if isinstance(resp, dict):
+            official_url = str(resp.get("official_url") or "").strip()
+            if official_url.startswith("http") and _is_better_link(official_url, comp.url):
+                comp.url = official_url
         if stage in ("已结束", "无关"):
             log.info("[AI核实] %s —— %s，剔除", comp.title, stage)
             return None
@@ -346,6 +358,25 @@ def _to_competition(it: dict, page_url: str, site: str, anchors: List[tuple] = N
         enabled_date="",
         rating=rating,
     )
+
+
+def _is_better_link(new_url: str, old_url: str) -> bool:
+    """判断新链接是否比旧链接更适合作为报名入口（官网 > 聚合站/种子页）。"""
+    from urllib.parse import urlparse
+
+    def host(u: str) -> str:
+        return (urlparse(u).netloc or "").lower().replace("www.", "", 1) if u else ""
+
+    old_host, new_host = host(old_url), host(new_url)
+    if not new_host or new_host == old_host:
+        return False
+    # 旧链接是聚合站/资讯站 → 任何不同域名的新链接都更优
+    if any(h in old_host for h in _AGGREGATOR_HOSTS):
+        return True
+    # 旧链接是种子源首页（根路径）而新链接是深层页面 → 更优
+    if old_url and not urlparse(old_url).path.strip("/"):
+        return True
+    return False
 
 
 _ANCHOR_SKIP = ("javascript:", "mailto:", "tel:", "#")

@@ -31,7 +31,7 @@ def build_message(
     updated: List[Competition],
     max_items: int = 20,
     deadline_alert_days: int = 14,
-    bot_name: str = "竞赛雷达",
+    bot_name: str = "赛探",
 ) -> str:
     """拼接新比赛 + 更新比赛的推送文案。"""
     if not new and not updated:
@@ -61,5 +61,5 @@ def build_message(
     return "\n".join(lines)
 
 
-def build_no_new_message(bot_name: str = "竞赛雷达") -> str:
+def build_no_new_message(bot_name: str = "赛探") -> str:
     return f"😴 【{bot_name}】今日扫描完毕，没有发现新比赛。"

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""竞赛雷达静态网站生成器：data/state.json -> site/index.html（单文件，零依赖）。
+"""赛探静态网站生成器：data/state.json -> site/index.html（单文件，零依赖）。
 
 风格参考 hello-ctf.com：深色终端风、英雄区、赛事按状态分组、
 倒计时徽标、来源/类别/含金量筛选。数据以 JSON 内嵌，前端 JS 渲染，
@@ -114,7 +114,7 @@ _TEMPLATE = """<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>竞赛雷达 — 大学生计算机竞赛，一页看完</title>
+<title>赛探 — 大学生计算机竞赛，一页看完</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
@@ -158,7 +158,7 @@ header .upd{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);letter-s
   background-image:radial-gradient(rgba(37,99,235,.14) 1px,transparent 1px);background-size:22px 22px;
   -webkit-mask-image:linear-gradient(115deg,transparent 30%,#000 90%);mask-image:linear-gradient(115deg,transparent 30%,#000 90%)}
 .banner-grid{position:relative}
-.kicker{font-family:var(--mono);font-size:14px;color:var(--accent);min-height:24px;letter-spacing:.02em}
+.kicker{font-family:var(--mono);font-size:14px;color:var(--accent);min-height:24px;letter-spacing:.02em;white-space:pre;display:block;line-height:1.5}
 .cursor{display:inline-block;width:9px;height:17px;background:var(--accent);vertical-align:-3px;margin-left:2px;animation:blink 1s steps(1) infinite}
 .hero h1{font-size:clamp(30px,3.6vw,42px);font-weight:800;letter-spacing:-.03em;line-height:1.2;margin:10px 0 14px}
 .hl{background:linear-gradient(transparent 62%,var(--hl) 62%)}
@@ -194,7 +194,7 @@ header .upd{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);letter-s
 .chip.on.green{background:var(--green);border-color:var(--green)}
 
 /* 分组与卡片 */
-section{margin:38px 0 10px}
+section{margin:38px 0 10px;scroll-margin-top:150px} /* 锚点跳转时给吸顶筛选栏留出空间，第一行卡片不被遮挡 */
 h2{font-size:20px;font-weight:800;letter-spacing:-.02em;display:flex;align-items:baseline;gap:10px;margin-bottom:16px}
 h2 .en{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--ink-3);letter-spacing:.16em}
 h2 .n{font-family:var(--mono);font-size:12px;color:var(--ink-3);font-weight:400;margin-left:auto}
@@ -226,7 +226,7 @@ footer .m{font-family:var(--mono);color:var(--accent)}
 </head>
 <body>
 <header><div class="wrap">
-  <div class="logo">竞赛雷达<span class="m">_</span></div>
+  <div class="logo">赛探<span class="m">_</span></div>
   <div class="upd">updated __UPDATED__</div>
 </div></header>
 
@@ -258,7 +258,7 @@ footer .m{font-family:var(--mono);color:var(--accent)}
 <main class="wrap" id="main"></main>
 
 <footer><div class="wrap">
-  <div>数据由「竞赛雷达」每日自动抓取与 AI 复核，仅供参考；报名前请以赛事官网原文为准。</div>
+  <div>数据由「赛探」每日自动抓取与 AI 复核，仅供参考；报名前请以赛事官网原文为准。</div>
   <div>来源：阿里云天池 · DataFountain · 科大讯飞 · 牛客 · Kaggle · CTFtime · 官方赛事渠道 · AI 情报员 <span class="m">EOF _</span></div>
 </div></footer>
 
@@ -269,26 +269,24 @@ const q = document.getElementById('q'), chipsEl = document.getElementById('chips
 const GROUPS = [["报名中","SIGN-UP","var(--green)"],["进行中","LIVE","var(--accent)"],["未开始","UPCOMING","var(--ink-3)"]];
 let active = {tag:null};
 
-/* 打字机：循环播报实时数据摘要，55ms 打字 / 停 2.2s / 逐字删除 */
-const nTotal = DATA.length,
-      nNew = DATA.filter(x=>x.today).length,
-      nDl = DATA.filter(x=>{const n=daysLeft(x.deadline);return n!==null&&n>=0&&n<=7}).length,
-      nOff = DATA.filter(x=>x.official).length,
-      nSrc = new Set(DATA.map(x=>x.platform)).size;
+/* 打字机：几行终端命令，从头敲到尾一遍（55ms/字），敲完停住、光标继续闪 */
 const LINES = [
-  "正在监控 " + nSrc + " 个赛事渠道，已收录 " + nTotal + " 场比赛",
-  "今日新增 " + nNew + " 场，" + nDl + " 场将在 7 天内截止",
-  "其中教育部认定的官方赛事 " + nOff + " 场",
-  "报名倒计时，已同步到每一张卡片",
+  "$ saitan scan --sources all --daily",
+  "  [ok] tianchi ......... 26 comps",
+  "  [ok] ctftime ......... 30 comps",
+  "  [ai] stage verified, expired dropped",
+  "$ deadline --within 7d --notify",
+  "$ flag{never_miss_a_deadline}",
 ];
-(function(){ const el = document.getElementById('typewriter'); let li=0, ci=0, del=false;
+(function(){ const el = document.getElementById('typewriter'); let li = 0, ci = 0;
   (function tick(){ const line = LINES[li];
-    if(!del){ el.textContent = line.slice(0, ++ci);
-      if(ci === line.length){ del = true; return setTimeout(tick, 2200); }
-      setTimeout(tick, 55);
-    } else { el.textContent = line.slice(0, --ci);
-      if(ci === 0){ del = false; li = (li+1) % LINES.length; }
-      setTimeout(tick, 22); }
+    el.textContent = LINES.slice(0, li).join("\\n") + (li ? "\\n" : "") + line.slice(0, ++ci);
+    if (ci === line.length) {
+      li += 1;
+      if (li === LINES.length) return;   // 敲完即停，光标仍闪烁
+      return setTimeout(tick, 350);
+    }
+    setTimeout(tick, 55);
   })();
 })();
 
@@ -314,15 +312,18 @@ function dlTag(x){ const n=daysLeft(x.deadline);
   const cls=n<=3?"soon":n<=7?"week":"ok";
   return '<span class="tag dl '+cls+'">⏰ '+n+' 天后截止</span>'; }
 function card(x){
-  const a=x.url?'<a class="title" href="'+x.url+'" target="_blank" rel="noopener">'+x.title+'</a>':'<span class="title">'+x.title+'</span>';
-  return '<div class="card'+(x.today?' today':'')+'">'
-    +'<div class="top">'+a+'<span class="badge '+x.rating+'">'+x.rating+'</span></div>'
+  const inner='<div class="top"><span class="title">'+x.title+'</span><span class="badge '+x.rating+'">'+x.rating+'</span></div>'
     +'<div class="meta"><b>'+(x.organizer||"主办方未知")+'</b>'+(x.type?' · '+x.type:'')+' · '+x.category+'</div>'
     +'<div class="foot">'+(x.official?'<span class="tag official">教育部目录</span>':'')
     +(x.today?'<span class="tag new">🆕 今日新增</span>':'')+dlTag(x)
     +(x.reward?'<span class="tag">💰 '+x.reward+'</span>':'')
     +(x.enabled?'<span class="tag">开始 '+x.enabled+'</span>':'')
-    +'<span class="tag">'+x.platform+'</span></div></div>';
+    +'<span class="tag">'+x.platform+'</span></div>';
+  // 有链接的赛事：整张卡片都是可点击的链接
+  const cls='card'+(x.today?' today':'');
+  return x.url
+    ? '<a class="'+cls+'" href="'+x.url+'" target="_blank" rel="noopener" title="'+x.title+'">'+inner+'</a>'
+    : '<div class="'+cls+'">'+inner+'</div>';
 }
 function render(){
   const kw=q.value.trim().toLowerCase();
@@ -352,7 +353,7 @@ render();
 
 
 def main():
-    ap = argparse.ArgumentParser(description="生成竞赛雷达静态网站")
+    ap = argparse.ArgumentParser(description="生成赛探静态网站")
     ap.add_argument("--state", default="data/state.json")
     ap.add_argument("--out", default="site/index.html")
     ap.add_argument("--sheet-url", default="", help="在线表格链接（英雄区按钮）")

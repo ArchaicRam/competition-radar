@@ -45,7 +45,7 @@ python run_daily.py --export-csv
 | `excel_file` | Excel 台账输出路径（默认 `data/competitions.xlsx`） |
 | `excel_link` | 可选：Excel 的在线下载链接（如 GitHub raw 链接），配置后在卡片里显示可点链接 |
 | `feishu_sheet_url` | 可选：**飞书在线表格** URL，配置后每天自动同步到该表，卡片里显示"查看在线表格"链接 |
-| `lark_profile` | lark-cli 的应用 profile 名（默认 `jingsai`，即"竞赛雷达"应用） |
+| `lark_profile` | lark-cli 的应用 profile 名（默认 `jingsai`，即"赛探"应用） |
 | `official_keywords` | 可选：覆盖"教育部认定赛事"识别关键词（默认内置常见 A 类赛事名单） |
 | `llm_api_key` | **DeepSeek API Key**（platform.deepseek.com 获取），AI 情报员/日报解读的开关；留空则 AI 模块全部跳过 |
 | `llm_base_url` | 默认 `https://api.deepseek.com`，其它 OpenAI 兼容服务可改 |
@@ -81,7 +81,7 @@ python run_daily.py --export-csv     # 导出台账 data/competitions.csv（Exce
 
 每天发一张**情报日报卡片** + 同步**飞书在线表格** + 生成**本地 Excel 台账**：
 
-- 表头：`📡 竞赛雷达 · 情报日报（今日新增 N）`，有新比赛时表头变红
+- 表头：`📡 赛探 · 情报日报（今日新增 N）`，有新比赛时表头变红
 - 摘要：共 N 场进行中 ｜ 教育部认定赛事 X 场 ｜ 今日新增 M
 - **今日新增**：红色加粗清单（带报名链接）
 - **即将截止**：N 天内截止的比赛清单（⏰x天后）

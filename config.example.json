@@ -2,7 +2,7 @@
   "feishu_webhook": "https://open.feishu.cn/open-apis/bot/v2/hook/在此粘贴你的群机器人Webhook地址",
   "feishu_secret": "",
   "feishu_chat_id": "",
-  "bot_name": "竞赛雷达",
+  "bot_name": "赛探",
   "sources": ["tianchi", "datafountain", "nowcoder", "xfyun", "kaggle", "ctftime"],
   "digest_when_no_new": false,
   "send_table_daily": true,
