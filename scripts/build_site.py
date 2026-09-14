@@ -153,9 +153,9 @@ header .upd{font-family:var(--mono);font-size:11.5px;color:#33d3eb;letter-spacin
 .banner-grid{position:relative}
 .kicker{font-family:var(--mono);font-size:14px;color:#00f1ff;min-height:24px;letter-spacing:.02em;white-space:pre;display:block;line-height:1.5;text-shadow:0 1px 3px rgba(255,255,255,.9),0 0 8px rgba(255,255,255,.7)}
 .cursor{display:inline-block;width:9px;height:17px;background:#00f1ff;vertical-align:-3px;margin-left:2px;animation:blink 1s steps(1) infinite}
-.banner h1{font-size:clamp(30px,3.6vw,42px);font-weight:800;letter-spacing:-.03em;line-height:1.2;margin:10px 0 14px;color:#000}
+.banner h1{font-size:clamp(30px,3.6vw,42px);font-weight:800;letter-spacing:-.03em;line-height:1.2;margin:10px 0 14px;color:#fff;text-shadow:0 2px 6px rgba(0,0,0,.45)}
 .hl{background:linear-gradient(transparent 62%,var(--hl) 62%)}
-.banner .sub{font-size:15.5px;color:#000;max-width:560px}
+.banner .sub{font-size:15.5px;color:#fff;max-width:560px;text-shadow:0 1px 3px rgba(0,0,0,.5)}
 .cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
 .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:10px;font-weight:600;font-size:14px;border:1.5px solid transparent;transition:all .15s}
 .btn.dark{background:#4a52bc;color:#fff;box-shadow:0 12px 26px -12px rgba(74,82,188,.55)}
@@ -196,7 +196,7 @@ h2 .n{font-family:var(--mono);font-size:12px;color:var(--ink-3);font-weight:400;
 .card:hover{transform:translateY(-2px);border-color:var(--ink)}
 .card.today{box-shadow:0 0 0 2px var(--accent)}
 .card .top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
-.card .title{font-weight:700;font-size:14.5px;line-height:1.45;color:#000}
+.card .title{font-weight:700;font-size:14.5px;line-height:1.45;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.35)}
 .card .title:hover{color:var(--accent)}
 .badge{flex-shrink:0;font-family:var(--mono);font-size:11px;font-weight:700;padding:2px 10px;border-radius:999px}
 .badge.高{background:var(--red-soft);color:var(--red)}
