@@ -134,7 +134,7 @@ _TEMPLATE = """<!DOCTYPE html>
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{background:var(--wash) url('bg.png') center/cover no-repeat fixed;color:var(--ink);font-family:var(--sans);line-height:1.7}
+body{background:linear-gradient(rgba(0,0,0,.32),rgba(0,0,0,.32)),var(--wash) url('bg.png') center/cover no-repeat fixed;color:var(--ink);font-family:var(--sans);line-height:1.7}
 ::selection{background:var(--hl)}
 a{color:inherit;text-decoration:none}
 .wrap{max-width:1060px;margin:0 auto;padding:0 22px}
