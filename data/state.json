@@ -1352,7 +1352,7 @@
       "url": "http://www.ncccu.org.cn",
       "deadline": "2026-11-25",
       "reward": "",
-      "comp_type": "比赛",
+      "comp_type": "挑战赛",
       "status": "报名中",
       "enabled_date": "",
       "rating": "高",
@@ -2735,7 +2735,7 @@
       "platform": "AI发现·我爱竞赛网",
       "organizer": "中国计量大学、全国标准化大学联盟等",
       "url": "http://bzh.moocollege.com/home",
-      "deadline": "2026-10-31",
+      "deadline": "",
       "reward": "",
       "comp_type": "比赛",
       "status": "报名中",
@@ -2772,6 +2772,6 @@
       "detected_at": "2026-09-14T08:34:53"
     }
   },
-  "last_run": "2026-09-14T09:56:10",
-  "last_total": 100
+  "last_run": "2026-09-14T09:59:26",
+  "last_total": 103
 }
