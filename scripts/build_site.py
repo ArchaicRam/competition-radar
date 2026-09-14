@@ -205,7 +205,7 @@ h2 .n{font-family:var(--mono);font-size:12px;color:var(--ink-3);font-weight:400;
 .meta{font-size:13px;color:rgb(118,157,255)}
 .meta b{color:rgb(118,157,255);font-weight:600}
 .foot{display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin-top:auto;padding-top:4px}
-.tag{font-family:var(--mono);font-size:11px;padding:2px 9px;border-radius:7px;background:rgba(255,255,255,.55);border:1px solid var(--line);color:rgb(250,148,148)}
+.tag{font-family:var(--mono);font-size:11px;padding:2px 9px;border-radius:7px;background:rgb(184,184,221);border:1px solid var(--line);color:rgb(74,218,162)}
 .tag.dl.soon{background:var(--red-soft);color:var(--red);border-color:transparent;font-weight:700}
 .tag.dl.week{background:var(--orange-soft);color:var(--orange);border-color:transparent;font-weight:600}
 .tag.dl.ok{background:var(--green-soft);color:var(--green);border-color:transparent}
