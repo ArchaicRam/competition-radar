@@ -155,7 +155,7 @@ header .upd{font-family:var(--mono);font-size:11.5px;color:#33d3eb;letter-spacin
 .cursor{display:inline-block;width:9px;height:17px;background:#00f1ff;vertical-align:-3px;margin-left:2px;animation:blink 1s steps(1) infinite}
 .banner h1{font-size:clamp(30px,3.6vw,42px);font-weight:800;letter-spacing:-.03em;line-height:1.2;margin:10px 0 14px;color:#000}
 .hl{background:linear-gradient(transparent 62%,var(--hl) 62%)}
-.banner .sub{font-size:15.5px;color:#000;max-width:560px;text-shadow:0 1px 2px rgba(255,255,255,.85)}
+.banner .sub{font-size:15.5px;color:#000;max-width:560px}
 .cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
 .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:10px;font-weight:600;font-size:14px;border:1.5px solid transparent;transition:all .15s}
 .btn.dark{background:#4a52bc;color:#fff;box-shadow:0 12px 26px -12px rgba(74,82,188,.55)}
@@ -203,14 +203,14 @@ h2 .n{font-family:var(--mono);font-size:12px;color:var(--ink-3);font-weight:400;
 .badge.中{background:var(--orange-soft);color:var(--orange)}
 .badge.低{background:var(--green-soft);color:var(--green)}
 .meta{font-size:13px;color:rgb(118,157,255)}
-.meta b{color:var(--ink);font-weight:600}
+.meta b{color:rgb(118,157,255);font-weight:600}
 .foot{display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin-top:auto;padding-top:4px}
 .tag{font-family:var(--mono);font-size:11px;padding:2px 9px;border-radius:7px;background:rgba(255,255,255,.55);border:1px solid var(--line);color:var(--ink-2)}
 .tag.dl.soon{background:var(--red-soft);color:var(--red);border-color:transparent;font-weight:700}
 .tag.dl.week{background:var(--orange-soft);color:var(--orange);border-color:transparent;font-weight:600}
 .tag.dl.ok{background:var(--green-soft);color:var(--green);border-color:transparent}
 .tag.new{background:var(--accent-soft);color:var(--accent);border-color:transparent;font-weight:700}
-.tag.official{background:#fffbeb;color:#b45309;border-color:#fde68a;font-weight:600}
+.tag.official{background:#e6f0ff;color:#3a6fc4;border-color:#bcd4f7;font-weight:600}
 .empty{color:var(--ink-3);text-align:center;padding:48px 0;font-family:var(--mono);font-size:13px}
 footer{border-top:1px solid var(--line);margin-top:54px;padding:24px 0 44px;color:var(--ink-3);font-size:12.5px}
 footer .m{font-family:var(--mono);color:var(--accent)}
