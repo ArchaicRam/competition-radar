@@ -2798,8 +2798,36 @@
       "enabled_date": "",
       "rating": "高",
       "detected_at": "2026-09-14T10:47:58"
+    },
+    "ai:b83f4d7ed804": {
+      "key": "ai:b83f4d7ed804",
+      "title": "皎月同行·安全共守月度挖洞活动",
+      "platform": "AI发现·漏洞盒子",
+      "organizer": "漏洞盒子（斗象智能安全）",
+      "url": "https://www.vulbox.com/",
+      "deadline": "",
+      "reward": "按月度提交漏洞发放奖励，越挖越有奖",
+      "comp_type": "众包悬赏",
+      "status": "进行中",
+      "enabled_date": "",
+      "rating": "中",
+      "detected_at": "2026-09-14T11:26:19"
+    },
+    "ai:6f60b3c567f1": {
+      "key": "ai:6f60b3c567f1",
+      "title": "赛力斯SRC 2026安全众测活动",
+      "platform": "AI发现·漏洞盒子",
+      "organizer": "赛力斯SRC（漏洞盒子平台）",
+      "url": "https://src.seres.cn/announcement/detail?id=24",
+      "deadline": "",
+      "reward": "漏洞奖励（按漏洞等级发放奖金/盒子积分）",
+      "comp_type": "众包悬赏",
+      "status": "进行中",
+      "enabled_date": "",
+      "rating": "中",
+      "detected_at": "2026-09-14T11:26:19"
     }
   },
-  "last_run": "2026-09-14T11:05:49",
-  "last_total": 104
+  "last_run": "2026-09-14T11:27:17",
+  "last_total": 86
 }
