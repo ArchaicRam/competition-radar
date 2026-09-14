@@ -78,6 +78,7 @@ _ENV_MAP = {
     "FEISHU_SECRET": "feishu_secret",
     "FEISHU_CHAT_ID": "feishu_chat_id",
     "FEISHU_SHEET_URL": "feishu_sheet_url",
+    "SITE_URL": "site_url",
     "LARK_PROFILE": "lark_profile",
     "SOURCES": "sources",
     "DATA_FILE": "data_file",

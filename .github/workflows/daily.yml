@@ -66,6 +66,8 @@ jobs:
           FEISHU_CHAT_ID: ${{ secrets.FEISHU_CHAT_ID }}
           # 飞书在线表格地址（必配：否则卡片降级为"本机路径"、表格不更新）
           FEISHU_SHEET_URL: ${{ secrets.FEISHU_SHEET_URL }}
+          # 网页版总览地址（公开信息直接写死；日报卡片底部会带"网页版总览"链接）
+          SITE_URL: https://archaicram.github.io/competition-radar/
           # Kaggle 账号（可选）：不配置则跳过 Kaggle
           KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
           KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
