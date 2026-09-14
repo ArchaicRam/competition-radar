@@ -130,17 +130,18 @@ _TEMPLATE = """<!DOCTYPE html>
   --mono:"JetBrains Mono","SFMono-Regular",Consolas,Menlo,monospace;
   --sans:Inter,-apple-system,"PingFang SC","Microsoft YaHei","Segoe UI",sans-serif;
   --radius:14px;
+  --glass:rgba(255,255,255,.6); /* 面板透明度：60%（覆盖在背景图上） */
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7}
+body{background:var(--wash) url('bg.png') center/cover no-repeat fixed;color:var(--ink);font-family:var(--sans);line-height:1.7}
 ::selection{background:var(--hl)}
 a{color:inherit;text-decoration:none}
 .wrap{max-width:1060px;margin:0 auto;padding:0 22px}
 .mono{font-family:var(--mono)}
 
 /* 顶栏 */
-header{position:sticky;top:0;z-index:9;background:rgba(255,255,255,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+header{position:sticky;top:0;z-index:9;background:var(--glass);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
 header .wrap{display:flex;align-items:center;justify-content:space-between;height:58px}
 .logo{font-weight:800;font-size:16px;letter-spacing:-.01em}
 .logo .m{font-family:var(--mono);color:var(--accent);animation:blink 1.1s steps(1) infinite}
@@ -173,15 +174,15 @@ header .upd{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);letter-s
 
 /* 统计条 */
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:22px}
-.stat{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:14px 18px}
+.stat{background:var(--glass);border:1px solid var(--line);border-radius:var(--radius);padding:14px 18px;backdrop-filter:blur(4px)}
 .stat b{display:block;font-family:var(--mono);font-size:26px;font-weight:700;letter-spacing:-.02em}
 .stat.hot b{color:var(--red)}
 .stat span{font-size:12.5px;color:var(--ink-2)}
 .stat .lbl{font-family:var(--mono);font-size:10px;color:var(--ink-3);letter-spacing:.16em}
 
 /* 筛选区 */
-.filters{position:sticky;top:58px;z-index:8;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:13px 0;margin-top:34px}
-.search{width:100%;padding:10px 16px;border-radius:10px;border:1px solid var(--line);background:var(--wash);color:var(--ink);font-family:var(--mono);font-size:13.5px;outline:none;transition:border-color .15s}
+.filters{position:sticky;top:58px;z-index:8;background:var(--glass);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:13px 0;margin-top:34px}
+.search{width:100%;padding:10px 16px;border-radius:10px;border:1px solid var(--line);background:rgba(255,255,255,.7);color:var(--ink);font-family:var(--mono);font-size:13.5px;outline:none;transition:border-color .15s}
 .search:focus{border-color:var(--accent);background:var(--paper)}
 .search::placeholder{color:var(--ink-3)}
 .chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:11px}
@@ -199,7 +200,7 @@ h2{font-size:20px;font-weight:800;letter-spacing:-.02em;display:flex;align-items
 h2 .en{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--ink-3);letter-spacing:.16em}
 h2 .n{font-family:var(--mono);font-size:12px;color:var(--ink-3);font-weight:400;margin-left:auto}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:12px}
-.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;display:flex;flex-direction:column;gap:9px;transition:all .15s}
+.card{background:var(--glass);backdrop-filter:blur(4px);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;display:flex;flex-direction:column;gap:9px;transition:all .15s}
 .card:hover{transform:translateY(-2px);border-color:var(--ink)}
 .card.today{box-shadow:0 0 0 2px var(--accent)}
 .card .top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
@@ -212,7 +213,7 @@ h2 .n{font-family:var(--mono);font-size:12px;color:var(--ink-3);font-weight:400;
 .meta{font-size:13px;color:var(--ink-2)}
 .meta b{color:var(--ink);font-weight:600}
 .foot{display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin-top:auto;padding-top:4px}
-.tag{font-family:var(--mono);font-size:11px;padding:2px 9px;border-radius:7px;background:var(--wash);border:1px solid var(--line);color:var(--ink-2)}
+.tag{font-family:var(--mono);font-size:11px;padding:2px 9px;border-radius:7px;background:rgba(255,255,255,.55);border:1px solid var(--line);color:var(--ink-2)}
 .tag.dl.soon{background:var(--red-soft);color:var(--red);border-color:transparent;font-weight:700}
 .tag.dl.week{background:var(--orange-soft);color:var(--orange);border-color:transparent;font-weight:600}
 .tag.dl.ok{background:var(--green-soft);color:var(--green);border-color:transparent}
@@ -357,6 +358,7 @@ def main():
     ap.add_argument("--state", default="data/state.json")
     ap.add_argument("--out", default="site/index.html")
     ap.add_argument("--sheet-url", default="", help="在线表格链接（英雄区按钮）")
+    ap.add_argument("--bg", default="assets/bg.png", help="页面背景图（复制到输出目录 bg.png）")
     args = ap.parse_args()
 
     items = load_competitions(args.state)
@@ -364,7 +366,13 @@ def main():
     os.makedirs(os.path.dirname(os.path.abspath(args.out)), exist_ok=True)
     with open(args.out, "w", encoding="utf-8") as f:
         f.write(html)
-    print(f"网站已生成: {args.out}（{len(items)} 场，{len(html) // 1024} KB）")
+    bg_note = ""
+    if args.bg and os.path.exists(args.bg):
+        import shutil
+        bg_out = os.path.join(os.path.dirname(os.path.abspath(args.out)), "bg.png")
+        shutil.copy2(args.bg, bg_out)
+        bg_note = f"，背景图 {os.path.getsize(bg_out) // 1024} KB"
+    print(f"网站已生成: {args.out}（{len(items)} 场，{len(html) // 1024} KB{bg_note}）")
 
 
 if __name__ == "__main__":
