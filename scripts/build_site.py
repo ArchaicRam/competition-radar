@@ -174,11 +174,11 @@ header .upd{font-family:var(--mono);font-size:11.5px;color:#33d3eb;letter-spacin
 
 /* 筛选区 */
 .filters{position:sticky;top:58px;z-index:8;background:rgba(255,255,255,.05);backdrop-filter:blur(4px);border-bottom:1px solid var(--line);padding:13px 0;margin-top:34px}
-.search{width:100%;padding:10px 16px;border-radius:10px;border:1px solid #5b37b7;background:rgba(255,255,255,.05);color:#33a8eb;font-family:var(--mono);font-size:13.5px;outline:none;transition:border-color .15s}
+.search{width:100%;padding:10px 16px;border-radius:10px;border:1px solid #5b37b7;background:rgba(255,255,255,.05);color:rgb(250,148,148);font-family:var(--mono);font-size:13.5px;outline:none;transition:border-color .15s}
 .search:focus{border-color:var(--accent);background:var(--paper)}
-.search::placeholder{color:rgba(58,168,235,.85)}
+.search::placeholder{color:rgba(250,148,148,.85)}
 .chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:11px}
-.chip{padding:4px 13px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:rgb(126,182,200);font-size:12px;font-family:var(--mono);cursor:pointer;user-select:none;transition:all .12s}
+.chip{padding:4px 13px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:rgb(250,148,148);font-size:12px;font-family:var(--mono);cursor:pointer;user-select:none;transition:all .12s}
 .chip:hover{border-color:var(--ink)}
 .chip.on{background:var(--ink);border-color:var(--ink);color:#fff;font-weight:600}
 .chip.on.blue{background:var(--accent);border-color:var(--accent)}
@@ -205,7 +205,7 @@ h2 .n{font-family:var(--mono);font-size:12px;color:var(--ink-3);font-weight:400;
 .meta{font-size:13px;color:rgb(118,157,255)}
 .meta b{color:rgb(118,157,255);font-weight:600}
 .foot{display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin-top:auto;padding-top:4px}
-.tag{font-family:var(--mono);font-size:11px;padding:2px 9px;border-radius:7px;background:rgba(255,255,255,.55);border:1px solid var(--line);color:var(--ink-2)}
+.tag{font-family:var(--mono);font-size:11px;padding:2px 9px;border-radius:7px;background:rgba(255,255,255,.55);border:1px solid var(--line);color:rgb(250,148,148)}
 .tag.dl.soon{background:var(--red-soft);color:var(--red);border-color:transparent;font-weight:700}
 .tag.dl.week{background:var(--orange-soft);color:var(--orange);border-color:transparent;font-weight:600}
 .tag.dl.ok{background:var(--green-soft);color:var(--green);border-color:transparent}
