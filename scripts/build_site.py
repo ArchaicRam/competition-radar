@@ -262,24 +262,22 @@ const q = document.getElementById('q'), chipsEl = document.getElementById('chips
 const GROUPS = [["报名中","SIGN-UP","var(--green)"],["进行中","LIVE","var(--accent)"],["未开始","UPCOMING","var(--ink-3)"]];
 let active = {tag:null};
 
-/* 打字机：几行终端命令，从头敲到尾一遍（55ms/字），敲完停住、光标继续闪 */
+/* 打字机：轮流播放终端命令——敲一行、停 2.2s、逐字删除、换下一行，无限循环 */
 const LINES = [
   "$ saitan scan --sources all --daily",
-  "  [ok] tianchi ......... 26 comps",
-  "  [ok] ctftime ......... 30 comps",
-  "  [ai] stage verified, expired dropped",
+  "$ [tianchi] 26 comps [ctftime] 30 comps",
   "$ deadline --within 7d --notify",
+  "$ ai verify --stage auto --drop-expired",
   "$ flag{never_miss_a_deadline}",
 ];
-(function(){ const el = document.getElementById('typewriter'); let li = 0, ci = 0;
+(function(){ const el = document.getElementById('typewriter'); let li = 0, ci = 0, del = false;
   (function tick(){ const line = LINES[li];
-    el.textContent = LINES.slice(0, li).join("\\n") + (li ? "\\n" : "") + line.slice(0, ++ci);
-    if (ci === line.length) {
-      li += 1;
-      if (li === LINES.length) return;   // 敲完即停，光标仍闪烁
-      return setTimeout(tick, 350);
-    }
-    setTimeout(tick, 55);
+    if (!del) { el.textContent = line.slice(0, ++ci);
+      if (ci === line.length) { del = true; return setTimeout(tick, 2200); }
+      setTimeout(tick, 55);
+    } else { el.textContent = line.slice(0, --ci);
+      if (ci === 0) { del = false; li = (li + 1) % LINES.length; }
+      setTimeout(tick, 22); }
   })();
 })();
 
