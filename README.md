@@ -47,9 +47,9 @@ python run_daily.py --export-csv
 | `feishu_sheet_url` | 可选：**飞书在线表格** URL，配置后每天自动同步到该表，卡片里显示"查看在线表格"链接 |
 | `lark_profile` | lark-cli 的应用 profile 名（默认 `jingsai`，即"赛探"应用） |
 | `official_keywords` | 可选：覆盖"教育部认定赛事"识别关键词（默认内置常见 A 类赛事名单） |
-| `llm_api_key` | **DeepSeek API Key**（platform.deepseek.com 获取），AI 情报员/日报解读的开关；留空则 AI 模块全部跳过 |
-| `llm_base_url` | 默认 `https://api.deepseek.com`，其它 OpenAI 兼容服务可改 |
-| `llm_model` | 默认 `deepseek-chat` |
+| `llm_api_key` | **智谱 API Key**（open.bigmodel.cn 获取），AI 情报员/日报解读的开关；留空则 AI 模块全部跳过 |
+| `llm_base_url` | 默认智谱 `https://open.bigmodel.cn/api/coding/paas/v4`，其它 OpenAI 兼容服务可改 |
+| `llm_model` | 默认 `glm-5.3-flash` |
 | `ai_discover` | `true`：启用"AI 情报员"，扫描 `seed_sources` 非接口型来源 |
 | `ai_digest` | `true`：启用"AI 今日看点"，卡片里多一段当日解读 |
 | `seed_sources` | AI 情报员的种子源列表 `[{"name":"站点名","url":"页面地址"}]`，可随意增删（官网公告/聚合站/揭榜挂帅页/高校就业网都行） |
