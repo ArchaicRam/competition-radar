@@ -1352,7 +1352,7 @@
       "url": "http://www.ncccu.org.cn",
       "deadline": "2026-11-25",
       "reward": "",
-      "comp_type": "挑战赛",
+      "comp_type": "比赛",
       "status": "报名中",
       "enabled_date": "",
       "rating": "高",
@@ -2756,8 +2756,22 @@
       "enabled_date": "",
       "rating": "中",
       "detected_at": "2026-09-14T08:17:37"
+    },
+    "ai:d2ad6fdeb54b": {
+      "key": "ai:d2ad6fdeb54b",
+      "title": "“挑战杯”黑科技展示活动",
+      "platform": "AI发现·挑战杯",
+      "organizer": "挑战杯竞赛组委会",
+      "url": "http://www.tiaozhanbei.net/",
+      "deadline": "",
+      "reward": "",
+      "comp_type": "作品征集",
+      "status": "预计10月启动报名（按往届）",
+      "enabled_date": "",
+      "rating": "高",
+      "detected_at": "2026-09-14T08:34:53"
     }
   },
-  "last_run": "2026-09-14T08:18:23",
-  "last_total": 103
+  "last_run": "2026-09-14T08:35:28",
+  "last_total": 100
 }
