@@ -123,7 +123,7 @@ _TEMPLATE = """<!DOCTYPE html>
   color-scheme: light;
   --paper:#ffffff; --wash:#f8fafc; --line:#e6eaf1;
   --ink:#0f172a; --ink-2:#475569; --ink-3:#94a3b8;
-  --accent:#2563eb; --accent-soft:#eff6ff; --hl:#bfdbfe;
+  --accent:#2563eb; --accent-soft:#eff6ff; --hl:rgba(0,241,255,.4);
   --red:#dc2626; --red-soft:#fef2f2;
   --orange:#d97706; --orange-soft:#fffbeb;
   --green:#059669; --green-soft:#ecfdf5;
@@ -141,18 +141,18 @@ a{color:inherit;text-decoration:none}
 .mono{font-family:var(--mono)}
 
 /* 顶栏 */
-header{position:sticky;top:0;z-index:9;background:var(--glass);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+header{position:sticky;top:0;z-index:9;background:rgba(255,255,255,.2);backdrop-filter:blur(4px);border-bottom:1px solid var(--line)}
 header .wrap{display:flex;align-items:center;justify-content:space-between;height:58px}
-.logo{font-weight:800;font-size:16px;letter-spacing:-.01em}
-.logo .m{font-family:var(--mono);color:var(--accent);animation:blink 1.1s steps(1) infinite}
-header .upd{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);letter-spacing:.06em}
+.logo{font-weight:800;font-size:16px;letter-spacing:-.01em;color:#33d3eb;text-shadow:0 1px 3px rgba(0,0,0,.25)}
+.logo .m{font-family:var(--mono);color:#33d3eb;animation:blink 1.1s steps(1) infinite}
+header .upd{font-family:var(--mono);font-size:11.5px;color:#33d3eb;letter-spacing:.06em;text-shadow:0 1px 3px rgba(0,0,0,.25)}
 @keyframes blink{50%{opacity:0}}
 
 /* Hero banner：圆角大卡片 + 点阵纹理 + 柔光 */
 .banner{position:relative;margin-top:26px;border:1px solid var(--line);border-radius:26px;overflow:hidden;background:transparent;padding:52px 54px 44px}
 .banner-grid{position:relative}
-.kicker{font-family:var(--mono);font-size:14px;color:var(--accent);min-height:24px;letter-spacing:.02em;white-space:pre;display:block;line-height:1.5;text-shadow:0 1px 3px rgba(255,255,255,.9),0 0 8px rgba(255,255,255,.7)}
-.cursor{display:inline-block;width:9px;height:17px;background:var(--accent);vertical-align:-3px;margin-left:2px;animation:blink 1s steps(1) infinite}
+.kicker{font-family:var(--mono);font-size:14px;color:#00f1ff;min-height:24px;letter-spacing:.02em;white-space:pre;display:block;line-height:1.5;text-shadow:0 1px 3px rgba(255,255,255,.9),0 0 8px rgba(255,255,255,.7)}
+.cursor{display:inline-block;width:9px;height:17px;background:#00f1ff;vertical-align:-3px;margin-left:2px;animation:blink 1s steps(1) infinite}
 .hero h1{font-size:clamp(30px,3.6vw,42px);font-weight:800;letter-spacing:-.03em;line-height:1.2;margin:10px 0 14px}
 .hl{background:linear-gradient(transparent 62%,var(--hl) 62%)}
 .hero .sub{font-size:15.5px;color:var(--ink-2);max-width:560px;text-shadow:0 1px 2px rgba(255,255,255,.85)}
@@ -166,14 +166,14 @@ header .upd{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);letter-s
 
 /* 统计条 */
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:22px}
-.stat{background:var(--glass);border:1px solid var(--line);border-radius:var(--radius);padding:14px 18px;backdrop-filter:blur(4px)}
+.stat{background:rgba(255,255,255,.2);border:1px solid var(--line);border-radius:var(--radius);padding:14px 18px;backdrop-filter:blur(2px)}
 .stat b{display:block;font-family:var(--mono);font-size:26px;font-weight:700;letter-spacing:-.02em}
 .stat.hot b{color:var(--red)}
 .stat span{font-size:12.5px;color:var(--ink-2);text-shadow:0 1px 2px rgba(255,255,255,.9)}
 .stat .lbl{font-family:var(--mono);font-size:10px;color:#475569;letter-spacing:.16em;text-shadow:0 1px 2px rgba(255,255,255,.9)}
 
 /* 筛选区 */
-.filters{position:sticky;top:58px;z-index:8;background:var(--glass);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:13px 0;margin-top:34px}
+.filters{position:sticky;top:58px;z-index:8;background:rgba(255,255,255,.2);backdrop-filter:blur(4px);border-bottom:1px solid var(--line);padding:13px 0;margin-top:34px}
 .search{width:100%;padding:10px 16px;border-radius:10px;border:1px solid var(--line);background:rgba(255,255,255,.7);color:var(--ink);font-family:var(--mono);font-size:13.5px;outline:none;transition:border-color .15s}
 .search:focus{border-color:var(--accent);background:var(--paper)}
 .search::placeholder{color:var(--ink-3)}
