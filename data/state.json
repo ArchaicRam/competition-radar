@@ -2131,7 +2131,7 @@
       "key": "ai:b4e718188ed1",
       "title": "一〇七杯算力与智能体开发大赛",
       "platform": "AI发现·中科大教务处",
-      "organizer": "中国科学技术大学",
+      "organizer": "中国科学技术大学教务处（校内发布）",
       "url": "https://www.teach.ustc.edu.cn/notice/notice-info/20515.html",
       "deadline": "",
       "reward": "",
@@ -2826,8 +2826,22 @@
       "enabled_date": "",
       "rating": "中",
       "detected_at": "2026-09-14T11:26:19"
+    },
+    "tianchi:532514": {
+      "key": "tianchi:532514",
+      "title": "蚂蚁灵波具身大模型挑战赛",
+      "platform": "tianchi",
+      "organizer": "",
+      "url": "https://tianchi.aliyun.com/competition/entrance/532514",
+      "deadline": "2026-10-26",
+      "reward": "¥280,000",
+      "comp_type": "机器人、计算机视觉‌",
+      "status": "报名中",
+      "enabled_date": "2026-09-11",
+      "rating": "",
+      "detected_at": "2026-09-15T09:27:55"
     }
   },
-  "last_run": "2026-09-14T11:27:17",
-  "last_total": 86
+  "last_run": "2026-09-15T09:29:34",
+  "last_total": 85
 }
