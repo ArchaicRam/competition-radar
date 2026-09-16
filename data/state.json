@@ -2456,7 +2456,7 @@
       "organizer": "OmniCTF",
       "url": "https://omnictf.com/",
       "deadline": "2026-09-19",
-      "reward": "Finals prizes (on-site):\r\nTop 3 Overall\r\nTop 1: 670 Euro\r\nTo",
+      "reward": "Finals prizes (on-site):\r\nTop 3 Overall\r\nTop 1: 670$\r\nTop 2:",
       "comp_type": "网络安全",
       "status": "未开始",
       "enabled_date": "2026-09-19",
@@ -2840,8 +2840,64 @@
       "enabled_date": "2026-09-11",
       "rating": "",
       "detected_at": "2026-09-15T09:27:55"
+    },
+    "ai:1aedfd28a924": {
+      "key": "ai:1aedfd28a924",
+      "title": "USRC 皎月同行·安全共守漏洞挖掘活动",
+      "platform": "AI发现·漏洞盒子",
+      "organizer": "USRC（漏洞盒子平台）",
+      "url": "https://www.vulbox.com/",
+      "deadline": "",
+      "reward": "漏洞奖励（越挖越有奖）",
+      "comp_type": "众包悬赏",
+      "status": "进行中",
+      "enabled_date": "",
+      "rating": "高",
+      "detected_at": "2026-09-16T09:21:16"
+    },
+    "ai:200c199f7c54": {
+      "key": "ai:200c199f7c54",
+      "title": "斗象 × MiniMax 安全研究员千万Token活动",
+      "platform": "AI发现·漏洞盒子",
+      "organizer": "斗象科技 × MiniMax",
+      "url": "https://www.vulbox.com/",
+      "deadline": "",
+      "reward": "千万Token",
+      "comp_type": "众包悬赏",
+      "status": "进行中",
+      "enabled_date": "",
+      "rating": "高",
+      "detected_at": "2026-09-16T09:21:16"
+    },
+    "ai:add78319881e": {
+      "key": "ai:add78319881e",
+      "title": "提漏洞 盒子奖励狂飙活动",
+      "platform": "AI发现·漏洞盒子",
+      "organizer": "漏洞盒子（斗象科技）",
+      "url": "https://www.vulbox.com/",
+      "deadline": "",
+      "reward": "漏洞奖励加码",
+      "comp_type": "众包悬赏",
+      "status": "进行中",
+      "enabled_date": "",
+      "rating": "高",
+      "detected_at": "2026-09-16T09:21:16"
+    },
+    "ai:4fd3c638b0d0": {
+      "key": "ai:4fd3c638b0d0",
+      "title": "SDC2026 安全开发者峰会·安全训练营",
+      "platform": "AI发现·看雪安全社区",
+      "organizer": "看雪学苑（第十届安全开发者峰会 SDC2026）",
+      "url": "https://www.kanxue.com/",
+      "deadline": "",
+      "reward": "报名即赠送第十届安全开发者峰会门票",
+      "comp_type": "训练营",
+      "status": "报名中",
+      "enabled_date": "",
+      "rating": "中",
+      "detected_at": "2026-09-16T09:20:59"
     }
   },
-  "last_run": "2026-09-15T09:29:34",
-  "last_total": 85
+  "last_run": "2026-09-16T09:22:17",
+  "last_total": 88
 }
