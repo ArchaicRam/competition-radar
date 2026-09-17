@@ -2896,8 +2896,50 @@
       "enabled_date": "",
       "rating": "中",
       "detected_at": "2026-09-16T09:20:59"
+    },
+    "ai:bb0fd3f3d119": {
+      "key": "ai:bb0fd3f3d119",
+      "title": "SDC2026·安全训练营（固件、AI攻防、Android逆向）",
+      "platform": "AI发现·看雪安全社区",
+      "organizer": "看雪（第十届安全开发者峰会）",
+      "url": "https://www.kanxue.com/",
+      "deadline": "",
+      "reward": "报名即赠送第十届安全开发者峰会（SDC2026）门票",
+      "comp_type": "训练营",
+      "status": "报名中",
+      "enabled_date": "",
+      "rating": "高",
+      "detected_at": "2026-09-17T09:29:43"
+    },
+    "ctftime:3418": {
+      "key": "ctftime:3418",
+      "title": "HKCERT CTF 2026 (Qualifying Round)",
+      "platform": "ctftime",
+      "organizer": "Black Bauhinia, HKCERT",
+      "url": "https://ctf.hkcert.org/",
+      "deadline": "2026-11-07",
+      "reward": "There are 2 rounds of the competition -> qualifying round an",
+      "comp_type": "网络安全",
+      "status": "未开始",
+      "enabled_date": "2026-11-06",
+      "rating": "",
+      "detected_at": "2026-09-17T09:28:52"
+    },
+    "ai:d6d0708c978d": {
+      "key": "ai:d6d0708c978d",
+      "title": "中国科大“一〇七杯”算力与智能体开发大赛",
+      "platform": "AI发现·中科大教务处",
+      "organizer": "中国科学技术大学",
+      "url": "https://www.teach.ustc.edu.cn/notice/notice-info/20561.html",
+      "deadline": "",
+      "reward": "",
+      "comp_type": "比赛",
+      "status": "进行中",
+      "enabled_date": "",
+      "rating": "中",
+      "detected_at": "2026-09-17T09:30:05"
     }
   },
-  "last_run": "2026-09-16T09:22:17",
-  "last_total": 88
+  "last_run": "2026-09-17T09:30:42",
+  "last_total": 83
 }
