@@ -2192,7 +2192,7 @@
       "deadline": "2026-09-20",
       "reward": "",
       "comp_type": "网络安全",
-      "status": "未开始",
+      "status": "进行中",
       "enabled_date": "2026-09-19",
       "rating": "",
       "detected_at": "2026-09-13T14:28:00"
@@ -3022,8 +3022,78 @@
       "enabled_date": "2026-09-30",
       "rating": "",
       "detected_at": "2026-09-18T09:01:57"
+    },
+    "ctftime:3333": {
+      "key": "ctftime:3333",
+      "title": "CSCTF 2026",
+      "platform": "ctftime",
+      "organizer": "Mirachron",
+      "url": "https://2026.chronos-security.ro/",
+      "deadline": "2026-11-08",
+      "reward": "TBD",
+      "comp_type": "网络安全",
+      "status": "未开始",
+      "enabled_date": "2026-11-06",
+      "rating": "",
+      "detected_at": "2026-09-19T08:49:57"
+    },
+    "ctftime:3331": {
+      "key": "ctftime:3331",
+      "title": "PINK+ CTF 2026",
+      "platform": "ctftime",
+      "organizer": "PINK+",
+      "url": "https://ctf.pink.bayern/",
+      "deadline": "2026-11-09",
+      "reward": "TBD\r\nEstimated 1100$ worth of prizes (including license priz",
+      "comp_type": "网络安全",
+      "status": "未开始",
+      "enabled_date": "2026-11-06",
+      "rating": "",
+      "detected_at": "2026-09-19T08:49:57"
+    },
+    "ctftime:3444": {
+      "key": "ctftime:3444",
+      "title": "Srdnlen CTF 2026 Finals (Sardinia Cyber Camp)",
+      "platform": "ctftime",
+      "organizer": "Srdnlen",
+      "url": "https://ctf.srdnlen.it/",
+      "deadline": "2026-10-29",
+      "reward": "TBD",
+      "comp_type": "网络安全",
+      "status": "未开始",
+      "enabled_date": "2026-10-29",
+      "rating": "",
+      "detected_at": "2026-09-19T08:49:57"
+    },
+    "ctftime:3443": {
+      "key": "ctftime:3443",
+      "title": "Sudocrypt v16.0",
+      "platform": "ctftime",
+      "organizer": "exunclan",
+      "url": "https://sudocrypt.com/",
+      "deadline": "2026-10-28",
+      "reward": "With a prize pool of over $900 USD in previous iterations, a",
+      "comp_type": "网络安全",
+      "status": "未开始",
+      "enabled_date": "2026-10-27",
+      "rating": "",
+      "detected_at": "2026-09-19T08:49:57"
+    },
+    "ai:23631bb2ae5f": {
+      "key": "ai:23631bb2ae5f",
+      "title": "SDC2026·安全训练营（固件安全、AI攻防、Android逆向）",
+      "platform": "AI发现·看雪安全社区",
+      "organizer": "看雪学苑（第十届安全开发者峰会）",
+      "url": "https://www.kanxue.com/",
+      "deadline": "",
+      "reward": "报名即赠送第十届安全开发者峰会（SDC2026）门票",
+      "comp_type": "训练营",
+      "status": "报名中",
+      "enabled_date": "",
+      "rating": "中",
+      "detected_at": "2026-09-19T08:50:40"
     }
   },
-  "last_run": "2026-09-18T09:04:30",
-  "last_total": 84
+  "last_run": "2026-09-19T08:51:34",
+  "last_total": 81
 }
