@@ -3083,14 +3083,14 @@
       "key": "ai:23631bb2ae5f",
       "title": "SDC2026·安全训练营（固件安全、AI攻防、Android逆向）",
       "platform": "AI发现·看雪安全社区",
-      "organizer": "看雪·安全开发者峰会（SDC）",
+      "organizer": "看雪（第十届安全开发者峰会 SDC2026）",
       "url": "https://www.kanxue.com/",
       "deadline": "",
-      "reward": "报名赠送第十届安全开发者峰会（SDC2026）门票",
+      "reward": "报名即赠送第十届安全开发者峰会门票",
       "comp_type": "训练营",
       "status": "报名中",
       "enabled_date": "",
-      "rating": "中",
+      "rating": "高",
       "detected_at": "2026-09-19T08:50:40"
     },
     "ai:aa85c126214f": {
@@ -3316,8 +3316,36 @@
       "enabled_date": "",
       "rating": "中",
       "detected_at": "2026-09-22T09:21:12"
+    },
+    "ai:03ecc72e37a3": {
+      "key": "ai:03ecc72e37a3",
+      "title": "斗象 × MiniMax 安全研究员千万Token激励活动",
+      "platform": "AI发现·漏洞盒子",
+      "organizer": "斗象科技 × MiniMax",
+      "url": "https://www.vulbox.com/",
+      "deadline": "",
+      "reward": "千万Token奖励",
+      "comp_type": "众包悬赏",
+      "status": "进行中",
+      "enabled_date": "",
+      "rating": "高",
+      "detected_at": "2026-09-23T09:21:52"
+    },
+    "ai:ea8f986e7f34": {
+      "key": "ai:ea8f986e7f34",
+      "title": "漏洞盒子安全众测项目（项目大厅/闪测大厅）",
+      "platform": "AI发现·漏洞盒子",
+      "organizer": "漏洞盒子（斗象科技）",
+      "url": "https://www.vulbox.com/projects/list",
+      "deadline": "",
+      "reward": "漏洞现金奖励与积分排行",
+      "comp_type": "众包悬赏",
+      "status": "进行中",
+      "enabled_date": "",
+      "rating": "高",
+      "detected_at": "2026-09-23T09:21:52"
     }
   },
-  "last_run": "2026-09-22T09:22:18",
-  "last_total": 84
+  "last_run": "2026-09-23T09:22:30",
+  "last_total": 83
 }
