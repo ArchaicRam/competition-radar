@@ -119,9 +119,9 @@ tianchi,CSIG图像图形技术挑战赛-赛道二：生成式图像增强轻量�
 tianchi,CCL2026-Eval 任务：第一届跨境电商图像文本翻译大赛,,大语言模型、计算机视觉、学术顶会论文发表、电商,高,2026-09-27,2026-08-20,"¥40,000",报名中,https://tianchi.aliyun.com/competition/entrance/532463,2026-08-16T19:50:51
 tianchi,CHIP2026-面向生物医学全文的特定患者表型概念识别任务,,医疗健康、自然语言处理、大语言模型,高,2026-09-27,2026-08-20,,报名中,https://tianchi.aliyun.com/competition/entrance/532512,2026-08-19T23:02:28
 ctftime,H7CTF 2026 Quals,H7Tex,网络安全,中,2026-09-27,2026-09-26,TDB,未开始,https://2026.h7tex.com/,2026-09-13T14:28:00
-ctftime,BCS CTF 2026,bdhxgrp,网络安全,中,2026-09-27,2026-09-25,Top 10 international teams will receive a complimentary tick,未开始,https://ctf.bcsictfest.com/,2026-09-13T14:28:00
-ctftime,FlightPath2026,ĀYŌDÈ,网络安全,中,2026-09-27,2026-09-25,,未开始,http://setyourvector.org/,2026-09-13T14:28:00
-ctftime,NileCTF,Cyb3r_Ph4nt0ms,网络安全,中,2026-09-27,2026-09-25,TBD,未开始,https://nilectf.com/register,2026-09-21T09:59:19
+ctftime,BCS CTF 2026,bdhxgrp,网络安全,中,2026-09-27,2026-09-25,Top 10 international teams will receive a complimentary tick,进行中,https://ctf.bcsictfest.com/,2026-09-13T14:28:00
+ctftime,FlightPath2026,ĀYŌDÈ,网络安全,中,2026-09-27,2026-09-25,,进行中,http://setyourvector.org/,2026-09-13T14:28:00
+ctftime,NileCTF,Cyb3r_Ph4nt0ms,网络安全,中,2026-09-27,2026-09-25,TBD,进行中,https://nilectf.com/register,2026-09-21T09:59:19
 xfyun,基于智能眼镜的第一视角阳光玫瑰劳作动作识别挑战赛,中国农业大学,算法,中,2026-09-28,2026-09-03,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=FPVSMAC,2026-09-04T08:53:03
 xfyun,阳光玫瑰葡萄花穗完整性判断与分割挑战赛,中国农业大学,算法,中,2026-09-28,2026-09-03,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=GrapeFlowerSeg,2026-09-04T08:53:03
 xfyun,幼果劣果识别挑战赛,中国农业大学,算法,中,2026-09-28,2026-09-03,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=YoungFruitBadSeg,2026-09-04T08:53:03
@@ -262,7 +262,7 @@ AI发现·漏洞盒子,斗象 × MiniMax 安全研究员千万Token奖励活动,
 AI发现·漏洞盒子,漏洞盒子安全众测/SRC漏洞赏金计划,斗象科技（漏洞盒子）,众包悬赏,高,,,漏洞现金赏金（按严重程度定级）+ 积分段位排名,进行中,https://www.vulbox.com/,2026-09-21T10:00:32
 AI发现·补天漏洞响应平台,补天漏洞响应平台——漏洞提交与众测赏金,补天（奇安信旗下）,众包悬赏,高,,,按漏洞等级获得现金赏金与平台积分、荣誉证书,进行中,https://www.butian.net/,2026-09-21T10:00:36
 AI发现·漏洞盒子,漏洞盒子安全众测（漏洞提交赏金）,斗象科技（漏洞盒子VulBox）,众包悬赏,高,,,按漏洞等级获得现金奖励与积分，另有排行榜赛季奖励,进行中,https://www.vulbox.com/,2026-09-22T09:21:12
-AI发现·看雪安全社区,SDC2026·安全训练营,看雪学苑（第十届安全开发者峰会）,训练营,高,,,报名即赠送第十届安全开发者峰会（SDC2026）门票,报名中,http://bbs.kanxue.com/thread-292962.htm?style=1,2026-09-22T09:20:49
+AI发现·看雪安全社区,SDC2026·安全训练营,看雪·安全开发者峰会（SDC）,训练营,高,,,报名即赠送第十届安全开发者峰会（SDC2026）门票,报名中,http://bbs.kanxue.com/thread-292962.htm?style=1,2026-09-22T09:20:49
 AI发现·上交教务处,第50期PRP本科生研究计划（第二轮报名）,上海交通大学教务处,项目招募,中,,,,报名中,https://jwc.sjtu.edu.cn/,2026-09-22T09:21:50
 AI发现·漏洞盒子,斗象 × MiniMax 联合活动：向安全研究员发放千万Token,斗象科技 × MiniMax,众包悬赏,中,,,千万Token（大模型API额度）及漏洞赏金,进行中,https://www.vulbox.com/,2026-09-22T09:21:12
 AI发现·漏洞盒子,斗象 × MiniMax 安全研究员千万Token激励活动,斗象科技 × MiniMax,众包悬赏,高,,,千万Token奖励,进行中,https://www.vulbox.com/,2026-09-23T09:21:52
