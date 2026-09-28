@@ -1545,11 +1545,11 @@
       "platform": "tianchi",
       "organizer": "",
       "url": "https://tianchi.aliyun.com/competition/entrance/532512",
-      "deadline": "2026-09-27",
+      "deadline": "2026-10-01",
       "reward": "",
       "comp_type": "‌医疗健康、自然语言处理、大语言模型",
-      "status": "进行中",
-      "enabled_date": "2026-08-20",
+      "status": "报名中",
+      "enabled_date": "2026-09-28",
       "rating": "",
       "detected_at": "2026-08-19T23:02:28"
     },
@@ -3456,8 +3456,50 @@
       "enabled_date": "2026-11-14",
       "rating": "",
       "detected_at": "2026-09-27T10:02:22"
+    },
+    "ai:d937972e369f": {
+      "key": "ai:d937972e369f",
+      "title": "斗象 × MiniMax 联合活动：向安全研究员发放千万 Token 奖励",
+      "platform": "AI发现·漏洞盒子",
+      "organizer": "斗象科技 × MiniMax",
+      "url": "https://www.vulbox.com/",
+      "deadline": "",
+      "reward": "千万 Token 奖励（提交漏洞可获得）",
+      "comp_type": "众包悬赏",
+      "status": "进行中",
+      "enabled_date": "",
+      "rating": "高",
+      "detected_at": "2026-09-28T10:59:07"
+    },
+    "ai:e71f80c52ed6": {
+      "key": "ai:e71f80c52ed6",
+      "title": "漏洞盒子白帽漏洞提交赏金计划（安全众测）",
+      "platform": "AI发现·漏洞盒子",
+      "organizer": "漏洞盒子（斗象科技）",
+      "url": "https://www.vulbox.com/",
+      "deadline": "",
+      "reward": "漏洞赏金、积分与段位排名奖励",
+      "comp_type": "众包悬赏",
+      "status": "进行中",
+      "enabled_date": "",
+      "rating": "高",
+      "detected_at": "2026-09-28T10:59:07"
+    },
+    "ctftime:3337": {
+      "key": "ctftime:3337",
+      "title": "GlacierCTF 2026",
+      "platform": "ctftime",
+      "organizer": "LosFuzzys",
+      "url": "https://glacierctf.com/",
+      "deadline": "2026-11-21",
+      "reward": "",
+      "comp_type": "网络安全",
+      "status": "未开始",
+      "enabled_date": "2026-11-20",
+      "rating": "",
+      "detected_at": "2026-09-28T10:58:17"
     }
   },
-  "last_run": "2026-09-27T10:04:00",
-  "last_total": 80
+  "last_run": "2026-09-28T10:59:55",
+  "last_total": 71
 }
