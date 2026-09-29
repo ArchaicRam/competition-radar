@@ -146,7 +146,6 @@ ctftime,CubeCTF 2026,CubeMastery,网络安全·攻防,中,2026-10-03,2026-10-03,
 tianchi,余震预测技术国际大赛,,地质科学、地震学、地球物理学,高,2026-10-04,2026-09-01,"¥30,000",报名中,https://tianchi.aliyun.com/competition/entrance/532460,2026-08-17T15:05:25
 ctftime,CDCTF 2026,Crimson Defense,网络安全,中,2026-10-04,2026-10-03,Trophies are given to the top 3 teams (if US-based),未开始,https://crimsondefense.org/cdctf/,2026-09-13T14:28:00
 ctftime,Hacker's Gambit 2026 (Round 1 – Online Qualifier),JCOE Cyber Sentinels,网络安全,中,2026-10-04,2026-10-02,,未开始,https://unstop.com/p/hackers-gambit-2026-jaihind-college-of-engineering-kuran-1723293,2026-09-13T14:28:00
-ctftime,Securinets CTF Quals 2026,Securinets,网络安全,中,2026-10-04,2026-10-03,,未开始,https://ctf.securinets.tn/,2026-09-13T14:28:00
 ctftime,AltayCTF 2026,SharLike,网络安全·攻防,中,2026-10-04,2026-10-04,,未开始,https://university.altayctf.ru/2026,2026-09-13T14:28:00
 tianchi,CHIP2026-医学NLP代码自动生成测评 ——识别符合临床试验入组标准的患者,,医疗健康,高,2026-10-07,2026-08-31,,报名中,https://tianchi.aliyun.com/competition/entrance/532480,2026-09-08T08:53:52
 tianchi,AI+跨境黑客松巅峰赛——用AI解跨境真命题,,电商、物流,高,2026-10-08,2026-09-24,"¥100,000",报名中,https://tianchi.aliyun.com/competition/entrance/532509,2026-08-17T15:05:25
@@ -158,6 +157,7 @@ ctftime,FortID CTF 2026,TBTL,网络安全,中,2026-10-11,2026-10-09,TBD,未开�
 ctftime,GaianSpace CTF 2026,GaianSpace,网络安全,中,2026-10-14,2026-10-10,The top three teams and the best write-up will receive the f,未开始,https://gaian.space/ctf,2026-09-13T14:28:00
 AI发现·研究生创新实践系列大赛,中国研究生创“芯”大赛-EDA精英挑战赛,中国学位与研究生教育学会,挑战赛,高,2026-10-16,,,报名中,https://cpipc.acge.org.cn/cw/hp/2c9080158ee9c272018f229208b610a6,2026-09-13T09:37:16
 AI发现·研究生创新实践系列大赛,中国研究生网络安全创新大赛,中国学位与研究生教育学会,比赛,高,2026-10-18,,,报名中,https://cpipc.acge.org.cn/cw/hp/2c90800c8093eef401809d33b36f0652,2026-09-13T09:37:16
+ctftime,Securinets CTF Quals 2026,Securinets,网络安全,中,2026-10-18,2026-10-17,,未开始,https://ctf.securinets.tn/,2026-09-13T14:28:00
 ctftime,DEADFACE CTF 2026,Cyber Hacktics,网络安全,中,2026-10-19,2026-10-17,"1st Place - $300
 2nd Place - $200
 3rd Place - $100",未开始,https://ctf.deadface.io/,2026-09-13T14:28:00
@@ -278,3 +278,6 @@ AI发现·漏洞盒子,漏洞盒子安全众测项目（项目大厅）,漏洞�
 AI发现·漏洞盒子,斗象×MiniMax 安全研究员激励计划,漏洞盒子（斗象科技）× MiniMax,众包悬赏,高,,,千万Token奖励及现金漏洞赏金,进行中,https://www.vulbox.com/,2026-09-27T10:03:10
 AI发现·漏洞盒子,斗象 × MiniMax 联合活动：向安全研究员发放千万 Token 奖励,斗象科技 × MiniMax,众包悬赏,高,,,千万 Token 奖励（提交漏洞可获得）,进行中,https://www.vulbox.com/,2026-09-28T10:59:07
 AI发现·漏洞盒子,漏洞盒子白帽漏洞提交赏金计划（安全众测）,漏洞盒子（斗象科技）,众包悬赏,高,,,漏洞赏金、积分与段位排名奖励,进行中,https://www.vulbox.com/,2026-09-28T10:59:07
+AI发现·漏洞盒子,斗象 × MiniMax 联合漏洞悬赏：向安全研究员撒千万 Token,漏洞盒子（斗象科技）× MiniMax,众包悬赏,高,,,千万 Token 等漏洞提交奖励,进行中,https://www.vulbox.com/,2026-09-29T10:44:58
+AI发现·补天漏洞响应平台,补天漏洞响应平台白帽漏洞提交,补天（奇安信旗下漏洞响应平台）,众包悬赏,高,,,漏洞赏金、积分、荣誉证书、白帽等级成长体系,进行中,https://www.butian.net/,2026-09-29T10:44:39
+AI发现·漏洞盒子,漏洞盒子白帽漏洞提交悬赏（项目大厅/闪测大厅）,漏洞盒子（斗象科技）,众包悬赏,中,,,漏洞现金奖励与积分段位,进行中,https://www.vulbox.com/projects/list,2026-09-29T10:44:58
