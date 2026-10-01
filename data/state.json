@@ -1604,8 +1604,8 @@
       "deadline": "2026-12-31",
       "reward": "¥20,000",
       "comp_type": "自然语言处理、大语言模型",
-      "status": "进行中",
-      "enabled_date": "",
+      "status": "报名中",
+      "enabled_date": "2026-10-01",
       "rating": "",
       "detected_at": "2026-08-23T04:36:25"
     },
@@ -3335,10 +3335,10 @@
       "key": "ai:ea8f986e7f34",
       "title": "漏洞盒子安全众测项目（项目大厅/闪测大厅）",
       "platform": "AI发现·漏洞盒子",
-      "organizer": "漏洞盒子（斗象科技）",
+      "organizer": "漏洞盒子（斗象智能安全）",
       "url": "https://www.vulbox.com/projects/list",
       "deadline": "",
-      "reward": "现金奖励、积分排名及企业SRC合作机会",
+      "reward": "按漏洞等级获得现金奖励与积分、段位提升",
       "comp_type": "众包悬赏",
       "status": "进行中",
       "enabled_date": "",
@@ -3582,8 +3582,36 @@
       "enabled_date": "2026-10-09",
       "rating": "",
       "detected_at": "2026-09-30T10:31:40"
+    },
+    "ai:3cb73b0d88d1": {
+      "key": "ai:3cb73b0d88d1",
+      "title": "斗象 × MiniMax 漏洞提交赢千万Token活动",
+      "platform": "AI发现·漏洞盒子",
+      "organizer": "漏洞盒子（斗象科技）× MiniMax",
+      "url": "https://www.vulbox.com/",
+      "deadline": "",
+      "reward": "MiniMax 大模型 Token（千万级），漏洞提交另有盒子奖励",
+      "comp_type": "众包悬赏",
+      "status": "进行中",
+      "enabled_date": "",
+      "rating": "高",
+      "detected_at": "2026-10-01T11:00:03"
+    },
+    "ai:e94ce0638384": {
+      "key": "ai:e94ce0638384",
+      "title": "补天漏洞响应平台白帽子漏洞提交悬赏",
+      "platform": "AI发现·补天漏洞响应平台",
+      "organizer": "补天平台（奇安信旗下）",
+      "url": "https://www.butian.net/",
+      "deadline": "",
+      "reward": "按漏洞等级获得现金奖励与积分，可累积荣誉证书并晋升精英白帽",
+      "comp_type": "众包悬赏",
+      "status": "进行中",
+      "enabled_date": "",
+      "rating": "高",
+      "detected_at": "2026-10-01T11:00:01"
     }
   },
-  "last_run": "2026-09-30T10:33:26",
-  "last_total": 66
+  "last_run": "2026-10-01T11:00:50",
+  "last_total": 65
 }
