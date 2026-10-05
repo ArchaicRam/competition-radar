@@ -3739,7 +3739,7 @@
     },
     "ctftime:3441": {
       "key": "ctftime:3441",
-      "title": "isfcr{ctf} 2026 Quals",
+      "title": "Cryovault 2026 Quals",
       "platform": "ctftime",
       "organizer": "x6e.x65.x78.x75.x73",
       "url": "https://isfcr.xyz/",
@@ -3753,7 +3753,7 @@
     },
     "ctftime:3442": {
       "key": "ctftime:3442",
-      "title": "isfcr{ctf} 2026 Finals",
+      "title": "Cryovault 2026 Finals",
       "platform": "ctftime",
       "organizer": "x6e.x65.x78.x75.x73",
       "url": "https://isfcr.xyz/",
@@ -3834,8 +3834,22 @@
       "enabled_date": "2026-10-31",
       "rating": "",
       "detected_at": "2026-10-04T10:36:51"
+    },
+    "ctftime:3471": {
+      "key": "ctftime:3471",
+      "title": "SOLAR CTF 2026",
+      "platform": "ctftime",
+      "organizer": "SOLARCTF",
+      "url": "https://solarctf.ru/",
+      "deadline": "2026-10-18",
+      "reward": "The total prize pool is ₽300,000* plus limited-edition merch",
+      "comp_type": "网络安全",
+      "status": "未开始",
+      "enabled_date": "2026-10-17",
+      "rating": "",
+      "detected_at": "2026-10-05T11:33:23"
     }
   },
-  "last_run": "2026-10-04T10:38:07",
+  "last_run": "2026-10-05T11:34:47",
   "last_total": 63
 }
