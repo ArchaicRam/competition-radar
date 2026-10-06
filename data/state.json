@@ -3742,7 +3742,7 @@
       "title": "Cryovault 2026 Quals",
       "platform": "ctftime",
       "organizer": "x6e.x65.x78.x75.x73",
-      "url": "https://isfcr.xyz/",
+      "url": "https://isfcrpesu.ctfd.io/",
       "deadline": "2026-10-11",
       "reward": "1st Rs. 30,000\r\n2nd Rs 20,000\r\n3rd Rs 10,000\r\nFirst consolat",
       "comp_type": "网络安全",
@@ -3756,7 +3756,7 @@
       "title": "Cryovault 2026 Finals",
       "platform": "ctftime",
       "organizer": "x6e.x65.x78.x75.x73",
-      "url": "https://isfcr.xyz/",
+      "url": "https://isfcrpesu.ctfd.io/",
       "deadline": "2026-10-25",
       "reward": "1st Rs. 30,000\r\n2nd Rs 20,000\r\n3rd Rs 10,000\r\nFirst consolat",
       "comp_type": "网络安全",
@@ -3848,8 +3848,22 @@
       "enabled_date": "2026-10-17",
       "rating": "",
       "detected_at": "2026-10-05T11:33:23"
+    },
+    "ai:62b6c3aee18a": {
+      "key": "ai:62b6c3aee18a",
+      "title": "斗象 × MiniMax 联合漏洞奖励活动",
+      "platform": "AI发现·漏洞盒子",
+      "organizer": "漏洞盒子（斗象科技）× MiniMax",
+      "url": "https://www.vulbox.com/",
+      "deadline": "",
+      "reward": "千万Token及漏洞盒子现金/积分奖励",
+      "comp_type": "众包悬赏",
+      "status": "进行中",
+      "enabled_date": "",
+      "rating": "高",
+      "detected_at": "2026-10-06T11:19:46"
     }
   },
-  "last_run": "2026-10-05T11:34:47",
-  "last_total": 63
+  "last_run": "2026-10-06T11:20:38",
+  "last_total": 64
 }
