@@ -2332,7 +2332,7 @@
       "deadline": "2026-10-14",
       "reward": "The top three teams and the best write-up will receive the f",
       "comp_type": "网络安全",
-      "status": "未开始",
+      "status": "进行中",
       "enabled_date": "2026-10-10",
       "rating": "",
       "detected_at": "2026-09-13T14:28:00"
@@ -3918,8 +3918,36 @@
       "enabled_date": "",
       "rating": "高",
       "detected_at": "2026-10-09T11:22:23"
+    },
+    "ctftime:3473": {
+      "key": "ctftime:3473",
+      "title": "BSides Peoria CTF 2026",
+      "platform": "ctftime",
+      "organizer": "BSides Peoria CTF Village",
+      "url": "https://bsidespeoriac.tf/",
+      "deadline": "2026-10-24",
+      "reward": "2x Black Badges to the conference.",
+      "comp_type": "网络安全",
+      "status": "未开始",
+      "enabled_date": "2026-10-24",
+      "rating": "",
+      "detected_at": "2026-10-10T10:38:51"
+    },
+    "ctftime:3467": {
+      "key": "ctftime:3467",
+      "title": "InIt CTF",
+      "platform": "ctftime",
+      "organizer": "Hackers_In_India",
+      "url": "https://hackersinindia.com/init-ctf",
+      "deadline": "2026-11-14",
+      "reward": "Finalized with sponsors — includes .xyz domain codes and vou",
+      "comp_type": "网络安全",
+      "status": "未开始",
+      "enabled_date": "2026-11-14",
+      "rating": "",
+      "detected_at": "2026-10-10T10:38:51"
     }
   },
-  "last_run": "2026-10-09T11:23:20",
-  "last_total": 65
+  "last_run": "2026-10-10T10:40:40",
+  "last_total": 62
 }
