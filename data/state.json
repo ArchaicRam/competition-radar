@@ -63,7 +63,7 @@
       "platform": "tianchi",
       "organizer": "",
       "url": "https://tianchi.aliyun.com/competition/entrance/532499",
-      "deadline": "2026-09-27",
+      "deadline": "2026-10-18",
       "reward": "¥200,000",
       "comp_type": "计算机视觉‌",
       "status": "进行中",
@@ -77,7 +77,7 @@
       "platform": "tianchi",
       "organizer": "",
       "url": "https://tianchi.aliyun.com/competition/entrance/532500",
-      "deadline": "2026-09-27",
+      "deadline": "2026-10-18",
       "reward": "¥200,000",
       "comp_type": "计算机视觉‌",
       "status": "进行中",
@@ -234,8 +234,8 @@
       "deadline": "2026-10-31",
       "reward": "¥30,000",
       "comp_type": "地质科学、地震学、地球物理学",
-      "status": "报名中",
-      "enabled_date": "2026-10-01",
+      "status": "进行中",
+      "enabled_date": "",
       "rating": "",
       "detected_at": "2026-08-17T15:05:25"
     },
@@ -3960,8 +3960,36 @@
       "enabled_date": "",
       "rating": "高",
       "detected_at": "2026-10-11T10:52:22"
+    },
+    "ai:8fb7dbfc059a": {
+      "key": "ai:8fb7dbfc059a",
+      "title": "斗象 × MiniMax 安全研究员漏洞悬赏活动",
+      "platform": "AI发现·漏洞盒子",
+      "organizer": "斗象科技 × MiniMax（漏洞盒子平台）",
+      "url": "https://www.vulbox.com/",
+      "deadline": "",
+      "reward": "千万 Token 及漏洞盒子奖励",
+      "comp_type": "众包悬赏",
+      "status": "进行中",
+      "enabled_date": "",
+      "rating": "高",
+      "detected_at": "2026-10-12T12:05:31"
+    },
+    "ai:3720b2c425b6": {
+      "key": "ai:3720b2c425b6",
+      "title": "漏洞盒子白帽漏洞提交奖励计划",
+      "platform": "AI发现·漏洞盒子",
+      "organizer": "斗象科技（漏洞盒子）",
+      "url": "https://www.vulbox.com/",
+      "deadline": "",
+      "reward": "按漏洞等级获得盒子奖励（现金/积分）",
+      "comp_type": "众包悬赏",
+      "status": "进行中",
+      "enabled_date": "",
+      "rating": "高",
+      "detected_at": "2026-10-12T12:05:31"
     }
   },
-  "last_run": "2026-10-11T10:53:06",
-  "last_total": 63
+  "last_run": "2026-10-12T12:06:18",
+  "last_total": 66
 }
