@@ -103,6 +103,10 @@ jobs:
     needs: scan
     if: ${{ !cancelled() && needs.scan.result == 'success' }}
     runs-on: ubuntu-latest
+    # 与 deploy-site（push 触发）共用同一组：避免两个部署撞车
+    concurrency:
+      group: pages-deploy
+      cancel-in-progress: true
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

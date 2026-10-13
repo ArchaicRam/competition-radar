@@ -38,6 +38,11 @@ try:
 except ImportError:
     CtfTimeFetcher = None  # type: ignore[assignment]
 
+try:
+    from .ai_race import AiRaceFetcher
+except ImportError:
+    AiRaceFetcher = None  # type: ignore[assignment]
+
 _REGISTRY: Dict[str, type] = {
     "datafountain": DataFountainFetcher,
 }
@@ -48,6 +53,7 @@ for _name, _cls in [
     ("xfyun", XfyunFetcher),
     ("saikr", SaikrFetcher),
     ("ctftime", CtfTimeFetcher),
+    ("ai_race", AiRaceFetcher),
 ]:
     if _cls is not None:
         _REGISTRY[_name] = _cls

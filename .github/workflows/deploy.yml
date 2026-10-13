@@ -1,0 +1,50 @@
+name: deploy-site
+
+# 改代码只重新发布网页：不扫描、不发飞书、不改 data/
+# （data/state.json 的日常变更由每日扫描提交并自带 [skip ci]，不会触发本工作流）
+on:
+  push:
+    branches: [master]
+    paths:
+      - "scripts/build_site.py"
+      - "assets/**"
+      - "data/state.json"
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy-pages:
+    runs-on: ubuntu-latest
+    # 与 daily.yml 的 deploy-pages 共用同一组：新部署顶掉进行中的旧部署
+    concurrency:
+      group: pages-deploy
+      cancel-in-progress: true
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # build_site.py 纯标准库，无需装依赖；从仓库里已提交的 data/state.json 生成
+      - name: Build site
+        run: python scripts/build_site.py --sheet-url "$FEISHU_SHEET_URL"
+        env:
+          FEISHU_SHEET_URL: ${{ secrets.FEISHU_SHEET_URL }}
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

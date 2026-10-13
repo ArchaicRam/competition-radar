@@ -11,7 +11,7 @@ DEFAULT_CONFIG: Dict[str, Any] = {
     "feishu_secret": "",
     "feishu_chat_id": "",
     "bot_name": "赛探",
-    "sources": ["tianchi", "datafountain", "nowcoder", "xfyun", "kaggle", "ctftime"],
+    "sources": ["tianchi", "datafountain", "nowcoder", "xfyun", "kaggle", "ctftime", "ai_race", "saikr"],
     "digest_when_no_new": False,
     "send_table_daily": True,
     "max_table_rows": 0,
@@ -109,7 +109,7 @@ def load_config(path: str = "config.json") -> Dict[str, Any]:
 
 
 def normalize_sources(sources: List[str]) -> List[str]:
-    known = {"tianchi", "datafountain", "nowcoder", "xfyun", "kaggle", "saikr", "ctftime"}
+    known = {"tianchi", "datafountain", "nowcoder", "xfyun", "kaggle", "saikr", "ctftime", "ai_race"}
     out = []
     for s in sources:
         s = (s or "").strip().lower()

@@ -237,6 +237,115 @@ def test_ctftime_convert():
         assert is_official(t, ""), t
 
 
+def test_ai_race_convert():
+    from src.fetchers.ai_race import AiRaceFetcher
+    from datetime import datetime, timedelta
+
+    f = AiRaceFetcher({})
+
+    def d(off: int) -> str:
+        return (datetime.now() + timedelta(days=off)).strftime("%Y-%m-%d")
+
+    comp = {
+        "id": "811261245834526780",
+        "competitionName": "第二届全国人工智能应用创新大赛",
+        "trackList": [
+            {"trackName": "挂帅赛道", "stageList": [
+                {"stageName": "校赛", "startDt": d(-40), "endDt": d(-30)},
+                {"stageName": "区域赛", "startDt": d(-29), "endDt": d(-25)},
+                {"stageName": "全国赛", "startDt": d(-24), "endDt": d(-20)},
+            ]},
+            {"trackName": "通用赛道", "stageList": [
+                # 同一阶段因分赛区重复多条：应取最近截止、最早开始
+                {"stageName": "校赛", "startDt": d(-5), "endDt": d(10)},
+                {"stageName": "校赛", "startDt": d(-5), "endDt": d(10)},
+                {"stageName": "区域赛", "startDt": d(11), "endDt": d(30)},
+                {"stageName": "全国赛", "startDt": d(31), "endDt": d(50)},
+            ]},
+        ],
+    }
+    c = f._convert(comp)
+    assert c is not None
+    assert c.key == "ai_race:811261245834526780"
+    assert c.platform == "ai_race"
+    assert c.organizer == "中国技术经济学会"
+    assert c.status == "进行中"      # 通用赛道校赛已开始
+    assert c.deadline == d(10)       # 截止 = 今天之后最近的阶段结束
+    assert c.enabled_date == d(-5)
+    assert c.comp_type == "AI"
+    assert c.url == "https://www.ai-race.com.cn/"
+
+    # 全部阶段已结束 → 已结束，截止取最晚结束日
+    c2 = f._convert({"id": "2", "competitionName": "首届大赛",
+                     "trackList": [comp["trackList"][0]]})
+    assert c2.status == "已结束" and c2.deadline == d(-20)
+
+    # 尚未开赛 → 报名中，截止取第一阶段结束
+    c3 = f._convert({"id": "3", "competitionName": "第三届大赛", "trackList": [
+        {"trackName": "通用赛道", "stageList": [
+            {"stageName": "校赛", "startDt": d(3), "endDt": d(20)},
+        ]}]})
+    assert c3.status == "报名中" and c3.deadline == d(20)
+
+    # 坏数据：无标题 / 无 id / 无任何阶段日期 → 拦下
+    assert f._convert({"id": "4", "competitionName": " ", "trackList": []}) is None
+    assert f._convert({"id": "", "competitionName": "x", "trackList": []}) is None
+    assert f._convert({"id": "5", "competitionName": "y",
+                       "trackList": [{"stageList": [{"startDt": "", "endDt": ""}]}]}) is None
+
+
+def test_saikr_convert():
+    from src.fetchers.saikr import SaikrFetcher
+    from datetime import datetime, timedelta
+
+    f = SaikrFetcher({})
+
+    def ts(off_days: int) -> int:
+        return int((datetime.now() + timedelta(days=off_days)).timestamp())
+
+    row = {
+        "contest_id": 59656,
+        "contest_name": "【一级学会盖章】2026高校大学生数据分析大赛",
+        "contest_url": "vse/bett/data/5",
+        "organiser": "中国国土经济学会产业创新专业委员会",
+        "regist_start_time": ts(-10),
+        "regist_end_time": ts(15),
+        "contest_start_time": ts(-5),
+        "contest_end_time": ts(30),
+        "time_name": "正在报名",
+        "contest_class_second": "big_data",
+    }
+    c = f._convert(row)
+    assert c is not None
+    assert c.key == "saikr:59656"
+    assert c.platform == "saikr"
+    assert c.title == "2026高校大学生数据分析大赛"  # 【推广】前缀剥掉
+    assert c.organizer == "中国国土经济学会产业创新专业委员会"
+    assert c.url == "https://www.saikr.com/vse/bett/data/5"
+    assert c.deadline == (datetime.now() + timedelta(days=15)).strftime("%Y-%m-%d")
+    assert c.status == "报名中"
+    assert c.comp_type == "数据"
+    # enabled_date 与 deadline 同轴（报名窗口），否则会被质量校验误杀
+    assert c.enabled_date == (datetime.now() + timedelta(days=-10)).strftime("%Y-%m-%d")
+
+    # 报名已截止但比赛未结束 → 截止取比赛结束，状态进行中，enabled 同轴取比赛开始
+    c2 = f._convert({**row, "contest_id": 2, "regist_end_time": ts(-3),
+                     "time_name": "比赛进行中"})
+    assert c2.deadline == (datetime.now() + timedelta(days=30)).strftime("%Y-%m-%d")
+    assert c2.status == "进行中"
+    assert c2.enabled_date == (datetime.now() + timedelta(days=-5)).strftime("%Y-%m-%d")
+
+    # 全部时间已过 → 已结束
+    c3 = f._convert({**row, "contest_id": 3, "regist_end_time": ts(-9),
+                     "contest_end_time": ts(-2), "time_name": "比赛结束"})
+    assert c3.status == "已结束"
+
+    # 无时间戳的坏数据 / 无标题 → 拦下
+    assert f._convert({**row, "contest_id": 4, "regist_end_time": "",
+                       "contest_end_time": None}) is None
+    assert f._convert({**row, "contest_id": 5, "contest_name": "  "}) is None
+
+
 def test_digest_card():
     new = _sample_new()
     from src.card import build_digest_card
