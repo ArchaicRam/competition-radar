@@ -4383,7 +4383,7 @@
     },
     "saikr:59718": {
       "key": "saikr:59718",
-      "title": "2026年“智联杯”大学生人工智能竞答大赛",
+      "title": "“智联杯”大学生人工智能竞答大赛",
       "platform": "saikr",
       "organizer": "中国智慧工程研究会",
       "url": "https://www.saikr.com/vse/ZHGCxy2026RGZN",
@@ -4870,8 +4870,36 @@
       "enabled_date": "2026-08-19",
       "rating": "",
       "detected_at": "2026-10-14T09:33:32"
+    },
+    "saikr:60497": {
+      "key": "saikr:60497",
+      "title": "第三届“中西挑战杯”大学生数学建模大赛",
+      "platform": "saikr",
+      "organizer": "中国西部研究与发展促进会教育工作委员会",
+      "url": "https://www.saikr.com/vse/math3",
+      "deadline": "2026-11-21",
+      "reward": "",
+      "comp_type": "数学建模",
+      "status": "报名中",
+      "enabled_date": "2026-10-15",
+      "rating": "",
+      "detected_at": "2026-10-15T09:11:00"
+    },
+    "saikr:60496": {
+      "key": "saikr:60496",
+      "title": "第四届大学生“中促杯”数据分析大赛",
+      "platform": "saikr",
+      "organizer": "华夏文化促进会文化产业工作委员会",
+      "url": "https://www.saikr.com/vse/ZCBSJFX",
+      "deadline": "2026-12-12",
+      "reward": "",
+      "comp_type": "数据",
+      "status": "报名中",
+      "enabled_date": "2026-10-15",
+      "rating": "",
+      "detected_at": "2026-10-15T09:11:00"
     }
   },
-  "last_run": "2026-10-14T09:35:01",
-  "last_total": 126
+  "last_run": "2026-10-15T09:11:50",
+  "last_total": 123
 }
