@@ -4383,7 +4383,7 @@
     },
     "saikr:59718": {
       "key": "saikr:59718",
-      "title": "“智联杯”大学生人工智能竞答大赛",
+      "title": "“大学生人工智能竞答大赛",
       "platform": "saikr",
       "organizer": "中国智慧工程研究会",
       "url": "https://www.saikr.com/vse/ZHGCxy2026RGZN",
@@ -4667,7 +4667,7 @@
       "platform": "saikr",
       "organizer": "山东省应用统计学会",
       "url": "https://www.saikr.com/vse/2026TJKXCN",
-      "deadline": "2026-10-16",
+      "deadline": "2026-10-18",
       "reward": "",
       "comp_type": "AI",
       "status": "报名中",
@@ -4681,7 +4681,7 @@
       "platform": "saikr",
       "organizer": "山东省应用统计学会",
       "url": "https://www.saikr.com/vse/2026TJKXSF",
-      "deadline": "2026-10-16",
+      "deadline": "2026-10-17",
       "reward": "",
       "comp_type": "开发",
       "status": "报名中",
@@ -4898,8 +4898,22 @@
       "enabled_date": "2026-10-15",
       "rating": "",
       "detected_at": "2026-10-15T09:11:00"
+    },
+    "ai:fe259068554e": {
+      "key": "ai:fe259068554e",
+      "title": "漏洞盒子安全众测/漏洞提交赏金计划",
+      "platform": "AI发现·漏洞盒子",
+      "organizer": "斗象智能安全（漏洞盒子 VulBox）",
+      "url": "https://www.vulbox.com/",
+      "deadline": "",
+      "reward": "按漏洞等级发放赏金奖励",
+      "comp_type": "众包悬赏",
+      "status": "进行中",
+      "enabled_date": "",
+      "rating": "高",
+      "detected_at": "2026-10-16T09:05:02"
     }
   },
-  "last_run": "2026-10-15T09:11:50",
-  "last_total": 123
+  "last_run": "2026-10-16T09:06:16",
+  "last_total": 124
 }
