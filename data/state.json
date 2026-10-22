@@ -3674,7 +3674,7 @@
       "organizer": "HSCC",
       "url": "https://outbackoverflow26.hscyber.org/",
       "deadline": "2026-11-21",
-      "reward": "",
+      "reward": "More TBA\r\n\r\n1 year .xyz domains pp",
       "comp_type": "网络安全",
       "status": "未开始",
       "enabled_date": "2026-11-20",
@@ -3702,7 +3702,7 @@
       "organizer": "HiddenInvestigations",
       "url": "https://ctf.hiddeninvestigations.net/",
       "deadline": "2026-11-01",
-      "reward": "USD 2,500 Cash Prize Pool\r\n\r\n1st Place — $1,000\r\n2nd Place —",
+      "reward": "USD 2,500 Guaranteed Cash Prize Pool + Additional Sponsored ",
       "comp_type": "网络安全",
       "status": "未开始",
       "enabled_date": "2026-10-30",
@@ -3951,10 +3951,10 @@
       "key": "ai:8312b715dff1",
       "title": "补天漏洞响应平台·白帽漏洞提交与众测",
       "platform": "AI发现·补天漏洞响应平台",
-      "organizer": "奇安信·补天漏洞响应平台",
+      "organizer": "补天（奇安信旗下）",
       "url": "https://www.butian.net/",
       "deadline": "",
-      "reward": "按漏洞等级发放现金/积分奖励，参与众测项目另有报酬",
+      "reward": "提交有效漏洞可获现金奖励与积分，参与众测项目另有项目报酬",
       "comp_type": "众包悬赏",
       "status": "进行中",
       "enabled_date": "",
@@ -4607,7 +4607,7 @@
     },
     "saikr:59839": {
       "key": "saikr:59839",
-      "title": "2026年第二届计算机能力竞赛暨城市联赛（冬季赛）—计算机素养赛道",
+      "title": "计算机能力竞赛暨城市联赛（冬季赛）—计算机素养赛道",
       "platform": "saikr",
       "organizer": "大连市计算机学会 等",
       "url": "https://www.saikr.com/vse/CLComputer2026WT",
@@ -4621,7 +4621,7 @@
     },
     "saikr:59873": {
       "key": "saikr:59873",
-      "title": "2026年第二届计算机能力竞赛暨城市联赛（冬季赛）——算法编程赛道",
+      "title": "计算机能力竞赛暨城市联赛（冬季赛）——算法编程赛道",
       "platform": "saikr",
       "organizer": "大连市计算机学会 等",
       "url": "https://www.saikr.com/vse/CLAlgorithmp2026WT",
@@ -5304,8 +5304,22 @@
       "enabled_date": "2026-11-08",
       "rating": "",
       "detected_at": "2026-10-21T09:24:09"
+    },
+    "ai:5e55e06a50ad": {
+      "key": "ai:5e55e06a50ad",
+      "title": "漏洞盒子漏洞赏金计划（安全众测）",
+      "platform": "AI发现·漏洞盒子",
+      "organizer": "斗象科技·漏洞盒子",
+      "url": "https://www.vulbox.com/",
+      "deadline": "",
+      "reward": "厂商漏洞赏金、积分与排行榜奖励",
+      "comp_type": "众包悬赏",
+      "status": "进行中",
+      "enabled_date": "",
+      "rating": "高",
+      "detected_at": "2026-10-22T09:27:51"
     }
   },
-  "last_run": "2026-10-21T09:26:09",
-  "last_total": 122
+  "last_run": "2026-10-22T09:29:04",
+  "last_total": 123
 }
