@@ -2318,7 +2318,7 @@
       "deadline": "2026-10-25",
       "reward": "",
       "comp_type": "网络安全",
-      "status": "未开始",
+      "status": "进行中",
       "enabled_date": "2026-10-23",
       "rating": "",
       "detected_at": "2026-09-13T14:28:00"
@@ -2374,7 +2374,7 @@
       "deadline": "2026-10-25",
       "reward": "1st place: $8,000 USD\r\n2nd place: $4,000 USD\r\n3rd place: $2,",
       "comp_type": "网络安全",
-      "status": "未开始",
+      "status": "进行中",
       "enabled_date": "2026-10-23",
       "rating": "",
       "detected_at": "2026-09-13T14:28:00"
@@ -2990,7 +2990,7 @@
       "deadline": "2026-10-25",
       "reward": "1st - RSTCON Hard Hats & Next Year Tickets\r\n2nd - Conference",
       "comp_type": "网络安全",
-      "status": "未开始",
+      "status": "进行中",
       "enabled_date": "2026-10-23",
       "rating": "",
       "detected_at": "2026-09-18T09:01:57"
@@ -4065,7 +4065,7 @@
       "platform": "saikr",
       "organizer": "中国国际科技促进会物联网工作委员会",
       "url": "https://www.saikr.com/vse/2026WLBcomputilit",
-      "deadline": "2026-10-23",
+      "deadline": "2026-10-25",
       "reward": "",
       "comp_type": "开发",
       "status": "报名中",
@@ -4093,7 +4093,7 @@
       "platform": "saikr",
       "organizer": "中国互联网协会智慧教育工作委员会",
       "url": "https://www.saikr.com/vse/2026Industrial",
-      "deadline": "2026-10-23",
+      "deadline": "2026-10-25",
       "reward": "",
       "comp_type": "AI",
       "status": "报名中",
@@ -5318,8 +5318,36 @@
       "enabled_date": "",
       "rating": "高",
       "detected_at": "2026-10-22T09:27:51"
+    },
+    "ctftime:3336": {
+      "key": "ctftime:3336",
+      "title": "Crate-CTF 2026",
+      "platform": "ctftime",
+      "organizer": "Crate-CTF",
+      "url": "https://foi.se/cratectf",
+      "deadline": "2026-11-21",
+      "reward": "",
+      "comp_type": "网络安全",
+      "status": "未开始",
+      "enabled_date": "2026-11-21",
+      "rating": "",
+      "detected_at": "2026-10-23T09:23:10"
+    },
+    "ctftime:3436": {
+      "key": "ctftime:3436",
+      "title": "CyberSci Regional Qualifiers 2026-27",
+      "platform": "ctftime",
+      "organizer": "CyberSciOrganizers",
+      "url": "https://cybersecuritychallenge.ca/",
+      "deadline": "2026-11-21",
+      "reward": "Winners at Regionals get instant interviews and sometimes sa",
+      "comp_type": "网络安全",
+      "status": "未开始",
+      "enabled_date": "2026-11-21",
+      "rating": "",
+      "detected_at": "2026-10-23T09:23:10"
     }
   },
-  "last_run": "2026-10-22T09:29:04",
-  "last_total": 123
+  "last_run": "2026-10-23T09:25:11",
+  "last_total": 121
 }
