@@ -2833,11 +2833,11 @@
       "platform": "tianchi",
       "organizer": "",
       "url": "https://tianchi.aliyun.com/competition/entrance/532514",
-      "deadline": "2026-10-26",
+      "deadline": "2026-11-16",
       "reward": "¥280,000",
       "comp_type": "机器人、计算机视觉‌",
       "status": "进行中",
-      "enabled_date": "2026-09-11",
+      "enabled_date": "",
       "rating": "",
       "detected_at": "2026-09-15T09:27:55"
     },
@@ -4488,7 +4488,7 @@
       "deadline": "2026-11-15",
       "reward": "",
       "comp_type": "综合",
-      "status": "报名中",
+      "status": "进行中",
       "enabled_date": "2026-09-08",
       "rating": "",
       "detected_at": "2026-10-13T11:51:40"
@@ -4607,7 +4607,7 @@
     },
     "saikr:59839": {
       "key": "saikr:59839",
-      "title": "计算机能力竞赛暨城市联赛（冬季赛）—计算机素养赛道",
+      "title": "计算机能力竞赛暨城市联赛—计算机素养赛道",
       "platform": "saikr",
       "organizer": "大连市计算机学会 等",
       "url": "https://www.saikr.com/vse/CLComputer2026WT",
@@ -5514,8 +5514,36 @@
       "enabled_date": "",
       "rating": "高",
       "detected_at": "2026-10-26T10:13:00"
+    },
+    "ai:8d1fc1d3ccec": {
+      "key": "ai:8d1fc1d3ccec",
+      "title": "漏洞盒子安全众测平台（白帽漏洞提交赏金）",
+      "platform": "AI发现·漏洞盒子",
+      "organizer": "斗象智能安全（漏洞盒子 VulBox）",
+      "url": "https://www.vulbox.com/",
+      "deadline": "",
+      "reward": "按漏洞等级发放现金奖励，另有排行榜赛季积分奖励",
+      "comp_type": "众包悬赏",
+      "status": "进行中",
+      "enabled_date": "",
+      "rating": "高",
+      "detected_at": "2026-10-27T09:52:16"
+    },
+    "ai:01610dc79ec2": {
+      "key": "ai:01610dc79ec2",
+      "title": "补天漏洞响应平台 - 白帽子漏洞提交赏金计划",
+      "platform": "AI发现·补天漏洞响应平台",
+      "organizer": "补天平台（奇安信旗下）",
+      "url": "https://www.butian.net/",
+      "deadline": "",
+      "reward": "按漏洞等级获得现金奖励与积分、荣誉证书",
+      "comp_type": "众包悬赏",
+      "status": "进行中",
+      "enabled_date": "",
+      "rating": "高",
+      "detected_at": "2026-10-27T09:52:12"
     }
   },
-  "last_run": "2026-10-26T10:14:18",
-  "last_total": 123
+  "last_run": "2026-10-27T09:53:40",
+  "last_total": 121
 }
