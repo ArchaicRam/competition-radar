@@ -4219,7 +4219,7 @@
       "platform": "saikr",
       "organizer": "中国国际科技促进会物联网工作委员会",
       "url": "https://www.saikr.com/vse/EDA2026",
-      "deadline": "2026-10-30",
+      "deadline": "2026-11-01",
       "reward": "",
       "comp_type": "AI",
       "status": "报名中",
@@ -5209,7 +5209,7 @@
     },
     "saikr:60472": {
       "key": "saikr:60472",
-      "title": "2026第九届传智全国大学生数智创新与AI应用大赛—AIGC视觉海报创意设计赛",
+      "title": "2026第九届传智杯全国大学生数智创新与AI应用大赛—AIGC视觉海报创意设计赛",
       "platform": "saikr",
       "organizer": "全国高等院校计算机基础教育研究会",
       "url": "https://www.saikr.com/vse/2026AIGCSJHB",
@@ -5598,8 +5598,50 @@
       "enabled_date": "",
       "rating": "中",
       "detected_at": "2026-10-28T10:39:15"
+    },
+    "tianchi:532536": {
+      "key": "tianchi:532536",
+      "title": "2026 Qoder 高校创造力大赛",
+      "platform": "tianchi",
+      "organizer": "",
+      "url": "https://tianchi.aliyun.com/competition/entrance/532536",
+      "deadline": "2026-11-30",
+      "reward": "¥88,500",
+      "comp_type": "信息技术、教育",
+      "status": "报名中",
+      "enabled_date": "2026-10-29",
+      "rating": "",
+      "detected_at": "2026-10-29T10:55:20"
+    },
+    "ai:ad9001cef9ef": {
+      "key": "ai:ad9001cef9ef",
+      "title": "漏洞盒子（VulBox）漏洞众测与白帽挖洞奖励计划",
+      "platform": "AI发现·漏洞盒子",
+      "organizer": "斗象科技（漏洞盒子）",
+      "url": "https://www.vulbox.com/",
+      "deadline": "",
+      "reward": "提交有效漏洞可获现金/积分奖励，具体依各厂商项目而定",
+      "comp_type": "众包悬赏",
+      "status": "进行中",
+      "enabled_date": "",
+      "rating": "高",
+      "detected_at": "2026-10-29T10:56:14"
+    },
+    "ai:fb65878cf14c": {
+      "key": "ai:fb65878cf14c",
+      "title": "上海交通大学第51期PRP（本科生研究参与计划）立项申报",
+      "platform": "AI发现·上交教务处",
+      "organizer": "上海交通大学教务处",
+      "url": "https://jwc.sjtu.edu.cn/",
+      "deadline": "",
+      "reward": "",
+      "comp_type": "项目招募",
+      "status": "报名中",
+      "enabled_date": "",
+      "rating": "中",
+      "detected_at": "2026-10-29T10:56:25"
     }
   },
-  "last_run": "2026-10-28T10:39:54",
+  "last_run": "2026-10-29T10:57:34",
   "last_total": 123
 }
