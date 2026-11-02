@@ -231,11 +231,11 @@
       "platform": "tianchi",
       "organizer": "",
       "url": "https://tianchi.aliyun.com/competition/entrance/532460",
-      "deadline": "2026-10-31",
+      "deadline": "2026-12-20",
       "reward": "¥30,000",
       "comp_type": "地质科学、地震学、地球物理学",
-      "status": "报名中",
-      "enabled_date": "2026-10-01",
+      "status": "进行中",
+      "enabled_date": "",
       "rating": "",
       "detected_at": "2026-08-17T15:05:25"
     },
@@ -4429,7 +4429,7 @@
       "platform": "saikr",
       "organizer": "中国机电一体化技术应用协会",
       "url": "https://www.saikr.com/vse/algorithm202602",
-      "deadline": "2026-11-01",
+      "deadline": "2026-12-05",
       "reward": "",
       "comp_type": "开发",
       "status": "报名中",
@@ -4611,10 +4611,10 @@
       "platform": "saikr",
       "organizer": "大连市计算机学会 等",
       "url": "https://www.saikr.com/vse/CLComputer2026WT",
-      "deadline": "2026-11-01",
+      "deadline": "2026-11-27",
       "reward": "",
       "comp_type": "AI",
-      "status": "进行中",
+      "status": "已结束",
       "enabled_date": "2026-08-27",
       "rating": "",
       "detected_at": "2026-10-13T11:51:38"
@@ -4625,7 +4625,7 @@
       "platform": "saikr",
       "organizer": "大连市计算机学会 等",
       "url": "https://www.saikr.com/vse/CLAlgorithmp2026WT",
-      "deadline": "2026-10-30",
+      "deadline": "2026-12-18",
       "reward": "",
       "comp_type": "AI",
       "status": "报名中",
@@ -4649,7 +4649,7 @@
     },
     "saikr:59690": {
       "key": "saikr:59690",
-      "title": "2026年度第七届大学生算法设计与编程挑战赛(秋季赛)",
+      "title": "第七届大学生算法设计与编程挑战赛(秋季赛)",
       "platform": "saikr",
       "organizer": "天津市未来与预测科学研究会",
       "url": "https://www.saikr.com/vse/adpc2026autumn",
@@ -4740,7 +4740,7 @@
       "deadline": "2026-11-27",
       "reward": "",
       "comp_type": "数据",
-      "status": "已结束",
+      "status": "报名中",
       "enabled_date": "2026-09-16",
       "rating": "",
       "detected_at": "2026-10-13T11:51:40"
@@ -5780,8 +5780,22 @@
       "enabled_date": "",
       "rating": "中",
       "detected_at": "2026-10-31T10:26:25"
+    },
+    "ai:57ab658645cc": {
+      "key": "ai:57ab658645cc",
+      "title": "漏洞盒子漏洞赏金/安全众测计划",
+      "platform": "AI发现·漏洞盒子",
+      "organizer": "斗象科技（漏洞盒子）",
+      "url": "https://www.vulbox.com/",
+      "deadline": "",
+      "reward": "漏洞赏金及赛季积分排名奖励",
+      "comp_type": "众包悬赏",
+      "status": "进行中",
+      "enabled_date": "",
+      "rating": "高",
+      "detected_at": "2026-11-02T12:31:16"
     }
   },
-  "last_run": "2026-11-01T11:20:42",
-  "last_total": 118
+  "last_run": "2026-11-02T12:32:29",
+  "last_total": 119
 }
