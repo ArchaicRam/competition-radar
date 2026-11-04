@@ -175,7 +175,7 @@
       "platform": "tianchi",
       "organizer": "",
       "url": "https://tianchi.aliyun.com/competition/entrance/532508",
-      "deadline": "2026-11-15",
+      "deadline": "2026-11-22",
       "reward": "¥100,000",
       "comp_type": "机器人",
       "status": "进行中",
@@ -3030,7 +3030,7 @@
       "organizer": "Mirachron",
       "url": "https://2026.chronos-security.ro/",
       "deadline": "2026-11-08",
-      "reward": "TBD",
+      "reward": "Three months of PIECE Elite for every verified participant w",
       "comp_type": "网络安全",
       "status": "未开始",
       "enabled_date": "2026-11-06",
@@ -3714,12 +3714,12 @@
       "title": "h4ckc0n 2026",
       "platform": "ctftime",
       "organizer": "d4rkc0de",
-      "url": "http://h4ckc0n.in/",
-      "deadline": "2026-10-24",
-      "reward": "The total prize pool for h4ckc0n is ₹20,000 INR, distributed",
+      "url": "https://h4ckc0n.in/",
+      "deadline": "2026-11-15",
+      "reward": "The total prize pool for h4ckc0n is ₹10,000 INR, distributed",
       "comp_type": "网络安全",
       "status": "未开始",
-      "enabled_date": "2026-10-23",
+      "enabled_date": "2026-11-14",
       "rating": "",
       "detected_at": "2026-10-03T09:53:49"
     },
@@ -4467,7 +4467,7 @@
     },
     "saikr:59973": {
       "key": "saikr:59973",
-      "title": "高校大学生智能创新与计算机技能应用挑战赛——办公技能竞答赛道",
+      "title": "办公技能竞答赛道",
       "platform": "saikr",
       "organizer": "中国电子企业协会标准与技术成果转化工作委员会",
       "url": "https://www.saikr.com/vse/OS2026ZNCX",
@@ -5852,6 +5852,6 @@
       "detected_at": "2026-11-03T11:59:08"
     }
   },
-  "last_run": "2026-11-03T12:02:17",
-  "last_total": 121
+  "last_run": "2026-11-04T12:15:05",
+  "last_total": 120
 }
