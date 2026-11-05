@@ -3405,10 +3405,10 @@
       "key": "ai:2643b1576c79",
       "title": "漏洞盒子安全众测项目（项目大厅）",
       "platform": "AI发现·漏洞盒子",
-      "organizer": "漏洞盒子（斗象科技）",
+      "organizer": "斗象科技（漏洞盒子）",
       "url": "https://www.vulbox.com/projects/list",
       "deadline": "",
-      "reward": "漏洞现金赏金与积分奖励",
+      "reward": "按漏洞等级获得现金奖励及积分段位",
       "comp_type": "众包悬赏",
       "status": "进行中",
       "enabled_date": "",
@@ -5850,8 +5850,50 @@
       "enabled_date": "2026-11-03",
       "rating": "",
       "detected_at": "2026-11-03T11:59:08"
+    },
+    "ai:400588a5d97f": {
+      "key": "ai:400588a5d97f",
+      "title": "漏洞盒子闪测大厅",
+      "platform": "AI发现·漏洞盒子",
+      "organizer": "斗象科技（漏洞盒子）",
+      "url": "https://www.vulbox.com/flashFesting/hall",
+      "deadline": "",
+      "reward": "按测试结果获得奖励",
+      "comp_type": "众包悬赏",
+      "status": "进行中",
+      "enabled_date": "",
+      "rating": "高",
+      "detected_at": "2026-11-05T12:26:58"
+    },
+    "ai:d1425b1a19cb": {
+      "key": "ai:d1425b1a19cb",
+      "title": "补天众测 - 白帽漏洞众测/渗透测试悬赏",
+      "platform": "AI发现·补天漏洞响应平台",
+      "organizer": "补天漏洞响应平台（奇安信旗下）",
+      "url": "https://www.butian.net/Service/ce",
+      "deadline": "",
+      "reward": "按漏洞等级获得现金奖励",
+      "comp_type": "众包悬赏",
+      "status": "进行中",
+      "enabled_date": "",
+      "rating": "高",
+      "detected_at": "2026-11-05T12:27:06"
+    },
+    "ctftime:3492": {
+      "key": "ctftime:3492",
+      "title": "GaianSpace Perihelion CTF 2027",
+      "platform": "ctftime",
+      "organizer": "GaianSpace",
+      "url": "https://gaian.space/ctf",
+      "deadline": "2027-01-03",
+      "reward": "The top three teams and the best write-up will receive the f",
+      "comp_type": "网络安全",
+      "status": "未开始",
+      "enabled_date": "2027-01-02",
+      "rating": "",
+      "detected_at": "2026-11-05T12:25:57"
     }
   },
-  "last_run": "2026-11-04T12:15:05",
-  "last_total": 120
+  "last_run": "2026-11-05T12:28:07",
+  "last_total": 124
 }
