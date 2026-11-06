@@ -3032,7 +3032,7 @@
       "deadline": "2026-11-08",
       "reward": "Three months of PIECE Elite for every verified participant w",
       "comp_type": "网络安全",
-      "status": "未开始",
+      "status": "进行中",
       "enabled_date": "2026-11-06",
       "rating": "",
       "detected_at": "2026-09-19T08:49:57"
@@ -3144,7 +3144,7 @@
       "deadline": "2026-11-06",
       "reward": "We observe that the arrival of artificial intelligence (AI) ",
       "comp_type": "网络安全",
-      "status": "未开始",
+      "status": "进行中",
       "enabled_date": "2026-11-06",
       "rating": "",
       "detected_at": "2026-09-20T09:18:56"
@@ -3158,7 +3158,7 @@
       "deadline": "2026-11-07",
       "reward": "Open Division: (Online + In-person)\r\n1st - 100$\r\n2nd - 50$\r\n",
       "comp_type": "网络安全",
-      "status": "未开始",
+      "status": "进行中",
       "enabled_date": "2026-11-06",
       "rating": "",
       "detected_at": "2026-09-20T09:18:56"
@@ -4418,7 +4418,7 @@
       "deadline": "2026-11-14",
       "reward": "",
       "comp_type": "AI",
-      "status": "已结束",
+      "status": "报名中",
       "enabled_date": "2026-09-20",
       "rating": "",
       "detected_at": "2026-10-13T11:51:37"
@@ -4471,7 +4471,7 @@
       "platform": "saikr",
       "organizer": "中国电子企业协会标准与技术成果转化工作委员会",
       "url": "https://www.saikr.com/vse/OS2026ZNCX",
-      "deadline": "2026-11-06",
+      "deadline": "2026-11-08",
       "reward": "",
       "comp_type": "开发",
       "status": "报名中",
@@ -5892,8 +5892,78 @@
       "enabled_date": "2027-01-02",
       "rating": "",
       "detected_at": "2026-11-05T12:25:57"
+    },
+    "saikr:62182": {
+      "key": "saikr:62182",
+      "title": "职业技能证书-数学建模考试入口",
+      "platform": "saikr",
+      "organizer": "华夏文化促进会素质教育委员会",
+      "url": "https://www.saikr.com/vse/SXJMZYNL2026",
+      "deadline": "2026-11-29",
+      "reward": "",
+      "comp_type": "数学建模",
+      "status": "进行中",
+      "enabled_date": "2026-11-06",
+      "rating": "",
+      "detected_at": "2026-11-06T12:10:35"
+    },
+    "xfyun:Wheat-SOD-train": {
+      "key": "xfyun:Wheat-SOD-train",
+      "title": "小麦麦穗目标检测练手赛",
+      "platform": "xfyun",
+      "organizer": "中国农业大学",
+      "url": "https://challenge.xfyun.cn/topic/info?type=Wheat-SOD-train",
+      "deadline": "2027-01-31",
+      "reward": "¥0万",
+      "comp_type": "train",
+      "status": "报名中",
+      "enabled_date": "2026-11-06",
+      "rating": "",
+      "detected_at": "2026-11-06T12:10:35"
+    },
+    "xfyun:Corn-WS-train": {
+      "key": "xfyun:Corn-WS-train",
+      "title": "玉米苗期杂草识别与分类练手赛",
+      "platform": "xfyun",
+      "organizer": "中国农业大学",
+      "url": "https://challenge.xfyun.cn/topic/info?type=Corn-WS-train",
+      "deadline": "2027-01-31",
+      "reward": "¥0万",
+      "comp_type": "train",
+      "status": "报名中",
+      "enabled_date": "2026-11-06",
+      "rating": "",
+      "detected_at": "2026-11-06T12:10:35"
+    },
+    "xfyun:vehicle-mc-train": {
+      "key": "xfyun:vehicle-mc-train",
+      "title": "车载摄像机图像的目标检测练手赛（赛季2）",
+      "platform": "xfyun",
+      "organizer": "安徽建筑大学",
+      "url": "https://challenge.xfyun.cn/topic/info?type=vehicle-mc-train",
+      "deadline": "2027-01-31",
+      "reward": "¥0万",
+      "comp_type": "train",
+      "status": "报名中",
+      "enabled_date": "2026-11-06",
+      "rating": "",
+      "detected_at": "2026-11-06T12:10:35"
+    },
+    "xfyun:Xray-25-train": {
+      "key": "xfyun:Xray-25-train",
+      "title": "X光安检图像识别练手赛（赛季6）",
+      "platform": "xfyun",
+      "organizer": "科大讯飞股份有限公司",
+      "url": "https://challenge.xfyun.cn/topic/info?type=Xray-25-train",
+      "deadline": "2027-01-31",
+      "reward": "¥0万",
+      "comp_type": "train",
+      "status": "报名中",
+      "enabled_date": "2026-11-06",
+      "rating": "",
+      "detected_at": "2026-11-06T12:10:35"
     }
   },
-  "last_run": "2026-11-05T12:28:07",
-  "last_total": 124
+  "last_run": "2026-11-06T12:12:39",
+  "last_total": 123
 }
