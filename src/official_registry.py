@@ -161,6 +161,20 @@ def reload_catalog(path: Optional[str] = None) -> Dict[str, Any]:
 # 核心匹配
 # ==========================================================================
 
+def _core_name(ev: Dict[str, Any]) -> str:
+    """目录条目的"核心中文名"，去掉括号别称与拉丁字母。
+
+    为什么需要：目录里写的是「睿抗机器人开发者大赛（RAICOM）」，归一化后变成
+    「睿抗机器人开发者大赛raicom」；而实际标题是「睿抗机器人开发者大赛（RoboCom）
+    CAIP信息技术创新赛道」。两边做"完整包含"判断时，因为中文名后面粘了个 raicom
+    而永远匹配不上，导致这条目录内赛事被判成「其他/低」。
+    """
+    name = ev.get("name") or ""
+    name = re.sub(r"[（(\[【][^）)\]】]*[）)\]】]", "", name)   # 去掉括号内容
+    name = re.sub(r"[A-Za-z][A-Za-z0-9/&\-]*", "", name)      # 去掉残留拉丁词
+    return _norm(name)
+
+
 def lookup(title: str, organizer: str = "") -> Optional[Dict[str, Any]]:
     """在目录里找这条比赛对应的赛事条目。命中返回 event dict，否则 None。
 
@@ -169,14 +183,17 @@ def lookup(title: str, organizer: str = "") -> Optional[Dict[str, Any]]:
       1) 名称命中 + 主办方命中 organizer_ok  → 直接认（最强证据）
       2) 名称命中 + 主办方不在白名单，但**也不是负面主办方** → 认
          （目录的主办方字段本就 60% 未核实，硬与门会把赛事全漏掉）
-      3) 名称命中 + 主办方是"促进会/报社/公司"这类负面 → **不认**
-         （挡住"XX杯蓝桥杯技能大赛"由民营公司挂名的情况）
+      3) 名称命中 + 主办方是"促进会/报社/公司"这类负面 →
+         若标题里**完整出现该条目的核心中文名**才认（强证据），否则不认
+
+    规则 3 的例外是踩过坑的：睿抗 RoboCom 的主办是「工业和信息化部人才交流中心」，
+    而"人才交流中心"在负面词表里（为了挡住挂名发证的野鸡赛）。早先这里一刀切 continue，
+    结果把目录内的睿抗也判成了「其他/低」。现在用"核心名完整出现"作为放行条件。
 
     另外还要求别名 >= 3 字；具体性靠"目录作者不写裸泛化词"保证。
     """
     load_catalog()
     nt = _norm(title)
-    no = _norm(organizer)
     if not nt:
         return None
     neg = organizer_authority(organizer) == "negative" if organizer else False
@@ -184,12 +201,14 @@ def lookup(title: str, organizer: str = "") -> Optional[Dict[str, Any]]:
         if alias not in nt:
             continue
         ok_list = [_norm(x) for x in (ev.get("organizer_ok") or []) if x]
-        if ok_list and no and any(frag in no for frag in ok_list):
+        if ok_list and organizer and any(frag in _norm(organizer) for frag in ok_list):
             return ev                                   # (1) 名称 + 主办方双命中
         if neg:
-            continue                                    # (3) 名称像，但主办方是负面 → 不认
-        if ev.get("strict_organizer") and no:
-            continue                                    # 该条目要求主办方必须对上（高风险泛名）
+            if _strong_name_match(ev, title, alias):
+                return ev            # (3-例外) 标题强证据对上目录标准名 → 放行
+            continue                 # (3) 名称像，但主办方负面且只是弱命中 → 不认
+        if ev.get("strict_organizer") and organizer:
+            continue                                    # 该条目要求主办方必须对上
         return ev                                       # (2) 名称命中、主办方不矛盾
     return None
 
@@ -276,6 +295,32 @@ def effective_authority(title: str = "", organizer: str = "") -> str:
     return auth
 
 
+def _strong_name_match(ev: Dict[str, Any], title: str, alias: str = "") -> bool:
+    """标题是否"强证据"地就是这条目录赛事（不看主办方）。
+
+    强证据 = 满足任一：
+      1) 标题里完整出现核心中文名（去掉括号别称后）
+      2) 某个别名几乎覆盖了整个标题（>=80% 长度且 >=6 字）
+         —— 用于「RoboCom机器人开发者大赛」这种英文优先的别名
+
+    弱证据（只要"标题包含短别名"）不算：那正是「XX杯蓝桥杯技能大赛」被
+    民营公司挂名时能蒙混过关的原因。
+    """
+    nt = _norm(title)
+    if not nt:
+        return False
+    core = _core_name(ev)
+    if core and core in nt:
+        return True
+    cands = [alias] if alias else []
+    cands += [ev.get("name") or ""] + list(ev.get("aliases") or [])
+    for c in cands:
+        na = _norm(c)
+        if len(na) >= 6 and na in nt and len(na) >= 0.8 * len(nt):
+            return True
+    return False
+
+
 def _catalog_match_trustworthy(ev: Dict[str, Any], title: str, organizer: str) -> bool:
     """目录命中是否可信。
 
@@ -285,8 +330,7 @@ def _catalog_match_trustworthy(ev: Dict[str, Any], title: str, organizer: str) -
     """
     if effective_authority(title, organizer) != "negative":
         return True
-    name = _norm(ev.get("name") or "")
-    return bool(name) and name in _norm(title)
+    return _strong_name_match(ev, title)
 
 
 def is_official(title: str, organizer: str = "") -> bool:
