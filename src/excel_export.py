@@ -56,8 +56,10 @@ def export_excel(
         for c in comps
     ]
     new_rows: Set[int] = {i + 2 for i, c in enumerate(comps) if c.key in new_keys}
+    # 注意：类别名是「官方赛事」，不是旧版的「官方A类」。
+    # 用旧名匹配会让这条高亮规则永远不命中（静默失效，不报错）。
     official_rows: Set[int] = {
-        i + 2 for i, c in enumerate(comps) if categorize(c.title, c.organizer, c.platform) == "官方A类"
+        i + 2 for i, c in enumerate(comps) if categorize(c.title, c.organizer, c.platform) == "官方赛事"
     }
     meta = {
         "更新日期": datetime.now().strftime("%Y-%m-%d %H:%M"),

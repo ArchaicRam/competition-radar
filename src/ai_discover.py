@@ -35,7 +35,10 @@ _SYSTEM_PROMPT = (
     "- **只保留与计算机/软件/数据/AI/电子/网络安全/创新创业相关，且技术性强**的活动，无关的不要输出\n"
     "- **以下类型绝对不要输出**：语言/文字/写作/诵读/普通话/汉语类，外语/翻译类，"
     "纯考试型数学/英语竞赛，跨境电商/营销/直播/新文科等商科文科类，"
-    "职业规划/职业发展/求职类，视觉/媒体/服装等设计类，"
+    "职业规划/职业发展/求职类，"
+    "**一切艺术/设计/影视传媒类**（美术、书法、绘画、摄影、视觉传达、平面/包装/环境/服装/工业设计、"
+    "海报、插画、动画、动漫、文创、影视编导、微电影、短视频、短剧/漫剧/微短剧、AIGC 绘画与 AIGC 短剧、"
+    "大广赛/华灿奖/学院奖等广告设计奖），"
     "以及任何\"招募\"\"招聘\"\"宣传大使\"\"协办院校\"类公告（这些不是比赛）\n"
     "- 类型用中文：比赛 / 挑战赛 / 黑客松 / 需求征集 / 揭榜挂帅 / 作品征集 / "
     "开源活动 / 训练营 / 众包悬赏 / 项目招募\n"
@@ -247,7 +250,9 @@ def _verify_one(task: tuple) -> Optional[Competition]:
                 {"role": "user", "content": user},
             ],
             cfg,
-            max_tokens=300,
+            # 不能给太小：deepseek-flash 是推理模型，max_tokens=300 时思维链
+            # （实测 500~1100 字）会把额度吃光，content 返回空串 → 核实全部失败。
+            max_tokens=int(cfg.get("llm_max_tokens_verify", 2000)),
         )
         stage = str(resp.get("stage") or "").strip() if isinstance(resp, dict) else ""
         dl = normalize_date(resp.get("deadline")) if isinstance(resp, dict) else ""

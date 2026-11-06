@@ -20,6 +20,10 @@ from datetime import datetime
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+# 项目根目录 (scripts/ 的上一级)。默认路径都基于它, 这样不管从哪个目录启动
+# 都能找到 data/state.json —— 否则必须 cd 到项目根目录运行。
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 from src.official import (
     categorize,
     concrete_stage,
@@ -43,6 +47,10 @@ def _bucket(status: str, deadline: str, dl_date, today) -> str:
         return "未开始"
     if "已结束" in s:
         return "进行中"  # 理论上已被过滤，兜底不放"已结束"分组
+    # 「未公布」= 还没查到当届报名窗口，不能算"报名中"（会误导人去报名），
+    # 归到"未开始"更贴切：赛事存在、窗口未知。
+    if "未公布" in s or "待关注" in s:
+        return "未开始"
     if dl_date and dl_date >= today:
         return "报名中"
     return "进行中"
@@ -345,10 +353,11 @@ render();
 
 def main():
     ap = argparse.ArgumentParser(description="生成赛探静态网站")
-    ap.add_argument("--state", default="data/state.json")
-    ap.add_argument("--out", default="site/index.html")
+    ap.add_argument("--state", default=os.path.join(ROOT, "data", "state.json"))
+    ap.add_argument("--out", default=os.path.join(ROOT, "site", "index.html"))
     ap.add_argument("--sheet-url", default="", help="在线表格链接（英雄区按钮）")
-    ap.add_argument("--bg", default="assets/bg.png", help="页面背景图（复制到输出目录 bg.png）")
+    ap.add_argument("--bg", default=os.path.join(ROOT, "assets", "bg.png"),
+                    help="页面背景图（复制到输出目录 bg.png）")
     args = ap.parse_args()
 
     items = load_competitions(args.state)

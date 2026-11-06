@@ -173,16 +173,24 @@ def concrete_stage(status: str = "", deadline: str = "") -> str:
     from datetime import datetime
 
     s = (status or "").strip()
+    # 历史数据里可能残留旧逻辑写下的"预计3月启动报名（按往届）"——
+    # 那是按往届月份推的，不能当状态用（会让人以为能报名），一律归"未公布"。
+    if any(k in s for k in ("按往届", "预计")):
+        return "未公布"
     if s and s != "待核实":
         return s
     d = (deadline or "").strip()
+    if not d:
+        # 没有截止日期就老实写"未公布"。原来兜底成"进行中"，
+        # 会让"其实还没开报名"的赛事看起来像已经在跑。
+        return "未公布"
     if d:
         try:
             if datetime.strptime(d[:10], "%Y-%m-%d").date() >= datetime.now().date():
                 return "报名中"
         except ValueError:
-            pass
-    return "进行中"
+            return "未公布"
+    return "已截止"
 
 
 # 与计算机/科技主题明显无关的标题关键词（外语/人文/文体类）。
@@ -191,10 +199,12 @@ def concrete_stage(status: str = "", deadline: str = "") -> str:
 _OFF_TOPIC_TITLE_KEYS = [
     # 外语类
     "外语", "英语", "词汇", "翻译", "日语", "法语", "德语", "俄语", "韩语",
-    "泰语", "西班牙语", "阿拉伯语", "涉外",
+    "泰语", "西班牙语", "阿拉伯语", "涉外", "跨文化",
+    "外研社", "外教社", "国才杯", "NECCS",
     # 人文/语言表达类（含中语言文字类）
     "演讲", "朗诵", "辩论", "征文", "写作", "作文", "文学", "诗词", "诗歌",
     "普通话", "口译", "笔译", "语言文字", "汉语", "诵读", "规范字",
+    "诵写讲", "经典诵", "诗词大会",
     # 文体/传媒类
     "书法", "绘画", "摄影", "短视频", "微电影", "配音", "主持", "导游",
     "声乐", "舞蹈", "歌唱", "动漫",
@@ -227,23 +237,74 @@ _TECH_OVERRIDE_KEYS = [
     "数学建模", "电子设计",
 ]
 
+# 艺术 / 设计 / 影视传媒类：用户明确要求不进表（含 AIGC 短剧、海报、插画等）。
+# 注意**不能写裸的"设计"或"视觉"**——"集成电路设计""计算机视觉"会被误杀；
+# 所以这里只收"组合词"，且该判定**优先于** _TECH_OVERRIDE_KEYS 与目录放行：
+# 目录内的 大广赛、华灿奖、蓝桥杯视觉艺术设计赛 一样按艺术类剔除。
+_ART_TITLE_KEYS = [
+    # 美术 / 造型
+    "艺术", "美术", "绘画", "书法", "雕塑", "篆刻",
+    # 视觉设计
+    "视觉传达", "视觉艺术", "视觉设计", "平面设计", "包装设计",
+    "海报", "插画", "版式", "字体设计", "标志设计", "logo设计",
+    # 环境 / 服饰 / 工业设计
+    "环境设计", "环境艺术", "室内设计", "景观设计", "服装设计", "服饰设计",
+    "工业设计", "产品设计", "文创设计", "文创产品", "非遗", "传统工艺", "民间艺术",
+    # 影视传媒 / 内容创作
+    "影视", "编导", "微电影", "短视频", "纪录片", "宣传片",
+    "短剧", "漫剧", "微短剧", "剧本", "分镜",
+    # 数字艺术 / 新媒体
+    "数字艺术", "数字媒体", "新媒体艺术", "交互艺术", "动画", "动漫",
+    "摄影", "图片创意", "AI绘画", "AI生图", "AIGC绘画",
+    # 赛事品牌（本身就是艺术设计类）
+    "华灿奖", "大广赛", "广告艺术", "广告设计", "学院奖",
+]
+
+
+def is_art(title: str = "") -> bool:
+    """是否艺术/设计/影视传媒类赛（用户要求：这类不进表）。"""
+    t = title or ""
+    return any(k in t for k in _ART_TITLE_KEYS)
+
 
 def is_off_topic(title: str = "", organizer: str = "", platform: str = "") -> bool:
     """标题明显属于外语/人文/文体类，或属于技术性弱的商科/设计/职业类，
     或根本是招募/招聘公告 → 与本项目无关。
 
-    仅用于综合来源（AI 发现 / 赛氪等聚合站）；
+    艺术/设计/影视传媒类（含 AIGC 短剧、海报、插画等）按用户要求**一律剔除**，
+    且该判定优先于技术平台豁免、科技词覆盖与目录放行——因为
+    "AI 微短剧赛"含 AI、"华灿奖/大广赛/蓝桥杯视觉艺术设计赛"在目录内，
+    任何一条放行规则都会把它们漏进来。
+
+    其余规则仅用于综合来源（AI 发现 / 赛氪等聚合站）；
     tianchi/xfyun/datafountain/kaggle/ctftime 等技术平台本身只发技术赛事，
     标题里的"翻译""词汇"等词多为 NLP 任务名，不做跑题过滤。
     """
+    t = title or ""
+    # ① 艺术类：最高优先级，任何来源都不放行
+    if is_art(t):
+        return True
+    # ② 技术平台豁免（平台本身只发技术赛）
     if (platform or "").split("·")[0] in ("tianchi", "xfyun", "datafountain", "kaggle", "ctftime"):
         return False
-    t = title or ""
     if any(k in t for k in _TECH_OVERRIDE_KEYS):
         return False
+    # 外语/人文/文体类：**即使在高教学会目录内也剔除**。
+    # 目录的 84 项里有"外研社·国才杯""外教社杯跨文化能力大赛""大广赛"这类，
+    # 对计算机社团毫无价值；此前"目录内一律放行"会把它们放进来。
+    if any(k in t for k in _OFF_TOPIC_TITLE_KEYS):
+        return True
+    # 目录内赛事放行"技术性弱"这一类（避免"数学竞赛"把《全国大学生数学竞赛》误杀）
+    try:
+        from . import official_registry as _reg
+
+        if _reg.lookup(t, organizer):
+            return False
+    except Exception:  # noqa: BLE001  目录不可用时退回纯规则
+        pass
     if any(k in t for k in _WEAK_TECH_TITLE_KEYS):
         return True
-    return any(k in t for k in _OFF_TOPIC_TITLE_KEYS)
+    return False
 
 
 def prestige(title: str = "", organizer: str = "", platform: str = "", rating: str = "") -> str:
@@ -322,3 +383,50 @@ def competition_sort_key(c) -> Tuple:
 
 def sort_competitions(comps: List) -> List:
     return sorted(comps, key=competition_sort_key)
+
+
+# ==========================================================================
+# 目录驱动覆盖（放在文件末尾，模块导入完即生效）
+#
+# 背景：上面的"关键词 substring"判定会双向出错——
+#   假阳性：is_official("某某杯大学生数学建模大赛", "某某民营公司") = True
+#   假阴性：教育部高教司主办的节能减排竞赛被判成"其他"
+# 现改为以《全国普通高校大学生竞赛分析报告》竞赛目录为准（见 official_registry）。
+# 旧的三个实现保留为 _legacy_*，随时可回滚。
+# ==========================================================================
+from . import official_registry as _reg  # noqa: E402
+
+_legacy_is_official = is_official
+_legacy_categorize = categorize
+_legacy_prestige = prestige
+
+
+def is_official(title, organizer="", **_kw):  # noqa: F811
+    """是否官方赛事：目录内，或部委/中央群团主办。"""
+    return _reg.is_official(title or "", organizer or "")
+
+
+def categorize(title, organizer="", platform=""):  # noqa: F811
+    """赛事类别：官方赛事 / 企业赛 / 在线赛 / 高校赛事 / 其他。"""
+    return _reg.categorize(title or "", organizer or "", platform or "")
+
+
+def prestige(title="", organizer="", platform="", rating=""):  # noqa: F811
+    """含金量：高 / 中 / 低（目录优先，其次主办方权威度，最后平台默认）。"""
+    return _reg.prestige(title or "", organizer or "", platform or "", rating or "")
+
+
+def is_competition(title=""):
+    """是不是一场竞赛（测评/认证/培训/夏令营不算）。"""
+    return _reg.is_competition(title or "")
+
+
+def catalog_id(title, organizer=""):
+    """权威目录里的赛事 id，用于把子赛道折叠到父赛事。"""
+    return _reg.catalog_id(title or "", organizer or "")
+
+
+def deadline_kind_of(text, default="报名截止"):
+    """从通知原文判断日期属于哪种口径（全国/校内/作品提交/比赛结束）。"""
+    return _reg.classify_deadline_kind(text or "", default)
+

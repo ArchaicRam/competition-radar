@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
-"""LLM 客户端：OpenAI 兼容 Chat Completions（默认 DeepSeek）。
+"""LLM 客户端：OpenAI 兼容 Chat Completions（默认 DeepSeek 官方 API）。
 
 配置（config.json）：
-  llm_api_key    必填，DeepSeek 开放平台 API Key
-  llm_base_url   默认 https://api.deepseek.com
-  llm_model      默认 deepseek-chat
+  llm_api_key    必填，DeepSeek 开放平台 API Key（platform.deepseek.com）
+  llm_base_url   默认 https://api.deepseek.com（官方地址；不要带 /v1，本模块自己拼 /chat/completions）
+  llm_model      默认 deepseek-flash（官方现有：deepseek-flash / deepseek-v4-pro）
+
+注意：老配置里若是智谱的 https://open.bigmodel.cn/api/coding/paas/v4 + glm-5.3-flash，
+换成 DeepSeek 官方时必须同时改 base_url 和 model，只改 key 会 404。
 """
 from __future__ import annotations
 
@@ -30,7 +33,7 @@ def chat(
     if not api_key:
         raise LLMError("未配置 llm_api_key")
     base = (cfg.get("llm_base_url") or "https://api.deepseek.com").rstrip("/")
-    model = cfg.get("llm_model") or "deepseek-chat"
+    model = cfg.get("llm_model") or "deepseek-flash"
     payload = {
         "model": model,
         "messages": messages,
@@ -50,9 +53,26 @@ def chat(
         raise LLMError(f"LLM 接口错误 {status}: {raw.decode('utf-8', 'ignore')[:300]}")
     data = json.loads(raw.decode("utf-8", "ignore"))
     try:
-        return data["choices"][0]["message"]["content"].strip()
+        choice = data["choices"][0]
+        msg = choice.get("message") or {}
+        content = (msg.get("content") or "").strip()
     except (KeyError, IndexError, TypeError) as e:
         raise LLMError(f"LLM 响应结构异常: {e}") from e
+
+    if not content:
+        # deepseek-flash 是**推理模型**：先产 reasoning_content 再产 content，
+        # max_tokens 太小会把额度全耗在思维链上，content 变成空串
+        # （finish_reason=length）。这时要给出能直接定位的报错，而不是空字符串。
+        reason = choice.get("finish_reason")
+        thinking = (msg.get("reasoning_content") or "")
+        if reason == "length":
+            raise LLMError(
+                "LLM 输出被 max_tokens 截断：content 为空"
+                f"（模型 {model} 为推理模型，思维链已消耗额度，请调大 llm_max_tokens，"
+                f"当前 {payload['max_tokens']}；思维链长度 {len(thinking)} 字）"
+            )
+        raise LLMError(f"LLM 返回空内容（finish_reason={reason}，模型 {model}）")
+    return content
 
 
 def chat_json(

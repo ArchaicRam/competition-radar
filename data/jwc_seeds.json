@@ -1,0 +1,616 @@
+{
+  "meta": {
+    "verified_at": "2026-11-05",
+    "note": "高校教务处「竞赛通知」栏目第一手情报源清单。全部 URL 于 2026-11-05 逐条实测：用 HTTP GET 拉取原始字节，校验 200 + Content-Type=text/html + 解析出的列表项数与日期，并要求页面确实是「列表页」而非首页/404/导航聚合页；其中西安交通大学等条目另用 web_fetch 独立复核。verified=true 表示「实测返回 200 且确为带日期的通知列表页」；stale=true 表示栏目可访问但更新停在往年，抓取器应降权或跳过。verified=false 的条目保留在 seeds 里是为了给出负面结论（不要把时间花在这些站上），note 里写明失败原因。全部站点均为纯静态 HTML，无 JS 渲染，requests+lxml 即可解析。parser_hint 中的结构特征均为实抓样本归纳，不是推测。",
+    "total_universities": 39,
+    "verified_ok": 34,
+    "stale_but_ok": 6,
+    "failed_in_seeds": 5,
+    "failed_probes_extra": 10,
+    "encoding_note": "除湘潭大学外，所有站点 HTTP 头/meta 声明 utf-8 且实际可按 utf-8 解码。湘潭大学是唯一反例：页面声明 charset=gb2312，实际字节是 UTF-8 —— 按声明解码会得到乱码并只能解析出 0 个链接，必须强制 utf-8。抓取器建议统一用 r.content + 尝试 utf-8 优先、gb18030 兜底，不要相信 requests 的 r.encoding。"
+  },
+  "seeds": [
+    {
+      "university": "西安交通大学",
+      "list_url": "http://dean.xjtu.edu.cn/jxxx/jxtz2/jsap.htm",
+      "channel_name": "竞赛安排",
+      "encoding": "utf-8",
+      "verified": true,
+      "stale": false,
+      "parser_hint": "列表项为 <li>，每页 9 条；标题在 <a> 内且带频道前缀「[竞赛安排]关于…的通知」，日期 YYYY-MM-DD 在同级 <span> 里（不在 <a> 文本内），需取 li 全文用正则 (\\d{4}-\\d{2}-\\d{2}) 抽取。详情页 URL 形如 /info/1172/{id}.htm。分页逆序：第2页=jsap/51.htm、第3页=jsap/50.htm…末页=jsap/1.htm，即第 k 页(k>=2)为 jsap/{53-k}.htm，共 52 页；建议直接跟随「下页」链接。",
+      "sample_titles": [
+        "关于招募第二十二届全国大学生智能汽车竞赛参赛队员的通知",
+        "关于组织参加2027年美国大学生数学建模竞赛相关工作的通知",
+        "关于组织参加2027年中国大学生工程实践与创新能力大赛相关工作的通知"
+      ],
+      "note": "最强单源：一页同时覆盖智能汽车/美赛/工创赛/蓝桥杯/华为ICT。正文含校内选拔与国赛双口径日期。"
+    },
+    {
+      "university": "西北工业大学",
+      "list_url": "https://jiaowu.nwpu.edu.cn/jxxx1/sjjx.htm",
+      "channel_name": "实践教学",
+      "encoding": "utf-8",
+      "verified": true,
+      "stale": false,
+      "parser_hint": "列表项为 <li>，每页 15 条；标题在 <a> 内，日期 YYYY-MM-DD 在 li 末尾同级节点（不在 <a> 内）。相对链接以 ../info/1160/{id}.htm 形式出现，需 urljoin 到页面 URL。分页逆序：第2页=sjjx/39.htm、第3页=sjjx/38.htm…末页=sjjx/1.htm，共 40 页。",
+      "sample_titles": [
+        "关于组织参加第二十届全国大学生软件创新大赛报名工作的通知",
+        "关于举办西北工业大学第四届大学生工程实践与创新能力大赛的通知",
+        "关于组织参加第十八届蓝桥杯全国大学生软件和信息技术专业人才大赛的通知"
+      ],
+      "note": "更新极快（实测最新 2026-11-03）。栏目名「实践教学」但内容以竞赛报名/获奖通知为主，需按关键词过滤掉大创项目类。"
+    },
+    {
+      "university": "四川大学",
+      "list_url": "https://jwc.scu.edu.cn/jxgl/xkjs.htm",
+      "channel_name": "学科竞赛",
+      "encoding": "utf-8",
+      "verified": true,
+      "stale": false,
+      "parser_hint": "列表项为 <li>，每页 10 条；标题在 <a> 内，日期 YYYY-MM-DD 在同级节点。相对链接前缀为 ../info/1043/{id}.htm。分页逆序：第2页=xkjs/42.htm、第3页=xkjs/41.htm…末页=xkjs/1.htm，共 43 页。页面同时含大量导航 <a>（教务处简介等），解析时须只取带日期的 li。",
+      "sample_titles": [
+        "关于举办2026年四川大学大学生新文科实践创新大赛校内选拔赛（答辩）的通知",
+        "关于组织2026年四川省大学生孙训方力学竞赛参赛报名的通知",
+        "关于开展第十八届“全国大学生数学竞赛”四川赛区赛的通知"
+      ],
+      "note": "纯竞赛栏目，噪声低。"
+    },
+    {
+      "university": "武汉大学",
+      "list_url": "https://uc.whu.edu.cn/xkjs.htm",
+      "channel_name": "学科竞赛",
+      "encoding": "utf-8",
+      "verified": true,
+      "stale": false,
+      "parser_hint": "混合结构：25 条在 <li>、5 条在 <div>，每页 30 条；部分条目的日期被拼进 <a> 文本末尾（形如「…通知2026-07-09」），部分是同级节点，两种都要兼容。详情页有两种 URL：info/{col}/{id}.htm 与 2022/show.jsp?urltype=news.NewsContentUrl&wbtreeid=1698&wbnewsid={id}，后者需保留 query。分页逆序：第2页=xkjs/11.htm…末页=xkjs/1.htm，共 12 页。",
+      "sample_titles": [
+        "武汉大学关于组织参加2026年高教社杯全国大学生数学建模竞赛的通知",
+        "关于组织参加第九届“外教社杯”全国高校学生跨文化能力大赛校内选拔赛的通知",
+        "第十四届未来设计师•全国高校数字艺术设计大赛（NCDA）武汉大学校级评审拟获奖学生名单公示"
+      ],
+      "note": "注意噪声：该栏目把全校新闻稿也混进来（招生录取、学院动态），且新闻稿日期被统一写成同一批日期，按标题含「竞赛/大赛/报名/通知」过滤。"
+    },
+    {
+      "university": "南开大学",
+      "list_url": "https://jwc.nankai.edu.cn/xkjs/list.htm",
+      "channel_name": "学科竞赛",
+      "encoding": "utf-8",
+      "verified": true,
+      "stale": false,
+      "parser_hint": "列表项为 <div>（非 li），每页仅 6 条，是全量短列表、无分页；标题在 <a> 内，日期 YYYY-MM-DD 在同级节点。详情页 URL 形如 /{YYYY}/{MMDD}/c35414a{id}/page.htm，注意路径里嵌了日期和栏目号 c35414（可作为栏目校验指纹）。",
+      "sample_titles": [
+        "关于举办2026年南开大学生命科学基本实验技能竞赛的通知",
+        "关于第八届中华经典诵写讲大赛报名参赛工作的通知",
+        "2025年天津市普通高校大学数学竞赛南开大学选拔报名通知"
+      ],
+      "note": "更新频率低（年 2-4 条），但条条是竞赛正文通知，适合做低频高信噪比源。"
+    },
+    {
+      "university": "同济大学",
+      "list_url": "https://jwc.tongji.edu.cn/_t1272/sjjx/list.htm",
+      "channel_name": "大学生竞赛",
+      "encoding": "utf-8",
+      "verified": true,
+      "stale": true,
+      "parser_hint": "列表项为 <li>，8 条带日期；标题在 <a> 内，日期 YYYY-MM-DD 在同级节点。详情页 URL 形如 /{xx}/{yy}/c30536a{id}/page.htm，栏目指纹 c30536。注意 URL 会被 302 到 list.psp，但 list.htm 仍可直取；无分页控件。",
+      "sample_titles": [
+        "全国普通高校学科竞赛排行榜",
+        "第十一届全国大学生光电设计竞赛校内报名通知",
+        "2023年同济大学创新物理实验设计竞赛启动报名!"
+      ],
+      "note": "stale：内容停在 2023-04，说明该栏目已归档。若需要同济，应改抓 jwc.tongji.edu.cn 首页通知或 bksy.tongji.edu.cn/sjjx/list.htm。"
+    },
+    {
+      "university": "山东大学",
+      "list_url": "http://www.dxsjs.sdu.edu.cn/",
+      "channel_name": "全国大学生竞赛山东赛区组委会",
+      "encoding": "utf-8",
+      "verified": true,
+      "stale": false,
+      "parser_hint": "这是山东省赛区组委会官网而非教务处，但属于「主办方一手源」，优先级高于任何高校转发。首页内嵌列表：37 条在 <li>、1 条在 <div>；日期格式混用，6 条为 YYYY-MM-DD、32 条为 MM-DD（无年份，需按页面年份或最近月份回填，切勿当成跨年）。详情页 URL 形如 info/1002/{id}.htm。无标准分页，用「更多」或栏目页翻页。",
+      "sample_titles": [
+        "2024年TI杯全国大学生电子设计竞赛山东赛区…",
+        "2023高教社杯全国大学生数学建模竞赛山东赛区…",
+        "2021年TI杯全国大学生电子设计竞赛山东赛区…"
+      ],
+      "note": "省级组委会源，价值高于高校转发；但更新慢（最新 2024-07）。MM-DD 无年份是解析坑。"
+    },
+    {
+      "university": "西安电子科技大学",
+      "list_url": "https://jwc.xidian.edu.cn/sjjx.htm",
+      "channel_name": "实践教学",
+      "encoding": "utf-8",
+      "verified": true,
+      "stale": false,
+      "parser_hint": "列表项为 <li>，19 条带日期；日期被拼进 <a> 文本末尾（如「…的通知 2026-04-27」），<a> 外没有独立日期节点，必须在标题串上做正则并把日期从标题里剥离。详情页 /info/1025/{id}.htm。分页逆序：下页=sjjx/39.htm，末页=sjjx/1.htm。",
+      "sample_titles": [
+        "关于2026年（2022级）本科生毕业设计（论文）盲审工作安排的通知",
+        "关于2020级、2021级本科生基础层（C2级）实验实践能力达标测试补测的通知",
+        "2023年网络安全竞赛实训基地国际双创实践周集训通知"
+      ],
+      "note": "该栏目以「实践教学」为主（毕设、体质测试、实验达标），竞赛通知只是子集，需按标题关键词「竞赛/大赛/选拔」过滤。"
+    },
+    {
+      "university": "长安大学",
+      "list_url": "https://jwc.chd.edu.cn/7064/list.htm",
+      "channel_name": "学科竞赛",
+      "encoding": "utf-8",
+      "verified": true,
+      "stale": false,
+      "parser_hint": "列表项为 <li>，14 条带日期，日期 YYYY-MM-DD 在同级节点。重大坑：条目 href 大量指向 mp.weixin.qq.com 公众号文章而非校内详情页，抓取器需容许跨域外链并把 weixin 链接标记为「不可静态解析正文」。分页：尾页=/7064/list4.htm（共 4 页，正向递增 listN.htm）。",
+      "sample_titles": [
+        "我校学生在第六届国际大学生工程力学竞赛（亚洲赛区）中荣获佳绩",
+        "我校学子在2025年中国大学生机械工程创新创意大赛智能制造赛中获得佳绩"
+      ],
+      "note": "内容偏「获奖捷报」，报名类通知较少；适合补充获奖信息，不适合发现报名窗口。"
+    },
+    {
+      "university": "江苏大学",
+      "list_url": "https://jwc.ujs.edu.cn/scjy/xkjs.htm",
+      "channel_name": "学科竞赛",
+      "encoding": "utf-8",
+      "verified": true,
+      "stale": false,
+      "parser_hint": "列表项为 <li>，每页 15 条；标题在 <a> 内，日期 YYYY-MM-DD 在同级节点。相对链接前缀 ../info/1181/{id}.htm（栏目指纹 1181）。分页逆序：第2页=xkjs/7.htm、第3页=xkjs/6.htm…末页=xkjs/1.htm，共 8 页。",
+      "sample_titles": [
+        "关于举办江苏大学第十四届大学生数学建模竞赛的通知",
+        "关于举办第九届江苏大学智能机器人创意大赛的通知",
+        "关于举办第31届中国日报社“21世纪杯”全国英语演讲比赛江苏大学校园赛的通知"
+      ],
+      "note": "纯竞赛栏目，标题几乎全含「关于举办…的通知」，噪声极低。"
+    },
+    {
+      "university": "东华大学",
+      "list_url": "https://jw.dhu.edu.cn/tzgg/list.htm",
+      "channel_name": "通知公告",
+      "encoding": "utf-8",
+      "verified": true,
+      "stale": false,
+      "parser_hint": "列表项为 <li>，每页 15 条；标题在 <a> 内，日期 YYYY-MM-DD 在同级节点。详情页 URL 形如 /{YYYY}/{MMDD}/c22080a{id}/page.htm（栏目指纹 c22080）。分页正向递增：尾页=/tzgg/list100.htm。URL 会被重定向到 list.psp，需 allow_redirects 并保留相对路径拼接基准。",
+      "sample_titles": [
+        "第十三届全国大学生能源经济学术创意大赛参赛通知",
+        "关于2026年度东华大学 “数据科学”微专业招生选拔的通知"
+      ],
+      "note": "综合通知，竞赛通知约占 1/5，需关键词过滤。实测最新 2026-11-03，更新很勤。"
+    },
+    {
+      "university": "华东理工大学",
+      "list_url": "https://jwc.ecust.edu.cn/3940/list.htm",
+      "channel_name": "实践教学管理",
+      "encoding": "utf-8",
+      "verified": true,
+      "stale": false,
+      "parser_hint": "重要结构差异：列表项在表格行 <tr> 内（不是 <li>！），共 54 个 <tr>，其中 14 行带日期；日期 YYYY-MM-DD 在同级 <td>。详情页 /{YYYY}/{MMDD}/c3940a{id}/page.htm（栏目指纹 c3940）。分页正向递增：尾页=/3940/list13.htm。",
+      "sample_titles": [
+        "2026年“益晨杯”化学使生活更美好暨全国大学生化学实验创新设计…",
+        "ICPC、CCPC 程序设计竞赛、蓝桥杯大赛、百度之星大赛联合招新通…"
+      ],
+      "note": "全清单里少数用 tr 而非 li 的页面，写抓取器时表格分支必须覆盖。"
+    },
+    {
+      "university": "江南大学",
+      "list_url": "https://jwc.jiangnan.edu.cn/sjjx/sjcx.htm",
+      "channel_name": "实践创新",
+      "encoding": "utf-8",
+      "verified": true,
+      "stale": false,
+      "parser_hint": "列表项为 <li>，每页 20 条；标题在 <a> 内，日期 YYYY-MM-DD 在同级节点。相对链接前缀 ../info/1016/{id}.htm。分页控件里混有 javascript:void(0) 的假页码，只有「下页=sjcx/1.htm」「尾页=sjcx/1.htm」是真链接，需过滤 javascript:。",
+      "sample_titles": [
+        "关于做好2025-2026学年“全国大学生实习公共服务平台”实习数据报送工作的通知",
+        "关于提交2024年本科生实习教学工作总结和新增实习基地协议书的通知"
+      ],
+      "note": "内容以实习/实践教学为主，竞赛占比中低；更新偏慢（最新 2026-03-25）。"
+    },
+    {
+      "university": "南京师范大学",
+      "list_url": "https://jwc.njnu.edu.cn/sjjx.htm",
+      "channel_name": "实践教学",
+      "encoding": "utf-8",
+      "verified": true,
+      "stale": false,
+      "parser_hint": "列表项为 <div>（非 li），16 条带日期；日期被拼进 <a> 文本末尾（「…的通知 2025-04-15」），需正则剥离。相对链接 ../info/1107/{id}.htm。分页只有 1 页真链接（sjjx/1.htm），其余是 javascript:void(0)。",
+      "sample_titles": [
+        "关于开展2025年立项大创项目中期检查的通知",
+        "2024年全国大学生英语竞赛江苏省决赛获奖名单公布"
+      ],
+      "note": "以「大创项目」为主，纯竞赛通知少（最新 2025-04-15）。低优先。"
+    },
+    {
+      "university": "中国地质大学(北京)",
+      "list_url": "https://jwc.cugb.edu.cn/sjcx/xkjs/",
+      "channel_name": "学科竞赛",
+      "encoding": "utf-8",
+      "verified": true,
+      "stale": true,
+      "parser_hint": "列表项为 <li>，7 条带日期；日期在 <a> 文本末尾且 li 内重复出现（「…的通知 2026-04-21」），正则取最后一次匹配即可。详情页 URL 自带日期路径：/c/{YYYY-MM-DD}/{id}.shtml —— 可直接从 URL 反解日期，比解析 DOM 更稳。无标准分页控件（目录式 URL，末尾带斜杠）。",
+      "sample_titles": [
+        "关于组织参加第六届“外教社·词达人杯”全国大学生英语词汇能力大赛的通知",
+        "我校第四届大学生地质技能竞赛考试安排",
+        "关于举办我校2016年大学生数学建模竞赛的通知"
+      ],
+      "note": "stale：绝大部分条目停在 2015-2016，只有 1 条 2026，说明栏目基本停更。该站真正的竞赛信息可能已迁移，需另行探测。"
+    },
+    {
+      "university": "辽宁大学",
+      "list_url": "https://jwc.lnu.edu.cn/tzgg1/sysj.htm",
+      "channel_name": "实验实践",
+      "encoding": "utf-8",
+      "verified": true,
+      "stale": false,
+      "parser_hint": "列表项为 <ul>（9 条）+ <li>（1 条）混合；日期在同级节点但格式是「日 年-月」拆分形式（如「13 2026-10」），即 <span>日</span><span>YYYY-MM</span> 两段，正则需匹配 \\d{1,2}\\s+\\d{4}-\\d{2} 再自行补全。另有条目把「2026年3月12」这种中文日期当噪声混进 ctx，需优先取紧邻的非中文日期。详情页 ../info/1202/{id}.htm。分页：下页=sysj/4.htm，末页=sysj/1.htm。",
+      "sample_titles": [
+        "实践教学丨协同育人零距离——中央、省直媒体一线记者与辽大新传学子面对面",
+        "本科教学实验室安全工作提醒"
+      ],
+      "note": "日期格式是全清单最怪的一页（日/年月分离 + 中文日期噪声）。内容以实验实践新闻为主，竞赛少。"
+    },
+    {
+      "university": "山西大学",
+      "list_url": "https://jwc.sxu.edu.cn/sjjx/xkjs/index.htm",
+      "channel_name": "学科竞赛",
+      "encoding": "utf-8",
+      "verified": true,
+      "stale": true,
+      "parser_hint": "列表项为 <div>，5 条带日期；日期在 <a> 文本末尾且用斜杠分隔（YYYY/MM/DD），正则要同时吃 - / . 三种分隔符。详情页为 hash 文件名：/sjjx/xkjs/{32位hex}.htm，无法从 URL 推断语义。分页指向 index.htm（自身），实际无翻页。",
+      "sample_titles": [
+        "中国国际大学生创新大赛（2024）全国总决赛山西大学获奖名单",
+        "第六届中国国际“互联网+”大学生创新创业大赛山西大学获奖名单"
+      ],
+      "note": "stale：最新 2025/04/01，且内容全是「互联网+/创新大赛获奖名单」，几乎没有当季报名通知。低优先。"
+    },
+    {
+      "university": "云南大学",
+      "list_url": "https://jwc.ynu.edu.cn/index.htm",
+      "channel_name": "本科生院首页(通知区)",
+      "encoding": "utf-8",
+      "verified": true,
+      "stale": false,
+      "parser_hint": "首页而非独立栏目页：列表项为 <li>（67 条）+ <div>（1 条），共 68 条带日期，日期 YYYY-MM-DD 在同级节点；因是首页，<a> 里混杂大量导航链接，必须只保留「有同级日期节点」的 li。详情页 /info/1010|1015/{id}.htm。无分页（首页聚合）。",
+      "sample_titles": [
+        "云南大学2026年下半年全国大学英语六级考试报名补…",
+        "云南大学第29届全国推广普通话宣传周系列活动通知"
+      ],
+      "note": "暂无独立竞赛栏目可用，只能抓首页通知区（68 条/页，容量大、更新到 2026-09）。建议后续再探测 /tzgg 类子栏目（实测 /tzgg.htm 为 404）。"
+    },
+    {
+      "university": "福建师范大学",
+      "list_url": "https://jwc.fjnu.edu.cn/18638/list.htm",
+      "channel_name": "教学通知",
+      "encoding": "utf-8",
+      "verified": true,
+      "stale": false,
+      "parser_hint": "列表项为 <div>，每页 14 条；标题在 <a> 内，日期 YYYY-MM-DD 在同级节点。详情页 URL 形如 /{xx}/{yy}/c18638a{id}/page.htm（栏目指纹 c18638）。分页正向递增：尾页=/18638/list2.htm（页数极少）。",
+      "sample_titles": [
+        "关于做好2026年秋季学期开学本科教学有关工作安排的通知",
+        "关于开展2025级“孙绍振中国语言文学拔尖学生培养基地”学生选拔…"
+      ],
+      "note": "教学通知总栏，竞赛通知需关键词过滤；更新到 2026-08。"
+    },
+    {
+      "university": "湘潭大学",
+      "list_url": "https://jwc.xtu.edu.cn/xkjs/tzgg.htm",
+      "channel_name": "学科竞赛-通知公告",
+      "encoding": "utf-8",
+      "verified": true,
+      "stale": false,
+      "parser_hint": "列表项为 <li>，每页 15 条；标题在 <a> 内，日期 YYYY-MM-DD 在同级节点。相对链接前缀 ../info/1085/{id}.htm（栏目指纹 1085；学科竞赛下 1086=新闻报道、1089=竞赛认定表，按需分抓）。分页逆序：第2页=tzgg/24.htm、第3页=tzgg/23.htm…末页=tzgg/1.htm，共 25 页。★编码坑见 meta.encoding_note：声明 gb2312 实为 UTF-8，按声明解码会得到 0 个链接。",
+      "sample_titles": [
+        "关于组织参加第十八届蓝桥杯全国大学生软件和信息技术大赛的通知",
+        "关于公布湘潭大学2026年节能减排社会实践与科技竞赛等9项校级竞赛获奖名单的通知",
+        "关于举办2027年美国大学生数学建模竞赛（MCM/ICM）校内选拔赛的通知"
+      ],
+      "note": "全清单信噪比最高的源之一，标题几乎条条是「关于举办XX竞赛的通知」。父栏目 /xkjs.htm 是混合流，/xkjs/tzgg.htm 是纯竞赛通知流，用后者。"
+    },
+    {
+      "university": "杭州电子科技大学",
+      "list_url": "https://jwc.hdu.edu.cn/xkjs/list.htm",
+      "channel_name": "学科竞赛",
+      "encoding": "utf-8",
+      "verified": true,
+      "stale": false,
+      "parser_hint": "列表项为 <div>（非 li），每页 14 条；标题在 <a> 内，日期 YYYY-MM-DD 在同级节点。详情页 /{YYYY}/{MMDD}/c13482a{id}/page.htm（栏目指纹 c13482）。分页正向递增：尾页=/xkjs/list15.htm（共 15 页）。",
+      "sample_titles": [
+        "关于举办第十三届全国大学生能源经济学术创意大赛校选拔赛的通知",
+        "关于举办杭州电子科技大学第二十一届大学生机械设计竞赛暨浙江省第二十四届大学生机械设计竞赛选拔赛的通知",
+        "关于举办2027年杭州电子科技大学第二十届大学生电子商务竞赛暨第二十二届浙江省大学生电子商务竞赛校内选拔赛的通知"
+      ],
+      "note": "质量很高：校赛与省赛/国赛跳转关系在标题里就写明，方便建「校赛→省赛」映射。更新到 2026-10-29。"
+    },
+    {
+      "university": "西安理工大学",
+      "list_url": "https://jwc.xaut.edu.cn/xkjs/jsxx.htm",
+      "channel_name": "竞赛信息",
+      "encoding": "utf-8",
+      "verified": true,
+      "stale": false,
+      "parser_hint": "列表项为 <li>，16 条带日期，日期被拼进 <a> 文本开头且重复一次（「2025-04-15关于…」），需正则剥离前缀。详情页 ../info/1133/{id}.htm（栏目指纹 1133）；但部分条目跳到外部站（如 zhixing.xaut.edu.cn），需容许跨域。分页只有 1 页：下页=jsxx/1.htm、尾页=jsxx/1.htm。",
+      "sample_titles": [
+        "关于举办西安理工大学2025年大学生数学建模竞赛暨全国大学生数学建模竞赛校内选拔赛的通知",
+        "关于“招行杯”第十八届全国大学生节能减排社会实践与科技竞赛西安理工大学选拔赛的通知"
+      ],
+      "note": "纯竞赛栏目且标题全含「校内选拔赛」，对区分「校内截止 vs 国赛截止」极有价值。更新到 2025-04。"
+    },
+    {
+      "university": "北京林业大学",
+      "list_url": "https://jwc.bjfu.edu.cn/jgdt/index.html",
+      "channel_name": "教改动态",
+      "encoding": "utf-8",
+      "verified": true,
+      "stale": false,
+      "parser_hint": "列表项为 <li>，每页 15 条；标题在 <a> 内，日期 YYYY-MM-DD 在同级节点。详情页两种形态：站内为相对 hash 文件名（如 jgdt/916f1b41….html，静态目录 + 32位hex），部分是跨子站绝对链接（cos.bjfu.edu.cn、gxy.bjfu.edu.cn），需 urljoin 且容许跨域。分页不叫「下一页=N.htm」而是 .html：下一页=index1.html。",
+      "sample_titles": [
+        "关于2026年北京林业大学工程设计与表达竞赛暨2026年北京林业大学校内选拔赛获奖情况的通知",
+        "第42届全国部分地区大学生物理竞赛报名通知",
+        "关于举办2026年北京林业大学工程设计与表达竞赛暨2026年（第十二届）北京市大学生工程设计表达竞赛…"
+      ],
+      "note": "分页扩展名是 .html 而非 .htm，是最容易写错的一页。内容竞赛浓度高（先进成图、物理竞赛等），更新到 2026-10-22。"
+    },
+    {
+      "university": "天津工业大学",
+      "list_url": "https://jwc.tiangong.edu.cn/1328/list.htm",
+      "channel_name": "通知公告",
+      "encoding": "utf-8",
+      "verified": true,
+      "stale": false,
+      "parser_hint": "列表项为 <li>，13 条带日期；标题在 <a> 内，日期 YYYY-MM-DD 在同级节点。注意噪声：li 中混入 news.tiangong.edu.cn 的党建专题链接（也带日期），需按 host 或标题关键词剔除。详情页 /{YYYY}/{MMDD}/c1328a{id}/page.htm（栏目指纹 c1328）。分页正向递增：尾页=/1328/list10.htm。",
+      "sample_titles": [
+        "关于组织参加第十八届蓝桥杯全国大学生软件和信息技术大赛的通知",
+        "关于报名参加2026 年天津市大学生新工科实践创新大赛的通知"
+      ],
+      "note": "更新到 2026-11-03，蓝桥杯等头部赛事通知齐全。"
+    },
+    {
+      "university": "宁波大学",
+      "list_url": "https://jwc.nbu.edu.cn/tzgg1/sjjx.htm",
+      "channel_name": "实践教学",
+      "encoding": "utf-8",
+      "verified": true,
+      "stale": false,
+      "parser_hint": "列表项为 <li>，每页 10 条；标题在 <a> 内，日期 YYYY-MM-DD 在同级节点。相对链接 ../info/1126|1128|1129/{id}.htm（不同科室不同栏目号，不要写死一个）。分页逆序：第2页=sjjx/43.htm、第3页=sjjx/42.htm…末页=sjjx/1.htm，共 44 页。",
+      "sample_titles": [
+        "关于举办宁波大学2027年大学生企业数智化经营实践竞赛的通知",
+        "关于举办宁波大学2026年大学生物理学术竞赛的通知",
+        "关于举办第十五届全国口译大赛（英语）暨第十一届海峡两岸口译大赛宁波大学校…"
+      ],
+      "note": "标题多为「关于举办…竞赛的通知」，竞赛浓度高，更新到 2026-10-27。"
+    },
+    {
+      "university": "广东工业大学",
+      "list_url": "https://jwc.gdut.edu.cn/tzgg.htm",
+      "channel_name": "通知公告",
+      "encoding": "utf-8",
+      "verified": true,
+      "stale": false,
+      "parser_hint": "列表项为 <li>，每页 15 条；日期被拼进 <a> 文本末尾（「…的通知 2026-09-10」），需正则剥离。详情页 /info/1216/{id}.htm（栏目指纹 1216）。分页正向递增：第2页=tzgg/4.htm、第3页=tzgg/3.htm…末页=tzgg/1.htm，共 5 页。",
+      "sample_titles": [
+        "关于2026年春季学期结业换证领取证书的通知（三）",
+        "2026年秋季学期本科结业生重修报名通知"
+      ],
+      "note": "属综合教务通知，竞赛占比低（该站另有 /dbdh/glzd/xsxx/xkjs.htm 但那是制度文件不是通知）。需关键词过滤。"
+    },
+    {
+      "university": "厦门大学",
+      "list_url": "https://jwc.xmu.edu.cn/tzgg.htm",
+      "channel_name": "通知公告",
+      "encoding": "utf-8",
+      "verified": true,
+      "stale": false,
+      "parser_hint": "列表项为 <li>，每页 15 条；标题在 <a> 内且前面带一个多余的「>」字符（如「>关于2026年校运会停课的通知」），清洗时要 strip 掉；日期 YYYY-MM-DD 被拼在 <a> 文本末尾。详情页 /info/{col}/{id}.htm。分页逆序：第2页=tzgg/51.htm…末页=tzgg/1.htm，共 52 页。",
+      "sample_titles": [
+        "关于2026年校运会停课的通知",
+        "关于组织2026级本科新生开展学籍信息核对工作的通知",
+        "2026-2027学年第一学期公共课期末考试安排表"
+      ],
+      "note": "「>」前缀是该校全站标题模板特征，很显眼。综合通知，竞赛需过滤。"
+    },
+    {
+      "university": "北京工业大学",
+      "list_url": "https://undergrad.bjut.edu.cn/sjjx/cxcy/kjjs.htm",
+      "channel_name": "科技竞赛",
+      "encoding": "utf-8",
+      "verified": true,
+      "stale": true,
+      "parser_hint": "列表项为 <li>，但只有 5 条带日期；日期被拼进 <a> 文本开头且重复（「2025-08-06 关于…」）。详情页两种：/info/1334/{id}.htm 与 /content.jsp?urltype=news.NewsContentUrl&wbtreeid=1334&wbnewsid={id}。无分页。★注意任务给的 https://jxny.bjut.edu.cn/ 是机械工程学院站点，不是教务处；北工大教务处实际域名是 undergrad.bjut.edu.cn。",
+      "sample_titles": [
+        "关于2025世界人形机器人运动会校内备案名单的公示",
+        "关于公布北京工业大学2024年大学生科技竞赛优秀指导教师（团队）评选结果的通知"
+      ],
+      "note": "stale 且内容偏「指导教师评选/备案公示」而非学生报名通知，价值有限。建议改抓 undergrad.bjut.edu.cn 首页通知区（实测 18 条带日期，更新到 2026-11-02）。"
+    },
+    {
+      "university": "深圳大学",
+      "list_url": "https://jwb.szu.edu.cn/index/jwtz.htm",
+      "channel_name": "教务通知",
+      "encoding": "utf-8",
+      "verified": true,
+      "stale": true,
+      "parser_hint": "列表项为 <ul>（4 条）+ <li>（1 条）；日期结构很脏：<a> 文本里被塞进「19/ 2026-10」这类「浏览量/日期」混合串，且 ctx 会先匹配到一个固定的中文日期「2024年11月20」，导致按上下文取日期会全部取错。必须只从 <a> 文本内用 \\d{4}-\\d{2} 或 \\d{2}/\\s*\\d{4}-\\d{2} 精确抽取。详情页 /info/1053/{id}.htm。分页逆序：jwtz/13.htm…jwtz/1.htm，共 14 页。",
+      "sample_titles": [
+        "关于开展基层教学组织教学研讨活动的通知",
+        "关于开展第十七期“师学课堂”教学观摩活动的通知"
+      ],
+      "note": "stale + 解析陷阱最多的一页：日期抽取若用父节点上下文会系统性出错。信息价值低，建议只做兜底。"
+    },
+    {
+      "university": "河北大学",
+      "list_url": "https://jwc.hbu.edu.cn/index/jwkx.htm",
+      "channel_name": "教务快讯",
+      "encoding": "utf-8",
+      "verified": true,
+      "stale": false,
+      "parser_hint": "列表项为 <li>，每页 15 条；标题在 <a> 内，日期 YYYY-MM-DD 在同级节点。相对链接 ../info/1109/{id}.htm（栏目指纹 1109）。分页逆序：第2页=jwkx/34.htm、第3页=jwkx/33.htm…末页=jwkx/1.htm，共 35 页。",
+      "sample_titles": [
+        "我校3项教学案例入选2026年度河北省高校课程思政典型教学案例",
+        "我校承办第五届全国仪器类毕业设计大赛并荣获团体二等奖"
+      ],
+      "note": "是「快讯/新闻」而非通知，几乎没有报名类信息（都是事后报道）。只能用于发现获奖与赛事线索。"
+    },
+    {
+      "university": "成都信息工程大学",
+      "list_url": "https://jwc.cuit.edu.cn/cxcy/xkjs.htm",
+      "channel_name": "学科竞赛",
+      "encoding": "utf-8",
+      "verified": true,
+      "stale": false,
+      "parser_hint": "列表项为 <div>（非 li），15 条带日期；日期格式用斜杠 YYYY/MM/DD，正则需支持 / 分隔。 href 大量跨域到 www.cuit.edu.cn、glxysy.cuit.edu.cn 等子站，需容许跨域并标记。无分页控件（单页全量）。",
+      "sample_titles": [
+        "关于开展2025年（第九届）四川省大学生化学实验竞赛——成都信息工程大学校内选拔赛通知",
+        "2025年四川省大学生企业管理挑战赛企业管理决策赛道 校赛通知",
+        "2025“外研社•国才杯”“理解当代中国”全国大学生外语能力大赛英语组国际传播综合能力赛校内初赛报名通知"
+      ],
+      "note": "纯竞赛栏目、标题几乎全含「校内选拔赛/校赛通知」，对校内截止口径很有价值。更新到 2025-09。"
+    },
+    {
+      "university": "浙江师范大学",
+      "list_url": "https://jwc.zjnu.edu.cn/xkjs/list.htm",
+      "channel_name": "竞赛（A类）",
+      "encoding": "utf-8",
+      "verified": true,
+      "stale": true,
+      "parser_hint": "列表项为 <li>，每页 14 条；标题在 <a> 内，日期 YYYY-MM-DD 在同级节点。详情页 /{YYYY}/{MMDD}/c4304a{id}/page.htm（栏目指纹 c4304）。分页正向递增：尾页=/xkjs/list51.htm（共 51 页，历史很长）。",
+      "sample_titles": [
+        "关于公布参加第六届长三角师范生教学基本功大赛决赛选手名单的通…",
+        "竞赛通知：第十六届全国大学生数学竞赛浙江赛区通知"
+      ],
+      "note": "注意：该站首页 jwc.zjnu.edu.cn 的日期是 MM-DD 无年份且为新闻流；本 URL 才是「A类竞赛」真栏目。stale，最新 2024-10-30。"
+    },
+    {
+      "university": "中国科学技术大学",
+      "list_url": "https://www.teach.ustc.edu.cn/category/notice",
+      "channel_name": "通知新闻",
+      "encoding": "utf-8",
+      "verified": true,
+      "stale": false,
+      "parser_hint": "WordPress 风格站点：列表项为 <li>，16 条带日期；标题在 <a> 内，日期 YYYY-MM-DD 在同级节点。详情页 /notice/notice-info/{id}.html 或 /notice/notice-teaching/{id}.html（两类要都收）。分页是干净的正向路径：/category/notice/page/2 … /page/107，直接拼数字即可，共 107 页。",
+      "sample_titles": [
+        "关于“本科科研实践平台”名称·图标·形象征集活动入围作品线上投票的通知",
+        "关于2027届本科毕业生电子图像采集的通知"
+      ],
+      "note": "全清单里唯一 WordPress 式分页（/page/N），最容易实现翻页。综合通知，竞赛需过滤。"
+    },
+    {
+      "university": "清华大学",
+      "list_url": "https://jw.tsinghua.edu.cn/",
+      "channel_name": "教务处",
+      "encoding": "utf-8",
+      "verified": false,
+      "stale": null,
+      "parser_hint": "不可用。GET 返回 200 但被 302 到 id.tsinghua.edu.cn 统一身份认证登录页（页面 title=「清华大学用户电子身份服务系统」），未认证抓不到任何通知列表。",
+      "sample_titles": [],
+      "note": "失败原因：需校内统一身份认证（SSO），匿名不可抓。清华教务通知走校内门户，放弃。"
+    },
+    {
+      "university": "浙江大学",
+      "list_url": "https://jwb.zju.edu.cn/",
+      "channel_name": "本科生院",
+      "encoding": "utf-8",
+      "verified": false,
+      "stale": null,
+      "parser_hint": "不可用。jwb.zju.edu.cn 返回 HTTP 404、body 长度 0。DNS 可解析但站点未在根路径提供页面。",
+      "sample_titles": [],
+      "note": "失败原因：404。浙大教务公开通知需另找域名（如 bksy.zju.edu.cn，实测该域名 DNS 无法解析）。"
+    },
+    {
+      "university": "北京航空航天大学",
+      "list_url": "https://jiaowu.buaa.edu.cn/tzgg.htm",
+      "channel_name": "通知公告",
+      "encoding": "utf-8",
+      "verified": false,
+      "stale": null,
+      "parser_hint": "不可用。该路径 HTTP 404。教务部首页 https://jiaowu.buaa.edu.cn/ 本身 200，但导航里没有「竞赛」栏目，通知藏在 /info/1016/ 这类详情路径下，未找到稳定列表入口。",
+      "sample_titles": [],
+      "note": "失败原因：猜的列表路径 404，且站内未发现竞赛列表栏目。首页可抓但那是新闻流。"
+    },
+    {
+      "university": "哈尔滨工业大学",
+      "list_url": "http://jwc.hit.edu.cn/",
+      "channel_name": "教务处首页",
+      "encoding": "utf-8",
+      "verified": false,
+      "stale": null,
+      "parser_hint": "不可用。返回 200 但 body 仅 2374 字节、title=「提示信息」，是 WAF/反爬拦截页（同样现象出现在 /tzgg.htm → tzgg.psp，2350 字节）。",
+      "sample_titles": [],
+      "note": "失败原因：反爬 WAF 拦截。不要反复重试同一站（skill 里也提醒过 412/403 要换校）。"
+    },
+    {
+      "university": "湖南大学",
+      "list_url": "https://jwc.hnu.edu.cn/list.jsp?urltype=tree.TreeTempUrl&wbtreeid=1256",
+      "channel_name": "所有通知",
+      "encoding": "utf-8",
+      "verified": true,
+      "stale": false,
+      "parser_hint": "★日期格式是全清单最坑的一页：不是 YYYY-MM-DD，而是 {DD}{YYYY-MM} 无分隔符拼接，例如「042026-11」= 11 月 4 日、「222026-10」= 10 月 22 日，必须用 (?<!\\d)(\\d{1,2})(20\\d{2})-(\\d{1,2})(?!\\d) 反解，任何常规日期正则会全部漏掉。列表项在 <li>，日期同时出现在 <a> 文本开头和同级节点。注意同站另一种渲染（wbtreeid=1020）却是日期拼在标题末尾的正常写法，两处不统一。详情页 /info/{col}/{id}.htm（col 122/1021/1022/1608 多变）。URL 必须带完整 query（urltype=tree.TreeTempUrl&wbtreeid=…），不能简化成路径。",
+      "sample_titles": [
+        "关于公布2026-2027-1学期期中考试周课程考试安排的通知",
+        "2026年“外研社·国才杯”“理解当代中国”全国大学生外语能力大赛英语组短视频…",
+        "关于公布第二十三届湖南大学力学竞赛…"
+      ],
+      "note": "本页是「所有通知」综合流（更新到 2026-11-04，竞赛通知混在其中，需关键词过滤）。另有更纯粹的竞赛栏目 /sj_list.jsp?…&wbtreeid=1608「赛事信息」，但实测停更在 2024-10，只作补充。该站头部/尾部各含一大段全站导航，解析时只取带日期的条目。"
+    },
+    {
+      "university": "吉林大学",
+      "list_url": "https://jwc.jlu.edu.cn/rcpy/sjjx.htm",
+      "channel_name": "实践教学",
+      "encoding": "utf-8",
+      "verified": false,
+      "stale": null,
+      "parser_hint": "不可用（作为列表页）。HTTP 200 但只有 1 个带日期的条目，页面是「导航聚合页」：一堆指向虚拟仿真平台、办事流程、各子栏目的 <a>，没有成型的通知流。",
+      "sample_titles": [
+        "国家级虚拟仿真实验教学一流课程名单"
+      ],
+      "note": "失败原因：是栏目导航页不是通知列表。需要先在其 nav 里找到真正的二级列表 URL。"
+    }
+  ],
+  "failed_probes": [
+    {
+      "university": "华中师范大学",
+      "url": "https://jwc.ccnu.edu.cn/sjjx/kyjs.htm",
+      "reason": "HTTP 200 但 0 个带日期列表项；/sjjx/ 下各子栏目（kyjs、dxscxcy、hbssfsjxjnjs）body 内容互相重复，实为同一 JS 模板，列表为空。"
+    },
+    {
+      "university": "大连理工大学",
+      "url": "https://teach.dlut.edu.cn/sjjx/sjjx.htm",
+      "reason": "HTTP 200 但仅 1 条带日期，是导航聚合页（实验教学中心一览表 + 大创计划入口），无通知流。"
+    },
+    {
+      "university": "中国海洋大学",
+      "url": "https://jwc.ouc.edu.cn/",
+      "reason": "首页 200 但聚合的全是「教务处常用电话」「作息时间表」等常驻条目（日期还是 2019/2022），不是通知列表；/sjjxxg_6762/list.htm 是规章制度页。"
+    },
+    {
+      "university": "重庆大学",
+      "url": "https://jwc.cqu.edu.cn/",
+      "reason": "HTTP 412（反爬前置校验），无法取得正文。"
+    },
+    {
+      "university": "兰州大学",
+      "url": "https://jwc.lzu.edu.cn/",
+      "reason": "HTTP 412（反爬前置校验）。"
+    },
+    {
+      "university": "北京交通大学",
+      "url": "https://jwc.bjtu.edu.cn/",
+      "reason": "HTTP 503（服务不可用/限流）。"
+    },
+    {
+      "university": "中国地质大学(武汉)",
+      "url": "https://jwc.cug.edu.cn/",
+      "reason": "HTTP 403 Forbidden，body 仅 199 字节。"
+    },
+    {
+      "university": "南京理工大学",
+      "url": "https://jwc.njust.edu.cn/",
+      "reason": "HTTP 202 + 挑战页（JS cookie 校验），非真实内容。"
+    },
+    {
+      "university": "安徽大学",
+      "url": "https://jwc.ahu.edu.cn/",
+      "reason": "HTTP 412（反爬前置校验）。"
+    },
+    {
+      "university": "苏州大学",
+      "url": "https://jwc.suda.edu.cn/8651/list.htm",
+      "reason": "可访问但栏目停更于 2013-12，最新条目也要 13 年前，无情报价值（src 目录另有 /8614、/8675、/8676 三个竞赛相关栏目，同样停更）。"
+    }
+  ]
+}

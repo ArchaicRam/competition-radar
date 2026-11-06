@@ -79,7 +79,21 @@ def _request(
 
 
 def _maybe_gunzip(raw: bytes, headers: Dict[str, str]) -> bytes:
-    if headers.get("Content-Encoding", "").lower() == "gzip":
+    """按需解压 gzip 响应。
+
+    两个坑都踩过，必须同时防：
+      1. **响应头大小写不固定**。`dict(r.headers)` 保留服务端原始大小写，
+         DeepSeek 官方 API 发的是小写 `content-encoding: gzip`，
+         原来的 `headers.get("Content-Encoding")` 取不到 → 拿到一坨压缩字节 →
+         `json.loads` 报 "Expecting value: line 1 column 1 (char 0)"，极难定位。
+      2. **有的服务端不声明却压缩**，所以再用 gzip 魔数 1f 8b 兜一层底。
+    """
+    enc = ""
+    for k, v in (headers or {}).items():
+        if k.lower() == "content-encoding":
+            enc = str(v).lower()
+            break
+    if "gzip" in enc or raw[:2] == b"\x1f\x8b":
         try:
             return gzip.decompress(raw)
         except Exception:  # noqa: BLE001

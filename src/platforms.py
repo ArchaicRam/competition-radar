@@ -13,7 +13,9 @@ SOURCE_INFO: Dict[str, Tuple[str, str]] = {
     "xfyun": ("科大讯飞开发者大赛", "https://challenge.xfyun.cn/"),
     "kaggle": ("全球算法竞赛", "https://www.kaggle.com/competitions"),
     "ctftime": ("CTF赛事日历", "https://ctftime.org/events"),
-    "saikr": ("赛氪竞赛网（暂未接入）", "https://www.saikr.com/contests"),
+    "saikr": ("赛氪竞赛网", "https://www.saikr.com/contests"),
+    "ai_race": ("全国人工智能应用创新大赛", "https://www.ai-race.com.cn/"),
+    "jwc": ("高校教务处通知", "https://www.saikr.com/contests"),
 }
 
 PLATFORM_NAMES: Dict[str, str] = {k: v[0] for k, v in SOURCE_INFO.items()}

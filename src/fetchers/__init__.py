@@ -43,6 +43,11 @@ try:
 except ImportError:
     AiRaceFetcher = None  # type: ignore[assignment]
 
+try:
+    from .jwc import JwcFetcher
+except ImportError:
+    JwcFetcher = None  # type: ignore[assignment]
+
 _REGISTRY: Dict[str, type] = {
     "datafountain": DataFountainFetcher,
 }
@@ -54,6 +59,7 @@ for _name, _cls in [
     ("saikr", SaikrFetcher),
     ("ctftime", CtfTimeFetcher),
     ("ai_race", AiRaceFetcher),
+    ("jwc", JwcFetcher),
 ]:
     if _cls is not None:
         _REGISTRY[_name] = _cls

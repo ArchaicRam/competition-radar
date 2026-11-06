@@ -32,7 +32,7 @@ def digest(new_comps: List, cfg: Dict[str, Any]) -> str:
                 {"role": "user", "content": prompt},
             ],
             cfg,
-            max_tokens=300,
+            max_tokens=int(cfg.get("llm_max_tokens_digest", 1500)),
         )
     except Exception as e:  # noqa: BLE001
         log.warning("AI 日报解读失败: %s", e)

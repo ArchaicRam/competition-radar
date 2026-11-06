@@ -88,10 +88,18 @@ def _ms_to_dt(v) -> str:
 
 
 def _parse(s: str) -> datetime:
-    s = s.strip()
+    """解析成**带时区**的 datetime。
+
+    坑：`_now()` 返回 aware（带 tzinfo）的北京时间，`_parse()` 原来返回 naive，
+    两者相减/比较直接抛 "can't compare offset-naive and offset-aware datetimes"，
+    导致整个牛客源抓取失败（200 多个比赛全丢）。这里统一补上 tzinfo。
+    """
+    s = (s or "").strip()
     for fmt in ("%Y-%m-%d %H:%M", "%Y-%m-%d"):
         try:
-            return datetime.strptime(s, fmt)
+            dt = datetime.strptime(s, fmt)
+            return dt.replace(tzinfo=TZ_SH) if TZ_SH else dt
         except ValueError:
             continue
-    return datetime.min
+    floor = datetime.min
+    return floor.replace(tzinfo=TZ_SH) if TZ_SH else floor

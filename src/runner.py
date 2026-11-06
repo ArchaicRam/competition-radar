@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 """执行器：抓取 -> 校验 -> 排序 -> 增量对比 -> 推送日报 -> 落库 -> 导出台账。"""
 from __future__ import annotations
 
@@ -288,6 +288,9 @@ def _why_bad(c: Competition) -> Optional[str]:
     title = (c.title or "").strip()
     if not title:
         return "标题为空"
+    # 测评/认证/培训/夏令营不是竞赛，不该和赛事混排
+    if not official.is_competition(title):
+        return "非竞赛（测评/认证/培训）"
     # 外语/人文/文体类硬过滤：综合聚合站（赛氪等）和 LLM 提取都可能混入；
     # 技术平台（天池/讯飞等）不适用——它们的"翻译/词汇"多为 NLP 任务名
     if official.is_off_topic(title, platform=c.platform):
@@ -311,6 +314,12 @@ def _why_bad(c: Competition) -> Optional[str]:
         return f"已截止: {deadline}"
     if st and dl and st > dl:
         return f"开始晚于截止: {enabled} > {deadline}"
+    # 往届条目：标题里的年份全部早于今年、又没有截止日期 → 是往年通知，剔除。
+    # 例："2025年第十届'科云杯'全国大学生财会职业能力大赛"（教务处栏目的历史公告）。
+    # 注意要取 max：像"2025-2026赛季"这种跨年写法不能被误杀。
+    years = [int(y) for y in re.findall(r"(20\d{2})", title)]
+    if years and not dl and max(years) < datetime.now().year:
+        return f"往届条目（{max(years)}）"
     return None
 
 
@@ -352,19 +361,13 @@ def postprocess(
     for c, reason in dropped:
         log.warning("数据质量拦截: [%s] %s —— %s", c.platform, c.title, reason)
 
-    # 官方赛事报名时间兜底：有真实截止最好；否则按往届经验推断；
-    # 本届报名已过或推不出窗口 → 从表中移除（不出现"待核实"）
+    # 官方赛事不许用"往届月份"编日期。查不到就写"未公布"，再靠 jwc/官网源补真值。
+    # 原实现用 schedules.enrich_official 按月推算"预计X月启动报名"，会被下游渲染成
+    # "报名中"，等于把"还没开"说成"能报"（实测：蓝桥杯真实是 12-18，月份表只知道 10-3 月）。
     kept: List[Competition] = []
     for c in comps:
         if official.is_official(c.title, c.organizer) and not (c.deadline or "").strip():
-            from .schedules import enrich_official
-
-            note, keep = enrich_official(c.title, c.deadline, config)
-            if not keep:
-                log.warning("官方赛事无有效报名时间（本届已过或推不出窗口），移除: %s", c.title)
-                continue
-            if note:
-                c.status = note
+            c.deadline_kind = "未公布"
         kept.append(c)
 
     # 阶段补齐：只允许具体状态流出（用户硬性要求：绝不出现"待核实"）。
@@ -372,7 +375,164 @@ def postprocess(
     today = datetime.now().date()
     for c in kept:
         c.status = official.concrete_stage(c.status, c.deadline)
+
+    kept = _normalize_titles(kept)
+    kept = _fill_organizer_from_catalog(kept)
+    kept = _fill_deadline_kind(kept)
+    kept = _collapse_same_event(kept)
     return official.sort_competitions(kept), dropped
+
+
+def _normalize_titles(comps: List[Competition]) -> List[Competition]:
+    """把教务处来源的赛名再洗一遍（幂等）。
+
+    必要性：赛名是在抓取那一刻写进 state.json 的，之后改进标题清洗规则
+    并不会自动追溯历史条目。这里在出表前统一再过一遍，
+    保证"武汉大学关于组织参加2026年…"这类前缀不会被带进总览表。
+    """
+    try:
+        from .fetchers.jwc import _clean_title as jwc_clean
+    except Exception:  # noqa: BLE001
+        return comps
+    n = 0
+    for c in comps:
+        if (c.platform or "").startswith("jwc"):
+            new = jwc_clean(c.title)
+            if new and new != c.title:
+                c.title = new
+                n += 1
+    if n:
+        log.info("赛名清洗 %d 条", n)
+    return comps
+
+
+# 各平台的 deadline 语义（用于给"截止口径"列兜底）。
+# 平台自己的字段定义是确定的，不算"猜日期"——只是把已知语义写出来：
+#   天池/DataFountain/Kaggle/讯飞：deadline 是作品提交截止
+#   牛客/CTFtime：deadline 是比赛结束时间
+#   其余（赛氪 regist_end、AI发现、教务处）：报名截止
+_PLATFORM_DEADLINE_KIND = {
+    "nowcoder": "比赛结束",
+    "ctftime": "比赛结束",
+    "tianchi": "作品提交截止",
+    "datafountain": "作品提交截止",
+    "kaggle": "作品提交截止",
+    "xfyun": "作品提交截止",
+}
+
+
+def _fill_deadline_kind(comps: List[Competition]) -> List[Competition]:
+    """给"截止口径"列兜底：有截止日期的按平台语义标注，没有的写"未公布"。
+
+    没有这一列时，用户看到"截止 2026-11-15"根本分不清是报名关门、
+    校内选拔关门、还是比赛结束——尤其美赛这类"官网 1 月、校内 11 月"的。
+    """
+    for c in comps:
+        if (c.deadline_kind or "").strip():
+            continue
+        if (c.deadline or "").strip():
+            c.deadline_kind = _PLATFORM_DEADLINE_KIND.get(c.platform or "", "报名截止")
+        else:
+            c.deadline_kind = "未公布"
+    return comps
+
+
+# --------------------------------------------------------------------------
+# 同一赛事跨来源折叠
+# --------------------------------------------------------------------------
+
+def _norm_title(t: str) -> str:
+    return re.sub(r"[\s“”\"'《》【】「」（）()·．.,，、:：!！?？/\\|_—\-]+", "", t or "").lower()
+
+
+def _richness(c: Competition) -> int:
+    """一行数据的"信息量"打分，折叠同赛事时保留信息量最高的那条。"""
+    s = 0
+    if (c.deadline or "").strip():
+        s += 4
+    if (c.evidence_url or "").strip():
+        s += 3
+    if (c.platform or "").startswith("jwc"):
+        s += 2
+    if (c.organizer or "").strip():
+        s += 1
+    return s
+
+
+def _fill_organizer_from_catalog(comps: List[Competition]) -> List[Competition]:
+    """主办方为空的（典型：教务处通知解析不出来）用权威目录补上。"""
+    from . import official_registry as reg
+
+    filled = 0
+    for c in comps:
+        if not (c.organizer or "").strip():
+            ev = reg.lookup(c.title)
+            if ev:
+                c.organizer = ev.get("organizer") or ""
+                c.catalog_id = ev.get("id") or ""
+                filled += 1
+        elif not (c.catalog_id or "").strip():
+            c.catalog_id = reg.catalog_id(c.title, c.organizer)
+    if filled:
+        log.info("主办方由目录补齐 %d 条", filled)
+    return comps
+
+
+def _collapse_same_event(comps: List[Competition]) -> List[Competition]:
+    """同一赛事被多所学校 / 多个来源抓到 → 折叠成一行。
+
+    实例：'第十七届全国大学生市场调查与分析大赛报名'（东华大学）、
+          '“正大杯”第十七届全国大学生市场调查与分析大赛校内选拔赛'（西工大）、
+          '云南省第六届…暨第十七届全国…'（云南大学）
+    是同一场比赛在 3 所学校的通知。原样入表会让总览里同一赛事占 3 行。
+
+    规则：
+      · 按 catalog_id 分桶；**目录里的"系列赛"条目不折叠**
+        （如"中国研究生创新实践系列大赛"下面是研电赛/研数模/研机器人等
+          各自独立的赛事，折叠会把 10 个赛事压成 1 行）
+      · 其余同一 catalog_id 的折叠成一行，保留信息量最高的一条
+        （有截止 > 有依据URL > 教务处源 > 有主办方），
+        并在 deadline_alt 里记"同赛事另有N处来源：xxx / yyy"，信息不丢
+      · 目录外赛事（无 catalog_id）各校标题差异大，不折叠
+    """
+    from . import official_registry as reg
+
+    try:
+        by_id = (reg.load_catalog() or {}).get("by_id") or {}
+    except Exception:  # noqa: BLE001
+        by_id = {}
+
+    buckets: Dict[str, List[Competition]] = {}
+    order: List[str] = []
+    for c in comps:
+        if not (c.catalog_id or "").strip():
+            c.catalog_id = reg.catalog_id(c.title, c.organizer)
+        key = c.catalog_id or f"__{c.key}"
+        if key not in buckets:
+            buckets[key] = []
+            order.append(key)
+        buckets[key].append(c)
+
+    out: List[Competition] = []
+    folded = 0
+    for key in order:
+        items = buckets[key]
+        is_series = bool((by_id.get(key) or {}).get("series"))
+        if len(items) == 1 or is_series:
+            out.extend(items)
+            continue
+        best = max(items, key=_richness)
+        others = [c.title for c in items if c is not best]
+        note = "同赛事另有%d处来源：%s" % (len(others), " / ".join(t[:22] for t in others[:3]))
+        if len(others) > 3:
+            note += " 等"
+        best.deadline_alt = (best.deadline_alt + ";" if best.deadline_alt else "") + note
+        folded += len(items) - 1
+        log.info("同赛事折叠: %s（%d 处来源）", best.title[:44], len(items))
+        out.append(best)
+    if folded:
+        log.info("跨来源折叠共减少 %d 行", folded)
+    return out
 
 
 def _dry_run_text(new, updated, all_comps) -> str:

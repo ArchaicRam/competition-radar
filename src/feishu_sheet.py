@@ -25,10 +25,12 @@ from .platforms import PLATFORM_NAMES
 log = logging.getLogger("feishu_sheet")
 
 
-_HEADERS = ["类别", "含金量", "赛名", "主办方", "类型", "开始日期", "截止日期", "阶段", "奖金", "来源", "链接"]
-_COL_WIDTHS = {"A": 90, "B": 80, "C": 260, "D": 180, "E": 90, "F": 130, "G": 130, "H": 80, "I": 110, "J": 90, "K": 320}
+_HEADERS = ["类别", "含金量", "赛名", "主办方", "类型", "开始日期", "截止日期",
+            "截止口径", "阶段", "奖金", "来源", "链接", "依据"]
+_COL_WIDTHS = {"A": 90, "B": 80, "C": 260, "D": 180, "E": 90, "F": 130, "G": 130,
+               "H": 110, "I": 80, "J": 110, "K": 90, "L": 320, "M": 320}
 _MAX_ROWS = 1000
-_LAST_COL = "K"
+_LAST_COL = "M"
 
 # 含金量条件格式：高=红、中=橙、低=绿（整列一条规则，无需逐行样式）
 _RATING_RULES = [
@@ -131,9 +133,11 @@ def _build_csv(comps: List[Competition]) -> str:
             normalize_comp_type(c.comp_type),
             c.enabled_date,
             c.deadline,
+            c.deadline_kind,
             c.status,
             c.reward,
             PLATFORM_NAMES.get(c.platform, c.platform),
             c.url,
+            c.evidence_url,
         ])
     return buf.getvalue()

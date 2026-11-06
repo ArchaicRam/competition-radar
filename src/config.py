@@ -22,8 +22,8 @@ DEFAULT_CONFIG: Dict[str, Any] = {
     "lark_profile": "jingsai",
     "official_keywords": [],
     "llm_api_key": "",
-    "llm_base_url": "https://open.bigmodel.cn/api/coding/paas/v4",
-    "llm_model": "glm-5.3-flash",
+    "llm_base_url": "https://api.deepseek.com",
+    "llm_model": "deepseek-flash",
     "llm_max_tokens": 1200,
     "ai_discover": True,
     "ai_digest": True,
@@ -109,10 +109,25 @@ def load_config(path: str = "config.json") -> Dict[str, Any]:
 
 
 def normalize_sources(sources: List[str]) -> List[str]:
-    known = {"tianchi", "datafountain", "nowcoder", "xfyun", "kaggle", "saikr", "ctftime", "ai_race"}
+    """过滤未知数据源。
+
+    白名单**直接从抓取器注册表取**，不再手抄一份——原来这里是硬编码集合，
+    新加的抓取器（如 jwc）即使已在 fetchers/__init__.py 注册、config.json 也写了，
+    仍会被这里静默丢掉，表现为"跑了但 0 条"，极难排查（本次实测踩到）。
+    """
+    try:
+        from . import fetchers as _fetchers        # 延迟导入，避免循环依赖
+
+        known = set(_fetchers._REGISTRY)
+    except Exception:                              # noqa: BLE001  注册表不可用时退回宽松
+        known = set()
     out = []
     for s in sources:
         s = (s or "").strip().lower()
-        if s in known:
+        if not known or s in known:
             out.append(s)
+        else:
+            import logging
+
+            logging.getLogger("config").warning("未知数据源 %r（已忽略），可用: %s", s, sorted(known))
     return out
