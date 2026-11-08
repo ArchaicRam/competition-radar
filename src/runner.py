@@ -34,8 +34,7 @@ def run(
     """执行一次完整扫描。
 
     dry_run=True 时不推送、不改状态。
-    notify=False 时照常抓取/入库/导表，只是不发飞书消息
-    （用于"每天扫描保新鲜度、只在周一推送"的节奏）。
+    notify=False 时照常抓取/入库/导表，只是不发飞书消息（手动补数据/调试用）。
     """
     if log_to_console and not log.handlers:
         h = logging.StreamHandler()

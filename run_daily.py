@@ -31,7 +31,7 @@ def main():
     ap.add_argument("--config", default="config.json", help="配置文件路径（默认 config.json）")
     ap.add_argument("--export-csv", action="store_true", help="同时导出 CSV 台账 data/competitions.csv")
     ap.add_argument("--no-notify", action="store_true",
-                    help="照常抓取入库导表，但不发飞书消息（用于「每天扫描、只在周一推送」）")
+                    help="照常抓取入库导表，但不发飞书消息（手动补数据/调试用）")
     args = ap.parse_args()
 
     config = load_config(args.config)
