@@ -2,8 +2,14 @@ name: daily-competition-scan
 
 on:
   schedule:
-    - cron: "23 4 * * *" # UTC 04:23 = 北京时间 12:23，错开整点调度高峰
+    # 04:23 UTC = 北京时间 12:23，错开整点调度高峰。每天跑，保持数据与网页版新鲜。
+    # 飞书推送的节奏由下面的 PUSH_WEEKDAY 控制，不由 cron 控制。
+    - cron: "23 4 * * *"
   workflow_dispatch: {}
+
+env:
+  # 飞书推送日：1=周一 … 7=周日。只在周一推送到飞书；其余日子只扫描不推送。
+  PUSH_WEEKDAY: "1"
 
 # 同一时刻只允许一次扫描，避免并发运行互相覆盖 data/ 状态
 concurrency:
@@ -56,7 +62,17 @@ jobs:
           LARK_APP_SECRET: ${{ secrets.LARK_APP_SECRET }}
 
       - name: Run daily scan
-        run: python run_daily.py --export-csv
+        run: |
+          ARGS="--export-csv"
+          # 推送节奏：只在 PUSH_WEEKDAY（默认周一）推送；手动触发一律推送，方便测试。
+          DOW=$(date -u +%u)          # 1=周一 … 7=周日（UTC，与北京时间同一天）
+          if [ "$DOW" != "$PUSH_WEEKDAY" ] && [ "${{ github.event_name }}" != "workflow_dispatch" ]; then
+            echo "周${DOW} 不是推送日（推送日=周${PUSH_WEEKDAY}）：本次只扫描入库，不发飞书"
+            ARGS="$ARGS --no-notify"
+          else
+            echo "今天是推送日，扫描完成后会推送到飞书"
+          fi
+          python run_daily.py $ARGS
         env:
           # Webhook 从仓库 Secrets 读取（Settings -> Secrets and variables -> Actions）
           FEISHU_WEBHOOK: ${{ secrets.FEISHU_WEBHOOK }}

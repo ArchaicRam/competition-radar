@@ -30,6 +30,8 @@ def main():
     ap.add_argument("--sources", default="", help="本次只抓指定平台，逗号分隔，如 tianchi,datafountain")
     ap.add_argument("--config", default="config.json", help="配置文件路径（默认 config.json）")
     ap.add_argument("--export-csv", action="store_true", help="同时导出 CSV 台账 data/competitions.csv")
+    ap.add_argument("--no-notify", action="store_true",
+                    help="照常抓取入库导表，但不发飞书消息（用于「每天扫描、只在周一推送」）")
     args = ap.parse_args()
 
     config = load_config(args.config)
@@ -116,6 +118,7 @@ def main():
         sources=sources,
         dry_run=args.dry_run,
         export_csv_path="data/competitions.csv" if args.export_csv else None,
+        notify=not args.no_notify,
     )
     print(f"\n完成：共 {result['total']} 场，新 {result['new']} 场，更新 {result['updated']} 场")
     if result.get("excel"):

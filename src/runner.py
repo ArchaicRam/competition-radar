@@ -29,8 +29,14 @@ def run(
     dry_run: bool = False,
     export_csv_path: Optional[str] = None,
     log_to_console: bool = True,
+    notify: bool = True,
 ) -> Dict[str, Any]:
-    """执行一次完整扫描。dry_run=True 时不推送、不改状态。"""
+    """执行一次完整扫描。
+
+    dry_run=True 时不推送、不改状态。
+    notify=False 时照常抓取/入库/导表，只是不发飞书消息
+    （用于"每天扫描保新鲜度、只在周一推送"的节奏）。
+    """
     if log_to_console and not log.handlers:
         h = logging.StreamHandler()
         h.setFormatter(logging.Formatter("%(asctime)s %(levelname)s %(message)s"))
@@ -40,6 +46,14 @@ def run(
     _apply_official_keywords(config)
 
     store = Store(config["data_file"])
+    # 推送有两条通道：应用机器人（feishu_chat_id）和 webhook（feishu_webhook/secret）。
+    # notify=False 时把三条配置全部置空，_push_card/_push_text/_alert_anomaly 会自然短路，
+    # 抓取、入库、导表、写站点都不受影响。
+    if not notify:
+        config = dict(config)
+        config["feishu_webhook"] = ""
+        config["feishu_secret"] = ""
+        config["feishu_chat_id"] = ""
     notifier = FeishuNotifier(
         config.get("feishu_webhook", ""),
         config.get("feishu_secret", ""),
