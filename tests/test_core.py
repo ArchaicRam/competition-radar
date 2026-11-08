@@ -407,8 +407,11 @@ def test_sanitize():
     by_key = {c.key: c for c in kept}
     # 阶段硬性要求：绝不出现"待核实"/空值
     assert by_key["x:1"].status == "报名中"   # 有有效截止
-    assert by_key["x:4"].status == "进行中"   # 无截止
-    assert by_key["x:5"].status == "进行中"   # 待核实 + 无截止 → 具体化
+    # 无截止日期 → "未公布"，不再硬猜"进行中"。
+    # 理由：截止未知 ≠ 已在运行，硬猜会让看板上堆满假的"进行中"；
+    # 真实的截止口径由 deadline_kind 单独承载，阶段列不再重复撒谎。
+    assert by_key["x:4"].status == "未公布"
+    assert by_key["x:5"].status == "未公布"   # 待核实 + 无截止 → 仍未知
     reasons = {c.key: r for c, r in dropped}
     assert "与计算机主题无关" in reasons["x:2"]
     assert "与计算机主题无关" in reasons["x:6"]  # 招募公告不是比赛
@@ -418,8 +421,9 @@ def test_sanitize():
     # concrete_stage 各分支
     assert concrete_stage("进行中", "") == "进行中"          # 具体状态原样保留
     assert concrete_stage("待核实", "2099-01-01") == "报名中"  # 待核实 + 未来截止
-    assert concrete_stage("待核实", "以官网通知为准") == "进行中"  # 截止不可解析
-    assert concrete_stage("", "") == "进行中"
+    # 截止日期不可解析 / 没有截止 → 一律"未公布"（不硬猜"进行中"，见 test_sanitize 注释）
+    assert concrete_stage("待核实", "以官网通知为准") == "未公布"
+    assert concrete_stage("", "") == "未公布"
 
 
 def test_ai_stage_filter():

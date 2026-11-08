@@ -60,10 +60,12 @@ _NATIONAL_AUTHORITY = (
 # 省级：中
 _PROVINCIAL = ("省教育厅", "省教委", "团省委", "省科协", "市教育局", "省工业和信息化厅")
 
-# 反面：常见"市场化赛事"主办方特征。命中即不算官方（除非目录明确收录）
+# 反面：常见"市场化赛事"主办方特征。命中即不算官方（除非目录明确收录）。
+# 注意这里**不放 "某某"**：它只是测试/占位用的假名，不是真实世界的野鸡信号；
+# 放进去会让"未知主办方"从默认「中」被压成「低」，误伤 legit 的企业命题赛。
 _NEGATIVE_ORGANIZER = (
     "促进会", "文化传播", "文化发展", "传媒有限公司", "教育科技有限公司",
-    "咨询有限公司", "某某", "报社", "杂志社", "出版社", "广告",
+    "咨询有限公司", "报社", "杂志社", "出版社", "广告",
     "人才交流中心", "培训中心", "人才服务中心",
 )
 
@@ -337,6 +339,8 @@ def is_official(title: str, organizer: str = "") -> bool:
     """是否"官方赛事"（= 在高教学会竞赛目录内，或部委/中央群团主办）。"""
     if not is_competition(title):
         return False
+    if _is_security_brand(title):
+        return True
     auth = effective_authority(title, organizer)
     ev = lookup(title, organizer)
     if ev is not None:
@@ -372,6 +376,9 @@ def categorize(title: str, organizer: str = "", platform: str = "") -> str:
     if not is_competition(title):
         return "非竞赛"          # 测评/考试/认证/培训：不是赛事，不该混进表里
     auth = effective_authority(title, organizer)
+    # 国内权威安全赛（品牌词）：与 is_official 保持一致
+    if _is_security_brand(title):
+        return "官方赛事"
     # 校赛/校内选拔：即使能命中目录别名，你能报的也只是学校那一级，
     # 标「官方赛事」会给出错误信号（"这条是国赛"）。
     if _looks_like_school_event(title):
@@ -402,9 +409,34 @@ _INDUSTRY_KEYS = (
     "阿里巴巴", "阿里云", "腾讯", "华为", "百度", "科大讯飞", "字节", "美团", "京东",
     "蚂蚁", "微软", "Google", "Kaggle", "大疆", "网易", "小米",
     "ACM", "ICPC", "CCPC", "CCF", "IEEE", "中国计算机学会", "中国人工智能学会", "中国电子学会",
+    "创客中国",
 )
 
+# 部委/中央群团：只代表"官方认可"，权重低于业界认可（用户规则：业界 > 部委 > 名声）
+_GOV_KEYS = ("工信部", "工业和信息化部", "教育部", "科技部", "共青团",
+             "中央网信办", "国务院", "中央")
+
+# 名声大但未必业界认可（权重 1）
+_FAME_KEYS = ("全国高校计算机能力", "大学生职业发展", "全国大学生科技", "大学生创新创业")
+
 _LOW_VALUE_PATTERNS = ("知识竞赛", "答题", "问答", "闯关", "知识科普")
+
+# 国内权威网络安全竞赛的品牌词。
+# 为什么要单独列一份：旧实现把它们混在 _INDUSTRY_KEYS 里，但那张表同时含
+# "数学建模""挑战杯"这类泛词 —— 泛词正是「XX杯数学建模大赛」被野鸡赛蹭进
+# 官方赛的原因，所以泛词不能恢复。这里只保留**具体赛事品牌**，无泛化风险。
+# 由 tests/test_core.py（强网杯 → 高、网鼎杯/长城杯/天网杯 → 官方）钉住。
+_SECURITY_BRAND_KEYS = (
+    "强网杯", "网鼎杯", "长城杯", "天网杯", "工业信息安全技能大赛",
+)
+
+
+def _is_security_brand(title: str) -> bool:
+    t = title or ""
+    if any(k in t for k in _SECURITY_BRAND_KEYS):
+        return True
+    # 「信息安全铁人三项赛」：单看"铁人三项"会和体育赛事撞，必须带安全字样
+    return "铁人三项" in t and ("信息安全" in t or "网络安全" in t)
 
 
 def prestige(title: str = "", organizer: str = "", platform: str = "", rating: str = "") -> str:
@@ -431,9 +463,12 @@ def prestige(title: str = "", organizer: str = "", platform: str = "", rating: s
     if any(k in t for k in ("练手", "练习赛", "周赛", "月赛", "入门", "新手", "热身")):
         return "低"
 
+    # —— 国内权威安全赛品牌：高（ctftime 平台默认只有"中"，
+    #    强网杯这类必须靠品牌词抬上来，否则会被平台默认压成中）——
+    if _is_security_brand(t):
+        return "高"
+
     auth = effective_authority(t, o)
-    if auth == "national":
-        return "高"                                  # 部委主办即高（旧逻辑这里只给"中"，是倒挂主因）
     if auth == "negative":
         # 主办方是促进会/报社/公司：除非目录明确收录且名称对得上，一律低
         ev = lookup(t, o)
@@ -450,10 +485,20 @@ def prestige(title: str = "", organizer: str = "", platform: str = "", rating: s
         if grade == "B" or list_type == "observe":
             return "中"
 
-    if auth == "provincial":
-        return "中"
+    # 非目录赛事：沿用评分模型（业界 +3 / 部委 +2 / 名声 +1）。
+    # 不能简单写"部委主办即高"——只靠部委认可而业界无感的赛事只应给中，
+    # 否则"某中心挂名 + 部委字样"就会被抬成高（tests/test_core.py 钉住了这条）。
+    score = 0
     if any(k in o or k in t for k in _INDUSTRY_KEYS):
+        score += 3
+    if any(k in o for k in _GOV_KEYS):
+        score += 2
+    if any(k in t for k in _FAME_KEYS):
+        score += 1
+    if score >= 3:
         return "高"
+    if score >= 1:
+        return "中"
 
     # —— 平台默认（保留原实现的合理部分）——
     # 这几家是"平台自办/自审"的赛事，平台即背书；与赛氪那种"聚合站转载"不同。
