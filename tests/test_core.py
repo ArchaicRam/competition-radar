@@ -34,7 +34,12 @@ def _tmpdir(name: str) -> str:
 def _sample_new() -> list:
     # 截止日期用相对"今天"的未来时间，避免测试随日期漂移失败
     soon = (date.today() + timedelta(days=5)).isoformat()
-    return [
+    # 第二条也必须给"未来"的截止日期。以前这里写死 "2026-08-10"，
+    # 而 Store 会清理"截止超过 90 天"的条目：2026-11-08 时 cutoff 恰好是
+    # 2026-08-10（不满足 <，留着），到 11-09 cutoff 变成 08-11 就被清理，
+    # 于是 store.diff 第二天又把它当成"新比赛"，断言在某个具体日期突然炸掉。
+    later = (date.today() + timedelta(days=30)).isoformat()
+    items = [
         Competition(
             key="tianchi:1", title="AI+跨境黑客松巅峰赛", platform="tianchi",
             organizer="阿里云", url="https://tianchi.aliyun.com/competition/entrance/1",
@@ -44,7 +49,7 @@ def _sample_new() -> list:
         Competition(
             key="kaggle:test", title="Kaggle Titanic", platform="kaggle",
             organizer="Kaggle", url="https://www.kaggle.com/c/titanic",
-            deadline="2026-08-10", reward="$10,000", comp_type="数据",
+            deadline=later, reward="$10,000", comp_type="数据",
             status="报名中",
         ),
         Competition(
@@ -53,6 +58,12 @@ def _sample_new() -> list:
             deadline="2099-01-01", comp_type="算法竞赛", status="未开始",
         ),
     ]
+    # 守卫：样例数据的截止日期必须是"未来或远期"，否则会被 Store 的
+    # PRUNE_AFTER_DAYS 清理，让测试在某个具体日期开始无故失败。
+    today = date.today().isoformat()
+    for c in items:
+        assert c.deadline >= today, f"fixture 用了过期日期，会被 prune 掉: {c.key}={c.deadline}"
+    return items
 
 
 def test_message():
