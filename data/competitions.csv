@@ -1,6 +1,4 @@
 ﻿平台,比赛名称,主办方,类型,含金量,报名截止,开始日期,奖金,状态,链接,首次发现时间
-nowcoder,牛客周赛 Round 157,NowCoder,算法竞赛,低,2026-08-16 21:00,2026-08-16 19:00,,进行中,https://ac.nowcoder.com/acm/contest/139206?from=acm_calendar,2026-08-16T19:51:01
-nowcoder,河南萌新联赛2026第（五）场：信息工程大学,NowCoder,算法竞赛,低,2026-08-17 09:00,2026-08-17 05:00,,进行中,https://ac.nowcoder.com/acm/contest/139416?from=acm_calendar,2026-08-17T15:05:26
 xfyun,跨设备感知与协同执行,苏州穿山甲机器人股份有限公司,应用,中,2026-08-18,2026-06-26,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=XD-Perception,2026-08-17T15:05:28
 xfyun,人才培养与求职就业智能化,科大讯飞股份有限公司,应用,高,2026-08-18,2026-06-26,¥1万,报名中,https://challenge.xfyun.cn/topic/info?type=Talent-AI,2026-08-17T15:05:28
 nowcoder,2026牛客暑期多校训练营10,NowCoder,算法竞赛,中,2026-08-19 17:00,2026-08-19 12:00,,未开始,https://ac.nowcoder.com/acm/contest/133885?from=acm_calendar,2026-08-17T15:05:26
@@ -197,7 +195,6 @@ ctftime,Russian CTF Cup X Qualifier,ctfcup,网络安全,中,2026-11-01,2026-10-3
 ctftime,Africa battleCTF 2026 Qualifier,BUG PWN,网络安全,中,2026-11-04,2026-10-04,,进行中,https://ctf.bugpwn.com/,2026-10-04T10:36:51
 AI发现·我爱竞赛网,2026年第八届全国高校计算机能力挑战赛大数据挑战赛,全国高等学校计算机教育研究会,挑战赛,中,2026-11-06,,,报名中,https://www.52jingsai.com/,2026-09-13T15:06:04
 ctftime,BlackAlps CTF 2026,BlackAlps,网络安全,中,2026-11-06,2026-11-06,We observe that the arrival of artificial intelligence (AI) ,未开始,https://blackalps.ch/ba-26/contest,2026-09-20T09:18:56
-saikr,办公技能竞答赛道,中国电子企业协会标准与技术成果转化工作委员会,开发,中,2026-11-06,2026-09-07,,报名中,https://www.saikr.com/vse/OS2026ZNCX,2026-11-05T12:22:08
 nowcoder,牛客练习赛159,NowCoder,算法竞赛,低,2026-11-06 21:30,2026-11-06 19:00,,未开始,https://ac.nowcoder.com/acm/contest/142560?from=acm_calendar,2026-11-05T12:33:21
 AI发现·研究生创新实践系列大赛,中国研究生创“芯”大赛-EDA精英挑战赛,中国学位与研究生教育学会（教育部学位管理与研究生教育司指导）,挑战赛,高,2026-11-07,,,进行中,https://cpipc.acge.org.cn/cw/hp/2c9080158ee9c272018f229208b610a6,2026-09-13T09:37:16
 ctftime,HKCERT CTF 2026 (Qualifying Round),"Black Bauhinia, HKCERT",网络安全,中,2026-11-07,2026-11-06,There are 2 rounds of the competition -> qualifying round an,未开始,https://ctf.hkcert.org/,2026-09-17T09:28:52
@@ -222,24 +219,19 @@ ctftime,CSAW CTF Final Round 2026,NYUSEC,网络安全,中,2026-11-14,2026-11-12,
 ctftime,Platypwn 2026,Platypwnies,网络安全,中,2026-11-14,2026-11-13,See https://platypwnies.de/events/platypwn,未开始,https://platypwnies.de/events/platypwn/,2026-09-26T09:22:58
 ctftime,International Battle of Hackers 2026,FSEC-SS,网络安全,中,2026-11-14,2026-11-14,"Prize pool of Rm 22,000 for both Local & International categ",未开始,https://battleofhackers.com/,2026-09-27T10:02:22
 ctftime,InIt CTF,Hackers_In_India,网络安全,中,2026-11-14,2026-11-14,Finalized with sponsors — includes .xyz domain codes and vou,未开始,https://hackersinindia.com/init-ctf,2026-10-10T10:38:51
-saikr,2026华智·高校大学生数据分析大赛,中国国土经济学会产业创新专业委员会 等,数据,中,2026-11-14,2026-09-16,,报名中,https://www.saikr.com/vse/HZSJ,2026-11-05T12:22:08
-saikr,2026全国大学生机器人与算法大赛-知识竞答赛道,中国机电一体化技术应用协会,人工智能,中,2026-11-14,2026-09-20,,报名中,https://www.saikr.com/vse/59954,2026-11-05T12:22:08
-saikr,2026全国大学生机器人与算法大赛-模拟仿真赛道,中国机电一体化技术应用协会,人工智能,中,2026-11-14,2026-04-19,,报名中,https://www.saikr.com/vse/Robot/arborseek/26,2026-11-05T12:22:08
 jwc·西北工业大学,西北工业大学第四届大学生工程实践与创新能力大赛,,综合,中,2026-11-14,,,报名中,https://jiaowu.nwpu.edu.cn/info/1160/30678.htm,2026-11-05T12:22:11
 tianchi,2026-具身仿真合成挑战赛,,,高,2026-11-15,,"¥100,000",进行中,https://tianchi.aliyun.com/competition/entrance/532506,2026-08-17T15:05:25
 tianchi,2026-具身安全应用挑战赛,,,高,2026-11-15,,"¥100,000",进行中,https://tianchi.aliyun.com/competition/entrance/532507,2026-08-17T15:05:25
-ctftime,WolvCTF 2026,w01verines,网络安全,中,2026-11-15,2026-11-13,To be announced!,未开始,https://wolvctf.io/,2026-09-26T09:22:58
 ctftime,h4ckc0n 2026,d4rkc0de,网络安全,中,2026-11-15,2026-11-14,"The total prize pool for h4ckc0n is ₹10,000 INR, distributed",未开始,https://h4ckc0n.ctfd.io/,2026-10-03T09:53:49
 jwc·西北工业大学,“正大杯”第十七届全国大学生市场调查与分析大赛校内选拔赛,中国商业统计学会,综合,高,2026-11-15,,,报名中,https://jiaowu.nwpu.edu.cn/info/1160/30428.htm,2026-11-05T12:22:11
 jwc·东华大学,第十七届全国大学生市场调查与分析大赛报名,,综合,高,2026-11-15,,,报名中,https://jw.dhu.edu.cn/2026/0923/c22080a381001/page.htm,2026-11-05T12:24:26
 jwc·云南大学,云南省第六届市场调查与分析大赛暨第十七届全国...,,综合,高,2026-11-15,,,报名中,https://jwc.ynu.edu.cn/info/1009/4391.htm,2026-11-05T12:24:33
 AI发现·我爱竞赛网,第十五届中国创新创业大赛人工智能创新应用专业赛,工业和信息化部火炬高技术产业开发中心、安徽省科学技术厅,比赛,中,2026-11-15,,,报名中,http://www.cxcyds.com,2026-11-05T12:29:43
-saikr,2026年高校大学生“工创杯”人工智能知识大赛,中国商业技师协会,人工智能,中,2026-11-15,2026-08-09,,报名中,https://www.saikr.com/vse/2026RGZN,2026-11-05T12:22:08
 saikr,2026华智·高校大学生人工智能大赛,中国国土经济学会产业创新专业委员会 等,人工智能,中,2026-11-15,2026-07-01,,报名中,https://www.saikr.com/vse/HZRGZN,2026-11-05T12:22:08
 saikr,高校大学生智能创新与计算机技能应用挑战赛——新媒体技能赛道,中国电子企业协会标准与技术成果转化工作委员会,综合,中,2026-11-15,2026-09-08,,进行中,https://www.saikr.com/vse/NOM2026ZNCX,2026-11-05T12:22:08
-saikr,麟创杯人工智能知识竞赛（秋季赛）,中国技术市场协会数智技术专业委员会 等,人工智能,低,2026-11-15,2026-07-12,,报名中,https://www.saikr.com/vse/LCBRGZN02,2026-11-05T12:22:08
 nowcoder,牛客周赛 Round 170,NowCoder,算法竞赛,低,2026-11-15 21:00,2026-11-15 19:00,,未开始,https://ac.nowcoder.com/acm/contest/143406?from=acm_calendar,2026-11-05T12:33:21
 tianchi,蚂蚁灵波具身大模型挑战赛,,机器人、计算机视觉,高,2026-11-16,,"¥280,000",进行中,https://tianchi.aliyun.com/competition/entrance/532514,2026-09-15T09:27:55
+tianchi,2026-跨本体具身认知极限联合挑战赛,,机器人,高,2026-11-18,2026-11-02,"¥100,000",报名中,https://tianchi.aliyun.com/competition/entrance/532508,2026-08-17T15:05:25
 saikr,2026第九届传智杯全国大学生数智创新与AI应用大赛——程序设计挑战赛,全国高等院校计算机基础教育研究会,开发,中,2026-11-18,2026-10-18,,报名中,https://www.saikr.com/vse/2026CXSJTZS,2026-11-05T12:22:08
 saikr,2026第九届传智杯全国大学生数智创新与AI应用大赛—AIoT嵌入式系统创新大赛,全国高等院校计算机基础教育研究会,开发,中,2026-11-18,2026-10-18,,报名中,https://www.saikr.com/vse/2026AIoTQRS,2026-11-05T12:22:08
 saikr,2026第九届传智杯全国大学生数智创新与AI应用大赛—AI WEB网页开发挑战赛,全国高等院校计算机基础教育研究会,开发,中,2026-11-18,2026-10-18,,报名中,https://www.saikr.com/vse/2026AIWEBKF,2026-11-05T12:22:08
@@ -258,23 +250,27 @@ saikr,工业互联网技术与应用挑战赛——自动化竞答专项赛道,�
 ai_race,第二届全国人工智能应用创新大赛,中国技术经济学会,人工智能,中,2026-11-20,2026-09-18,,进行中,https://www.ai-race.com.cn/,2026-11-05T12:22:07
 jwc·杭州电子科技大学,2027年美国（国际）大学生数学建模竞赛与交叉学科建模竞赛集训报名通知,,综合,中,2026-11-20,,,报名中,https://jwc.hdu.edu.cn/2026/1015/c13482a301563/page.htm,2026-11-05T12:24:40
 jwc·中国科学技术大学,推荐我校师生参加第二届长三角高校“超星杯”智慧教与学大赛,,综合,中,2026-11-20,,,报名中,https://www.teach.ustc.edu.cn/notice/notice-info/20647.html,2026-11-05T12:28:57
-saikr,2026年大学生统计科学与算法编程挑战赛——计算机网络赛道,山东省应用统计学会,人工智能,中,2026-11-20,2026-07-01,,报名中,https://www.saikr.com/vse/2026TJKXCN,2026-11-05T12:22:08
+saikr,计算机网络赛道,山东省应用统计学会,人工智能,中,2026-11-20,2026-07-01,,报名中,https://www.saikr.com/vse/2026TJKXCN,2026-11-05T12:22:08
 saikr,2026年大学生统计科学与算法编程挑战赛——计算机组成原理赛道,山东省应用统计学会,开发,中,2026-11-20,2026-02-05,,报名中,https://www.saikr.com/vse/2026TJKXCOA,2026-11-05T12:22:08
+saikr,脑控四足·穿越挑战赛,上海水木络绎科技人才发展创新中心 等,人工智能,中,2026-11-20,2026-11-12,,报名中,https://www.saikr.com/vse/aivora2026,2026-11-16T12:53:51
 nowcoder,牛客挑战赛94,NowCoder,算法竞赛,中,2026-11-20 22:00,2026-11-20 19:00,,未开始,https://ac.nowcoder.com/acm/contest/143407?from=acm_calendar,2026-11-05T12:33:21
 ctftime,GlacierCTF 2026,LosFuzzys,网络安全,中,2026-11-21,2026-11-20,,未开始,https://glacierctf.com/,2026-09-28T10:58:17
-ctftime,Outback Overflow,HSCC,网络安全,中,2026-11-21,2026-11-20,"More TBA
+ctftime,Outback Overflow,HSCC,网络安全,中,2026-11-21,2026-11-20,"1st
 
-1 year .xyz domains pp",未开始,http://ctf.hscyber.org/,2026-10-02T10:32:35
+    6 month Premium Try Hack Me for every team member",未开始,http://ctf.hscyber.org/,2026-10-02T10:32:35
 ctftime,Crate-CTF 2026,Crate-CTF,网络安全,中,2026-11-21,2026-11-21,,未开始,https://foi.se/cratectf,2026-11-05T12:22:08
 ctftime,CyberSci Regional Qualifiers 2026-27,CyberSciOrganizers,网络安全,中,2026-11-21,2026-11-21,Winners at Regionals get instant interviews and sometimes sa,未开始,https://cybersecuritychallenge.ca/,2026-11-05T12:22:08
 saikr,第三届“中西挑战杯”大学生数学建模大赛,中国西部研究与发展促进会教育工作委员会,数学建模,低,2026-11-21,2026-10-15,,报名中,https://www.saikr.com/vse/math3,2026-11-05T12:22:08
-tianchi,2026-跨本体具身认知极限联合挑战赛,,机器人,高,2026-11-22,,"¥100,000",进行中,https://tianchi.aliyun.com/competition/entrance/532508,2026-08-17T15:05:25
+saikr,脑机接口开放创新竞赛,上海水木络绎科技人才发展创新中心 等,人工智能,中,2026-11-21,2026-11-12,,报名中,https://www.saikr.com/vse/neuracle2026,2026-11-16T12:53:50
+ctftime,WolvCTF 2026,w01verines,网络安全,中,2026-11-22,2026-11-20,To be announced!,未开始,https://wolvctf.io/,2026-09-26T09:22:58
 ctftime,EyesOpenCTF 7th edition,EyesOpen_Security,网络安全,中,2026-11-22,2026-11-20,1st: 300 USD + 1 year ExamBoot subscription. (500 USD dedica,未开始,https://eyesopensecurity.com/ctf-briefing.html,2026-09-27T10:02:22
 ctftime,Seize da Flaq,Seize da Flaq,网络安全,中,2026-11-22,2026-11-21,"Overall Pool Prize - 5,00,000 INR
 Cash Prizes - 30,000 INR",未开始,https://seizedaflaq.cyberonites.com/,2026-11-05T12:22:08
 saikr,2026年第二届大学生网络信息技术大赛,中国商业技师协会,人工智能,中,2026-11-22,2026-08-30,,报名中,https://www.saikr.com/vse/NEAI202602,2026-11-05T12:22:08
 jwc·湘潭大学,第二届全国人工智能应用创新大赛湘潭大学校赛,,综合,中,2026-11-22,,,报名中,https://jwc.xtu.edu.cn/info/1085/4983.htm,2026-11-05T12:24:37
 nowcoder,2026年海南大学程序设计竞赛（同步赛）,NowCoder,算法竞赛,低,2026-11-22 18:30,2026-11-22 14:30,,未开始,https://ac.nowcoder.com/acm/contest/142288?from=acm_calendar,2026-11-05T12:33:21
+nowcoder,2026年广东工业大学揭阳校区新生赛（同步赛）,NowCoder,算法竞赛,低,2026-11-22 18:30,2026-11-22 13:30,,未开始,https://ac.nowcoder.com/acm/contest/143633?from=acm_calendar,2026-11-16T12:53:49
+nowcoder,牛客周赛 Round 171,NowCoder,算法竞赛,低,2026-11-22 21:00,2026-11-22 19:00,,未开始,https://ac.nowcoder.com/acm/contest/144189?from=acm_calendar,2026-11-16T12:53:49
 AI发现·我爱竞赛网,2026年第八届全国高校计算机能力挑战赛,全国高等学校计算机教育研究会,挑战赛,中,2026-11-25,,,报名中,http://www.ncccu.org.cn,2026-08-17T15:05:35
 AI发现·我爱竞赛网,2026年第八届全国高校计算机能力挑战赛（含人工智能挑战赛等多赛项）,全国高等学校计算机教育研究会,挑战赛,中,2026-11-25,,,报名中,https://www.52jingsai.com/,2026-11-05T12:29:43
 saikr,2026年第十六届APMCM亚太地区大学生数学建模竞赛,中国国际科技促进会物联网工作委员会 等,数学建模,低,2026-11-25,2026-08-31,,报名中,https://www.saikr.com/vse/apmcm26,2026-11-05T12:22:08
@@ -284,13 +280,17 @@ saikr,高校大学生智能创新与计算机技能应用挑战赛——AI芯智
 saikr,计算机能力竞赛暨城市联赛—计算机素养赛道,大连市计算机学会 等,人工智能,中,2026-11-27,2026-08-27,,报名中,https://www.saikr.com/vse/CLComputer2026WT,2026-11-05T12:22:09
 saikr,C语言/C++编程巅峰赛,湖北省计算机信息系统集成协会,数据,中,2026-11-27,2026-09-16,,报名中,https://www.saikr.com/vse/Combined202601,2026-11-05T12:22:09
 saikr,物联网技术素养大赛,中国国际科技促进会物联网工作委员会,数据,低,2026-11-27,2026-09-03,,报名中,https://www.saikr.com/vse/IoTTL2026WLB,2026-11-05T12:22:09
+ctftime,RedReaper CTF,RedReaper,网络安全,中,2026-11-27,2026-11-27,TBD,未开始,https://qualification.redx.site/,2026-11-16T12:53:49
 nowcoder,牛客练习赛160,NowCoder,算法竞赛,低,2026-11-27 21:30,2026-11-27 19:00,,未开始,https://ac.nowcoder.com/acm/contest/143482?from=acm_calendar,2026-11-05T12:33:21
 ctftime,L3m0n CTF 2026 (Quals),L3m0n CTF,网络安全,中,2026-11-28,2026-11-28,To be announced,未开始,https://l3m0nctf.xyz/,2026-11-05T12:22:08
 ctftime,LakeCTF Quals 26-27,polygl0ts,网络安全,中,2026-11-28,2026-11-27,"Academic bracket
 Top 10 academic: invited to LakeCTF finals",未开始,https://lakectf.epfl.ch/,2026-11-05T12:22:08
 ctftime,CyberNSK2027-Qualifier,siberiansecurityleague,网络安全,中,2026-11-28,2026-11-28,Top teams from the qualifiers will be invited to the on-site,未开始,https://quals.sslctf.ru/,2026-11-05T12:22:08
-saikr,2026年全国大学生人工智能应用实践大赛,四川汇鑫创融大数据研究院,人工智能,中,2026-11-28,2026-10-24,,进行中,https://www.saikr.com/vse/AIPC26,2026-11-05T12:22:08
+saikr,2026全国大学生机器人与算法大赛-知识竞答赛道,中国机电一体化技术应用协会,人工智能,中,2026-11-28,2026-09-20,,报名中,https://www.saikr.com/vse/59954,2026-11-05T12:22:08
+saikr,2026年全国大学生人工智能应用实践大赛 -- 腾讯WorkBuddy创作挑战赛,四川汇鑫创融大数据研究院,人工智能,高,2026-11-28,2026-10-24,,进行中,https://www.saikr.com/vse/AIPC26,2026-11-05T12:22:08
+ctftime,Black Hat India 2026 Official CTF,CTF7,网络安全,中,2026-11-29,2026-11-28,"9 Black Hat India 2027 Briefings passes in total, worth ₹7,6",未开始,https://ctf.blackhat-india.com/,2026-11-16T12:53:49
 nowcoder,2026 年广东工业大学新生赛（同步赛）,NowCoder,算法竞赛,低,2026-11-29 18:30,2026-11-29 13:30,,未开始,https://ac.nowcoder.com/acm/contest/143460?from=acm_calendar,2026-11-05T12:33:21
+nowcoder,牛客周赛 Round 172,NowCoder,算法竞赛,低,2026-11-29 21:00,2026-11-29 19:00,,未开始,https://ac.nowcoder.com/acm/contest/144191?from=acm_calendar,2026-11-16T12:53:49
 tianchi,2026-具身极限挑战赛,,机器人,高,2026-11-30,,"¥300,000",进行中,https://tianchi.aliyun.com/competition/entrance/41,2026-08-17T15:05:25
 jwc·西安交通大学,华为ICT大赛2026-2027报名,华为技术有限公司,综合,高,2026-11-30,,,报名中,http://dean.xjtu.edu.cn/info/1172/10521.htm,2026-11-05T12:22:09
 jwc·云南大学,2026-2027第十一届华为ICT大赛,,综合,高,2026-11-30,,,报名中,https://jwc.ynu.edu.cn/info/1009/4393.htm,2026-11-05T12:24:33
@@ -314,12 +314,20 @@ saikr,第八届CRH大学生程序设计大赛——编程考察赛道,湖南省�
 ctftime,bi0sCTF 2026,bi0s,网络安全,中,2026-12-06,2026-12-05,,未开始,https://ctf.bi0s.in/,2026-11-05T12:22:08
 ctftime,x3CTF 2026,x3CTF,网络安全,中,2026-12-06,2026-12-04,TBA but they will be cute,未开始,https://x3c.tf/,2026-11-05T12:22:08
 saikr,2026年‘智联杯’大学生人工智能竞答大赛,中国智慧工程研究会,人工智能,中,2026-12-06,2026-08-09,,报名中,https://www.saikr.com/vse/ZHGCxy2026RGZN,2026-11-05T12:22:09
+ctftime,2026 Qiangwang Challenge on Cyber Mimic Defense Finals,LoveFromMimic,网络安全,中,2026-12-06,2026-12-03,,未开始,https://nest.pmlabs.com.cn/en/events/qiangwang-9/registration,2026-11-16T12:53:49
 saikr,2026年第三届大学生高新技术竞赛——无人车域控挑战赛,中国国际科技促进会物联网工作委员会,人工智能,低,2026-12-11,2026-10-09,,报名中,https://www.saikr.com/vse/2026DCU,2026-11-05T12:22:09
 saikr,2026“华青杯”大学生人工智能大赛——算法编程赛项,中国国际科技促进会青少年人工智能教育普及工作委员会,开发,低,2026-12-11,2026-07-16,,报名中,https://www.saikr.com/vse/HQBRGZN2601,2026-11-05T12:22:09
+saikr,Python编程巅峰赛,湖北省计算机信息系统集成协会,开发,中,2026-12-11,2026-08-07,,报名中,https://www.saikr.com/vse/Python202601,2026-11-16T12:53:52
 saikr,华青杯算法技能竞答赛项,中国国际科技促进会青少年人工智能教育普及工作委员会,开发,低,2026-12-12,2026-07-16,,报名中,https://www.saikr.com/vse/HQBRGZN2602,2026-11-05T12:22:09
 saikr,第四届大学生“中促杯”数据分析大赛,华夏文化促进会文化产业工作委员会,数据,低,2026-12-12,2026-10-15,,报名中,https://www.saikr.com/vse/ZCBSJFX,2026-11-05T12:22:09
+ctftime,OTERIA Cyber Cup #4,OteriHack,网络安全,中,2026-12-12,2026-12-12,"1st place: 500€ + goodies
+
+2nd place: 300€ + goodies
+
+3r",未开始,https://www.oteria-cyber-cup.fr/,2026-11-16T12:53:49
 ctftime,niteCTF 2026,Cryptonite,网络安全,中,2026-12-13,2026-12-11,,未开始,https://nitectf.cryptonitemit.in/,2026-11-05T12:22:08
-saikr,华青杯”AI机器人素养赛项,中国国际科技促进会青少年人工智能教育普及工作委员会,人工智能,低,2026-12-13,2026-07-15,,报名中,https://www.saikr.com/vse/HQBRGZN2603,2026-11-05T12:22:08
+saikr,2026全国大学生机器人与算法大赛-模拟仿真赛道,中国机电一体化技术应用协会,人工智能,中,2026-12-13,2026-04-19,,进行中,https://www.saikr.com/vse/Robot/arborseek/26,2026-11-05T12:22:08
+saikr,“华青杯”AI机器人素养赛项,中国国际科技促进会青少年人工智能教育普及工作委员会,人工智能,低,2026-12-13,2026-07-15,,报名中,https://www.saikr.com/vse/HQBRGZN2603,2026-11-05T12:22:08
 ctftime,Leo's 20th Birthday Bash,SanguineChameleon,网络安全,中,2026-12-13,2026-12-12,"1st place: USD 512
 2nd place: USD 256
 3rd place: USD 128
@@ -328,17 +336,24 @@ jwc·湘潭大学,第十八届蓝桥杯全国大学生软件和信息技术大�
 saikr,2026年第二届工业互联网技术与应用挑战赛——工业互联网专项赛道,中国互联网协会智慧教育工作委员会,人工智能,中,2026-12-18,2026-02-24,,报名中,https://www.saikr.com/vse/2026Industrial,2026-11-05T12:22:08
 saikr,计算机能力竞赛暨城市联赛（冬季赛）——算法编程赛道,大连市计算机学会 等,人工智能,中,2026-12-18,2026-08-31,,报名中,https://www.saikr.com/vse/CLAlgorithmp2026WT,2026-11-05T12:22:09
 ctftime,BSides Algiers 2026,sarrus,网络安全,中,2026-12-19,2026-12-17,Prizes will be announced soon.,未开始,https://shellmates.club/,2026-11-05T12:22:08
+saikr,2026华智·高校大学生数据分析大赛,中国国土经济学会产业创新专业委员会 等,数据,中,2026-12-19,2026-09-16,,报名中,https://www.saikr.com/vse/HZSJ,2026-11-05T12:22:08
 tianchi,余震预测技术国际大赛,,地质科学、地震学、地球物理学,高,2026-12-20,,"¥30,000",进行中,https://tianchi.aliyun.com/competition/entrance/532460,2026-08-17T15:05:25
 ctftime,BackdoorCTF 2026,InfoSecIITR,网络安全,中,2026-12-20,2026-12-19,"The prize pool for BackdoorCTF 2026 will be announced soon.",未开始,https://backdoor.infoseciitr.in/,2026-11-05T12:22:08
+saikr,2026年高校大学生“工创杯”人工智能知识大赛,中国商业技师协会,人工智能,中,2026-12-20,2026-08-09,,报名中,https://www.saikr.com/vse/2026RGZN,2026-11-05T12:22:08
 saikr,高校大学生智能创新与计算机技能应用挑战赛——计算机素养赛道,中国电子企业协会标准与技术成果转化工作委员会,开发,中,2026-12-20,2026-09-06,,报名中,https://www.saikr.com/vse/PC2026ZNCX,2026-11-05T12:22:09
+saikr,麟创杯人工智能知识竞赛（秋季赛）,中国技术市场协会数智技术专业委员会 等,人工智能,低,2026-12-20,2026-07-12,,报名中,https://www.saikr.com/vse/LCBRGZN02,2026-11-05T12:22:08
+saikr,2026年第十六届亚太地区大学生数学建模竞赛之五岳杯量子计算数学建模挑战赛,中国国际科技促进会物联网工作委员会 等,开发,低,2026-12-24,2026-11-10,,报名中,https://www.saikr.com/vse/apmcmlz26,2026-11-16T12:53:52
 saikr,2026年第三届大学生高新技术竞赛——无人机应用能力大赛,中国国际科技促进会物联网工作委员会,人工智能,低,2026-12-25,2026-10-09,,报名中,https://www.saikr.com/vse/2026UAV,2026-11-10T14:45:03
+saikr,办公技能竞答赛道,中国电子企业协会标准与技术成果转化工作委员会,开发,中,2026-12-27,2026-09-06,,报名中,https://www.saikr.com/vse/OS2026ZNCX,2026-11-05T12:22:08
 saikr,AI大模型创新应用挑战赛道,大连市计算机学会 等,人工智能,中,2026-12-27,2026-08-26,,报名中,https://www.saikr.com/vse/CLAIBM2026WN,2026-11-05T12:22:08
 ctftime,ASIS CTF Finals 2026,ASIS,网络安全,中,2026-12-28,2026-12-27,.:: TBA ::.,未开始,https://asisctf.com/,2026-11-05T12:22:08
 tianchi,2026CCKS系列赛,,自然语言处理、大语言模型、学术顶会论文发表,中,2026-12-31,,,进行中,https://tianchi.aliyun.com/competition/entrance/35,2026-08-17T15:05:25
 tianchi,2026CCL系列赛,,学术顶会论文发表,中,2026-12-31,,"¥40,000",进行中,https://tianchi.aliyun.com/competition/entrance/36,2026-08-17T15:05:25
 tianchi,知乎知学堂大模型挑战赛：大模型复杂表格识别与内容理解,,自然语言处理、大语言模型,高,2026-12-31,2026-10-01,"¥20,000",报名中,https://tianchi.aliyun.com/competition/entrance/532510,2026-08-23T04:36:25
+ctftime,THE FINAL EXPLOIT CTF 2026—QUALIFIERS,OxV01D,网络安全,中,2026-12-31,2026-12-29,To be announced,未开始,https://0xv01d-ctf.xyz/,2026-11-16T12:53:49
 xfyun,自动音频标记练手赛,合肥工业大学,训练,低,2027-01-01,2026-09-04,¥0万,报名中,https://challenge.xfyun.cn/topic/info?type=train-auto-audio-tagging,2026-09-05T08:23:18
 ctftime,GaianSpace Perihelion CTF 2027,GaianSpace,网络安全,中,2027-01-03,2027-01-02,The top three teams and the best write-up will receive the f,未开始,https://gaian.space/ctf,2026-11-05T12:22:08
+ctftime,UofTCTF 2027,UofTCTF,网络安全,中,2027-01-11,2027-01-09,To be announced.,未开始,https://ctf.uoftctf.org/,2026-11-16T12:53:49
 AI发现·我爱竞赛网,第十二届全国大学生生命科学竞赛（科学探究类）,,比赛,高,2027-01-15,,,报名中,http://www.culsc.cn/,2026-09-13T14:28:39
 AI发现·我爱竞赛网,2026年第十二届全国大学生生命科学竞赛（科学探究类）,全国大学生生命科学竞赛组织委员会,比赛,高,2027-01-15,,,报名中,http://www.culsc.cn/,2026-09-13T15:06:04
 jwc·西北工业大学,第二十届全国大学生软件创新大赛报名,示范性软件学院联盟,综合,中,2027-01-15,,,报名中,https://jiaowu.nwpu.edu.cn/info/1160/30698.htm,2026-11-05T12:22:10
@@ -377,8 +392,6 @@ tianchi,【打榜赛】CCL25-Eval  任务2：第三届汉语框架语义解析�
 tianchi,CCL25-Eval 打榜赛系列赛,,,中,2027-05-25,,"¥11,000",进行中,https://tianchi.aliyun.com/competition/entrance/19,2026-08-17T15:05:25
 tianchi,Q力星期四,,,高,2027-07-31,,,进行中,https://tianchi.aliyun.com/competition/entrance/39,2026-08-17T15:05:25
 tianchi,面向生物医学全文的特定患者表型概念识别任务-赛后评测,,医疗健康、自然语言处理、大语言模型,高,2027-09-30,2026-10-03,,报名中,https://tianchi.aliyun.com/competition/entrance/532512,2026-08-19T23:02:28
-AI发现·我爱竞赛网,第三届“AI宁波”大赛,,比赛,中,,,,未公布,https://rcgc.nbrc.com.cn/ds/2026/,2026-08-17T15:05:35
-AI发现·我爱竞赛网,2026第十届金砖国家技能发展与技术创新大赛,金砖国家工商理事会中方理事会、一带一路暨金砖国家技能发展国际联盟等,比赛,高,,,国际级荣誉，技能认证,未公布,http://www.brskills.com/#/view/3286,2026-08-17T15:05:35
 AI发现·我爱竞赛网,2027年第十届中国大学生工程实践与创新能力大赛,教育部工程训练教学指导委员会、中国大学生工程实践与创新能力大赛组委会,比赛,高,,,,未公布,http://www.gcxl.edu.cn,2026-08-18T22:09:43
 AI发现·全国大学生信息安全竞赛,第十九届全国大学生信息安全竞赛（作品赛）暨第三届“长城杯”网数智安全大赛（作品赛）,中国信息安全测评中心、教育部高等学校网络空间安全专业教学指导委员会,比赛,高,,,,未公布,http://www.ciscn.cn/announcement/view/423,2026-09-13T09:37:13
 AI发现·全国大学生信息安全竞赛,第十九届全国大学生信息安全竞赛（命题挑战赛）,中国信息安全测评中心、教育部高等学校网络空间安全专业教学指导委员会,挑战赛,高,,,,未公布,http://www.ciscn.cn/,2026-09-13T09:37:13
